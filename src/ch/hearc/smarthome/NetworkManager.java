@@ -1,6 +1,6 @@
-package com.example.smarthome;
+package ch.hearc.smarthome;
 
-import com.example.smarthome.PasswordManager;
+import ch.hearc.smarthome.PasswordManager;
 
 ;
 

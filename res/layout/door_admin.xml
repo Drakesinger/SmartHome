@@ -85,4 +85,13 @@
         android:layout_marginTop="21dp"
         android:text="Confirm new password:" />
 
+    <TextView
+        android:id="@+id/tv_door_admin_Message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_door_admin_new_pass2"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#CC0000" />
+
 </RelativeLayout>

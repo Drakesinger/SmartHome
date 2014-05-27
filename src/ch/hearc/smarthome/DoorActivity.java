@@ -1,7 +1,6 @@
-package com.example.smarthome;
+package ch.hearc.smarthome;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +9,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.example.smarthome.PasswordManager;
+import ch.hearc.smarthome.PasswordManager;
 
 public class DoorActivity extends Activity {
 
@@ -35,10 +33,9 @@ public class DoorActivity extends Activity {
 		setContentView(R.layout.door_main);
 
 		initialize_references();
-		// myPassword =
-		// convert_EditTextContent_to_Strings(et_door_main_Password);
-		PasswordManager
-				.setActual_pass(convert_EditTextContent_to_Strings(et_door_main_Password));
+
+		// We initialize the password just in case
+		PasswordManager.setActual_pass("1111");
 
 		b_door_main_Open.setOnClickListener(new OnClickListener() {
 
@@ -64,51 +61,19 @@ public class DoorActivity extends Activity {
 					}
 				} else {
 					// Show pop-up
-					launchPopup("Error", "Wrong password");
+					PopupMessages.launchPopup("Open door.",
+							"Wrong password, please retry.", DoorActivity.this);
 				}
 			}
 		});
 
 	}
 
-	private void launchPopupAlert(String messageType, String messageContent) {
-		//TODO create the same thing but with an alert dialog instead of dialog
-		
-	}
-
 	/**
-	 * Open a pop-up containing the title {@link messageType} and the
-	 * {@link messageContent}.
+	 * Convert the content of an {@link EditText} view widget to a
+	 * {@link String}.
 	 */
-	private void launchPopup(String messageType, String messageContent) {
-		final Dialog myDialog;
-		Button popupConfirmed;
-		TextView message;
-
-		// TODO Auto-generated method stub
-		myDialog = new Dialog(DoorActivity.this);
-		myDialog.setContentView(R.layout.pop_up_messages);
-		myDialog.setTitle(messageType);
-		myDialog.setCancelable(true);
-		message = (TextView) myDialog.findViewById(R.id.tv_message_text);
-		message.setText(messageContent);
-		popupConfirmed = (Button) myDialog.findViewById(R.id.b_message_seen);
-
-		popupConfirmed.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				myDialog.dismiss();
-
-			}
-
-		});
-		myDialog.show();
-	}
-
-	/** Convert the content of an {@link EditText} view widget to a {@link String}. */
-	private String convert_EditTextContent_to_Strings(EditText et) {
+	public static String convert_EditTextContent_to_Strings(EditText et) {
 		// String textContent = et.getText().toString();
 		return et.getText().toString();
 	}

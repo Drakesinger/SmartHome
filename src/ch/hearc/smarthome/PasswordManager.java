@@ -1,6 +1,4 @@
-package com.example.smarthome;
-
-import com.example.smarthome.NetworkManager;
+package ch.hearc.smarthome;
 
 public class PasswordManager {
 
@@ -21,6 +19,7 @@ public class PasswordManager {
 	 */
 	public static void setActual_pass(String pass) {
 		PasswordManager.actual_pass = pass;
+		NetworkManager.send_password();
 	}
 
 }
