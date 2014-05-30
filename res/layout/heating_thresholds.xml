@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/thresholdsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/thresholds"
+        android:textSize="25sp"
+        android:textStyle="italic" />
+
+    <!-- Heating -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_marginLeft="5dip"
+            android:text="@string/default_temperature"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editTextDefaultTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:inputType="numberDecimal" >
+        </EditText>
+
+    </RelativeLayout>
+
+    
+    <!-- Light -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtLightBelow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_marginLeft="5dip"
+            android:text="@string/light_below"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editTextTurnOnBelow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:inputType="numberDecimal" >
+        </EditText>
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/txtLightAbove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_marginLeft="5dip"
+            android:text="@string/light_above"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editTextTurnOffAbove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:inputType="numberDecimal" >
+        </EditText>
+
+    <Button
+        android:id="@+id/btnSaveThresholds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+            style="?android:attr/buttonBarButtonStyle"
+        android:layout_alignParentLeft="true"
+        android:onClick="saveThresholds"
+        android:text="@string/save_thresholds" />
+
+    </RelativeLayout>
+
+    
+</LinearLayout>

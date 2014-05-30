@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="18"
         android:targetSdkVersion="19" />
 
     <application
@@ -13,8 +13,66 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!-- Door Main Activity -->
         <activity
-            android:name="ch.hearc.smarthome.DoorActivity"
+            android:name="ch.hearc.smarthome.door.DoorActivity"
+            android:label="@string/app_name" >
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+
+        <!-- Door Administration Activity -->
+        <activity
+            android:name=".door.DoorAdminActivity"
+            android:label="Door Administration" >
+        </activity>
+
+        <!-- Heating Main Activity -->
+        <activity
+            android:name="ch.hearc.smarthome.heating.HeatingMainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+
+        <!-- Heating History -->
+        <activity
+            android:name="ch.hearc.smarthome.heating.HeatingHistory"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- Heating Scheduling -->
+        <activity
+            android:name="ch.hearc.smarthome.heating.HeatingScheduling"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- Heating Thresholds -->
+        <activity
+            android:name="ch.hearc.smarthome.heating.HeatingThresholds"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- Login Main Activity -->
+        <activity
+            android:name="ch.hearc.smarthome.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +81,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ch.hearc.smarthome.DoorAdminActivity"
-            android:label="Door Administration" >
+            android:name="ch.hearc.smarthome.HomeActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name="ch.hearc.smarthome.NoteActivity"
+            android:label="@string/title_activity_note" >
         </activity>
     </application>
 

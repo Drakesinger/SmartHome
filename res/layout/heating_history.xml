@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/historyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/history"
+        android:layout_marginBottom="20dp"
+        android:textSize="25sp"
+        android:textStyle="italic" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <TextView
+            android:id="@+id/txtTmp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="@string/tmp_1" />
+
+        <TextView
+            android:id="@+id/txtDay1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:text="@string/days_1" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtDay2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/days_2" />
+        
+        <TextView
+            android:id="@+id/txtTmp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="@string/tmp_2" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtDay3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/days_3" />
+        
+        <TextView
+            android:id="@+id/txtTmp3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="@string/tmp_3" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtDay4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/days_4" />
+        
+        <TextView
+            android:id="@+id/txtTmp4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="@string/tmp_4" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtDay5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/days_5" />
+        
+        <TextView
+            android:id="@+id/txtTmp5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="@string/tmp_5" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtDay6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/days_6" />
+        
+        <TextView
+            android:id="@+id/txtTmp6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="@string/tmp_6" />
+    <Button
+        android:id="@+id/btnShowPastWeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+            style="?android:attr/buttonBarButtonStyle"
+        android:layout_alignParentLeft="true"
+        android:onClick="showPastWeek"
+        android:text="@string/show_past_week" />
+        
+    </RelativeLayout>
+
+</LinearLayout>

@@ -5,4 +5,57 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Heating Main Activity -->
+    <string name="scheduling">Heating Scheduling</string>
+    <string name="thresholds">Thresholds Heat and Light</string>
+    <string name="history">History</string>
+
+    <!-- Heating Thresholds -->
+    <string name="heating">HEATING</string>
+    <string name="default_temperature">Default Temperature</string>
+    <string name="light_below">Turn on below</string>
+    <string name="light_above">Turn off above</string>
+    <string name="save_thresholds">Save Thresholds</string>
+    <string name="save_before_quit">Would you like to save Thresholds before leaving ?</string>
+    <string name="yes">Yes</string>
+    <string name="no_quit">No, let me quit</string>
+
+    <!-- Heating Scheduling -->
+    <string name="add">Add</string>
+    <string name="delete_selection">Delete Selection</string>
+
+    <!-- Heating History -->
+    <string name="show_past_week">Show Past Week</string>
+    <string name="days_1">Monday 24.03.14</string>
+    <string name="days_2">Tuesday 25.03.14</string>
+    <string name="days_3">Wednesday 26.03.14</string>
+    <string name="days_4">Thursday 27.03.14</string>
+    <string name="days_5">Friday 28.03.14</string>
+    <string name="days_6">Saturday 29.03.14</string>
+    <string name="tmp_1">20.1° C</string>
+    <string name="tmp_2">21.3° C</string>
+    <string name="tmp_3">22.4° C</string>
+    <string name="tmp_4">21.1° C</string>
+    <string name="tmp_5">21.5° C</string>
+    <string name="tmp_6">23.5° C</string>
+
+    <!-- Login Main Activity -->
+    <!-- FIX this!!!! -->
+    <string name="TextBouton1">Connexion</string>
+    <string name="title_activity_display_message">Bienvenue</string>
+    <string name="TextMdp">Veuillez entrer votre mot de passe </string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="TabPorte">Porte</string>
+    <string name="BouttonPorte">Porte</string>
+    <string name="BouttonChauffage">Chauffage</string>
+    <string name="BouttonNote">Notes</string>
+    <string name="BouttonAlarme">Alarme</string>
+    <string name="title_activity_notes_main">Notes</string>
+    <string name="NoteMain">"Notes : "</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_note">NoteActivity</string>
+    <string name="Exit">Exit</string>
+    <string name="Welcome">Bienvenue à la maison</string>
+    <string name="NoteAdd">Add</string>
+
 </resources>

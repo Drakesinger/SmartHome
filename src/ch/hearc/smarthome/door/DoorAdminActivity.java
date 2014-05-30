@@ -1,5 +1,8 @@
-package ch.hearc.smarthome;
+package ch.hearc.smarthome.door;
 
+import ch.hearc.smarthome.PasswordManager;
+import ch.hearc.smarthome.PopupMessages;
+import ch.hearc.smarthome.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.InputType;

@@ -1,4 +1,4 @@
-package ch.hearc.smarthome;
+package ch.hearc.smarthome.door;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import ch.hearc.smarthome.PasswordManager;
+import ch.hearc.smarthome.PopupMessages;
+import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.network.NetworkManager;
 
 public class DoorActivity extends Activity {
 

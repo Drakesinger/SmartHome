@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonScheduling"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/scheduling"
+        android:drawableLeft="@drawable/scheduling"
+        android:fontFamily="sans-serif-thin"
+        android:onClick="intentMenu"
+        android:text="@string/scheduling"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonThresholds"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/thresholds"
+        android:drawableLeft="@drawable/thresholds"
+        android:fontFamily="sans-serif-thin"
+        android:onClick="intentMenu"
+        android:text="@string/thresholds"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonHistory"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/history"
+        android:drawableLeft="@drawable/history"
+        android:fontFamily="sans-serif-thin"
+        android:onClick="intentMenu"
+        android:text="@string/history"
+        android:textStyle="bold" />
+
+</LinearLayout>

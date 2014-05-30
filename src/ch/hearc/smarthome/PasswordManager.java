@@ -1,5 +1,7 @@
 package ch.hearc.smarthome;
 
+import ch.hearc.smarthome.network.NetworkManager;
+
 public class PasswordManager {
 
 	static String default_pass = "default";

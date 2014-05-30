@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name = "scheduling_names">
+        <item>Souper famille</item>
+        <item>Vacances</item>
+        <item>Test</item>
+    </string-array>
+    <string-array name = "scheduling_dates">
+        <item>10.10.14 18:30–11.10.14 1:30</item>
+        <item>12.10.14 10:30–17.10.14 10:30</item>
+        <item>21.11.14 19:30–22.11.14 3:30</item>
+    </string-array>
+    <string-array name = "scheduling_temps">
+        <item>24</item>
+        <item>21</item>
+        <item>27</item>
+    </string-array>
+</resources>

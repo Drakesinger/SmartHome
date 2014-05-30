@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/schedulingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/scheduling"
+        android:textSize="25sp"
+        android:textStyle="italic" />
+
+    <ListView
+        android:id="@+id/listViewScheduling"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.66" >
+    </ListView>
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnAddHeating"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="addHeating"
+            android:text="@string/add" />
+
+        <Button
+            android:id="@+id/btnDeleteSelected"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:onClick="deleteSelection"
+            android:text="@string/delete_selection" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package ch.hearc.smarthome;
+package ch.hearc.smarthome.network;
 
 import ch.hearc.smarthome.PasswordManager;
 
