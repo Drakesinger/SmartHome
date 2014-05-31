@@ -1,7 +1,9 @@
-package ch.hearc.smarthome;
+package ch.hearc.smarthome.notes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import ch.hearc.smarthome.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

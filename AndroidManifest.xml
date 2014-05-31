@@ -85,7 +85,7 @@
             android:label="@string/title_activity_home" >
         </activity>
         <activity
-            android:name="ch.hearc.smarthome.NoteActivity"
+            android:name="ch.hearc.smarthome.notes.NoteActivity"
             android:label="@string/title_activity_note" >
         </activity>
     </application>

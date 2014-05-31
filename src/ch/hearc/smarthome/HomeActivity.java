@@ -1,5 +1,10 @@
 package ch.hearc.smarthome;
 
+import ch.hearc.smarthome.door.DoorActivity;
+import ch.hearc.smarthome.heating.HeatingMainActivity;
+import ch.hearc.smarthome.notes.NoteActivity;
+
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,17 +37,19 @@ public class HomeActivity extends Activity {
 	
 	public void DoorMainActivity(View view)
 	{
-		//Intent intent = new Intent(this, DoorMainActivity.class);
+		Intent intent = new Intent(this, DoorActivity.class);
+		startActivity(intent);
 	}	
 	
 	public void HeatMainActivity(View view)
 	{
-		//Intent intent = new Intent(this, HeatMainActivity.class);
+		Intent intent = new Intent(this, HeatingMainActivity.class);
+		startActivity(intent);
 	}
 	
 	public void NotesMainActivity(View view)
 	{
-		Intent intent = new Intent(HomeActivity.this, NoteActivity.class);
+		Intent intent = new Intent(this, NoteActivity.class);
 		startActivity(intent);
 	}
 	
