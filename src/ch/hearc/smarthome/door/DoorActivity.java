@@ -9,11 +9,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import ch.hearc.smarthome.PasswordManager;
+import ch.hearc.smarthome.CredentialManager;
+import ch.hearc.smarthome.LoginActivity;
 import ch.hearc.smarthome.PopupMessages;
 import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.network.NetworkManager;
 
 public class DoorActivity extends Activity {
 
@@ -23,7 +24,7 @@ public class DoorActivity extends Activity {
 	EditText et_door_main_Password;
 
 	/* Our password string */
-	// String myPassword;
+	String myPassword;
 
 	/* Our intent and context in case of password change decision */
 	Intent i;
@@ -35,10 +36,10 @@ public class DoorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.door_main);
 
-		initialize_references();
+		initializeReferences();
 
-		// We initialize the password just in case
-		PasswordManager.setActual_pass("1111");
+		//We initialize the password just in case
+		//CredentialManager.setActualPass("1111");
 
 		b_door_main_Open.setOnClickListener(new OnClickListener() {
 
@@ -56,11 +57,18 @@ public class DoorActivity extends Activity {
 				 * compare the password, then send it, and then launch a new
 				 * intent
 				 */
-				boolean password_ok = NetworkManager.send_password();
+				
+				//TODO try and catch
+				myPassword = convertEditTextContentToStrings(et_door_main_Password);
+				boolean password_ok = myPassword.equals(CredentialManager.getDoorPass());
+				
 				if (password_ok == true) {
 					if (checker == true) {
 						i = new Intent(c, DoorAdminActivity.class);
 						startActivity(i);
+					}else {
+						Toast.makeText(getApplicationContext(), "Opening door.",
+								Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					// Show pop-up
@@ -76,13 +84,13 @@ public class DoorActivity extends Activity {
 	 * Convert the content of an {@link EditText} view widget to a
 	 * {@link String}.
 	 */
-	public static String convert_EditTextContent_to_Strings(EditText et) {
+	public static String convertEditTextContentToStrings(EditText et) {
 		// String textContent = et.getText().toString();
 		return et.getText().toString();
 	}
 
 	/** Initialize all our used references for this activity */
-	private void initialize_references() {
+	private void initializeReferences() {
 		b_door_main_Open = (Button) findViewById(R.id.b_door_main_Open);
 		cb_door_main_Change_Password = (CheckBox) findViewById(R.id.cb_door_main_Change_Password);
 		et_door_main_Password = (EditText) findViewById(R.id.et_door_main_Password);

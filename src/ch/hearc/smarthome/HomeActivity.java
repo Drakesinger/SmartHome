@@ -56,5 +56,6 @@ public class HomeActivity extends Activity {
 	public void AlarmMainActivity(View view)
 	{
 		//Intent intent = new Intent(this, AlarmeMainActivity.class);
+		//startActivity(intent);
 	}
 }

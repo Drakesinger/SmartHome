@@ -60,7 +60,7 @@
         android:layout_below="@+id/editText2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:onClick="sendMessage"
+        android:onClick="login"
         android:selectAllOnFocus="false"
         android:text="@string/TextBouton1"
         android:textSize="14sp" />

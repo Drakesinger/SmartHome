@@ -9,11 +9,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-	
-	private EditText editText;
-	private EditText TextMdp;
+
+	private EditText et_userName;
+	private EditText et_password;
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-	
+
+	public static short kfirstUse = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,27 +29,66 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
-	
-	public void Enregistrement(View view){
-		//Intent intentEnregistrement = new Intent(this, LoginActivity.class);
+
+	public void Enregistrement(View view) {
+		// Intent intentEnregistrement = new Intent(this, LoginActivity.class);
 	}
-	public void sendMessage(View view){
-		Intent intent = new Intent(this, HomeActivity.class);
-		editText = (EditText) findViewById(R.id.editText1);
-		TextMdp = (EditText) findViewById(R.id.editText2);
-		String mdp = TextMdp.getText().toString();
-		String message = editText.getText().toString();
+
+	public void login(View view) {
 		
-		if(mdp.equals("pass") && message.equals("user"))
-		{
-			Toast.makeText(LoginActivity.this, "Login OK !", Toast.LENGTH_LONG).show();
-			intent.putExtra(EXTRA_MESSAGE, message);
+
+		et_userName = (EditText) findViewById(R.id.editText1);
+		et_password = (EditText) findViewById(R.id.editText2);
+
+		String password = et_password.getText().toString();
+		String username = et_userName.getText().toString();
+
+		if (kfirstUse == 1) {
+			/*
+			 * First use of our application. So we login with the details
+			 * entered and send them to the other device.
+			 */
+
+			CredentialManager.setCredential(username, password);
+
+			try {
+				//NetworkManager.connect();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			/*
+			NetworkManager.sendUsername(username);
+			NetworkManager.sendPassword(password);
+			 */
+			kfirstUse = 0;
+			
+			Intent intent = new Intent(this, HomeActivity.class);
+			intent.putExtra(EXTRA_MESSAGE, username);
 			startActivity(intent);
+
+		} else {
+			/* Already logged in once, so check if data entered is correct */
+			
+			// TODO CHANGE THIS to something better
+			
+			// Connection has been established
+			// Start
+			if (password.equals(CredentialManager.getActualPass())
+					&& username.equals(CredentialManager.getActualUser())) {
+
+				Toast.makeText(LoginActivity.this, "Login OK !",
+						Toast.LENGTH_LONG).show();
 				
+				Intent intent = new Intent(this, HomeActivity.class);
+				intent.putExtra(EXTRA_MESSAGE, username);
+				startActivity(intent);
+
+			} else {
+				Toast.makeText(LoginActivity.this,
+						"Mauvaise combinaison login/mdp !", Toast.LENGTH_LONG)
+						.show();
+			}
 		}
-		else
-		{
-			Toast.makeText(LoginActivity.this, "Mauvaise combinaison login/mdp !", Toast.LENGTH_LONG).show();
-		}
+
 	}
 }

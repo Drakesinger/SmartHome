@@ -31,7 +31,7 @@
         android:layout_marginTop="19dp"
         android:ems="10"
         android:hint="Your Password"
-        android:inputType="numberPassword" />
+        android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/textView1"

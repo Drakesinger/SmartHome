@@ -20,7 +20,7 @@
         android:layout_below="@+id/tv_Old"
         android:ems="10"
         android:hint="Enter your old password"
-        android:inputType="numberPassword" />
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/et_door_admin_new_pass1"
@@ -29,7 +29,7 @@
         android:layout_below="@+id/tv_New"
         android:ems="10"
         android:hint="Enter your new password"
-        android:inputType="numberPassword" />
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/et_door_admin_new_pass2"
@@ -38,7 +38,7 @@
         android:layout_below="@+id/tv_Conf"
         android:ems="10"
         android:hint="Re-enter your new password"
-        android:inputType="numberPassword" >
+        android:inputType="textPassword" >
     </EditText>
 
     <Button

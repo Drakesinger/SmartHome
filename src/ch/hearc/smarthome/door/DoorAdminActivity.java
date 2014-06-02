@@ -1,6 +1,6 @@
 package ch.hearc.smarthome.door;
 
-import ch.hearc.smarthome.PasswordManager;
+import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.PopupMessages;
 import ch.hearc.smarthome.R;
 import android.app.Activity;
@@ -24,7 +24,7 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 	Button b_change;
 	TextView tv_door_admin_Message;
 
-	/* EditText Table */
+	/* EditText Table containing our 3 EditText views */
 	EditText ets[] = new EditText[3];
 
 	/* String table containing password */
@@ -32,10 +32,11 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.door_admin);
-		initialize_references();
+
+		initializeReferences();
+
 		cb_show.setOnClickListener(this);
 		b_change.setOnClickListener(this);
 	}
@@ -43,11 +44,14 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 	/** Checks the validity of each password saved in our {@link String}table. */
 	private void checkValidity(String[] sT) {
 
-		if (sT[0].compareTo(PasswordManager.getActual_pass()) == 0) {
+		if (sT[0].equals(CredentialManager.getActualPass())) {
 			// Old password inserted is correct, proceed
 			if (sT[1].compareTo(sT[2]) == 0) {
 				// New password is confirmed, change it
-				PasswordManager.setActual_pass(sT[2]);
+
+				// TODO try and catch
+				CredentialManager.setActualPass(sT[2]);
+
 				tv_door_admin_Message.setText("");
 			} else {
 				/*
@@ -55,7 +59,7 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 				 * view item
 				 */
 				tv_door_admin_Message
-						.setText("The new password fields do not coencide.\nPlease try again.");
+						.setText("The new password fields do not coencide. Please try again.");
 			}
 		} else {
 			/*
@@ -63,7 +67,7 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 			 * item
 			 */
 			PopupMessages.launchPopup("Change password.",
-					"The old password you have entered is  not valid",
+					"The old password you have entered is not valid.",
 					DoorAdminActivity.this);
 		}
 	}
@@ -73,14 +77,8 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 	 * components.
 	 */
 	private void fillStringTable() {
-
 		for (int i = 0; i < 3; i++) {
-			stringTable[i] = convert_EditTextContent_to_Strings(ets[i]);
-			// TODO Problem should be solved now
-			/*
-			 * Log.i("stringTable[" + i + "] = ", stringTable[i]); Log.i("ets["
-			 * + i + "] = ", convert_EditTextContent_to_Strings((ets[i])));
-			 */
+			stringTable[i] = convertEditTextContentToStrings(ets[i]);
 		}
 	}
 
@@ -88,7 +86,7 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 	 * Convert the content of an {@link EditText} view widget to a
 	 * {@link String}.
 	 */
-	private String convert_EditTextContent_to_Strings(EditText et) {
+	private String convertEditTextContentToStrings(EditText et) {
 		return et.getText().toString();
 	}
 
@@ -99,12 +97,11 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 	 */
 	@Override
 	public void onActionModeFinished(ActionMode mode) {
-		// TODO Auto-generated method stub
 		super.onActionModeFinished(mode);
 	}
 
 	/** Initialize all our used references for this activity. */
-	private void initialize_references() {
+	private void initializeReferences() {
 		b_change = (Button) findViewById(R.id.b_change);
 		cb_show = (CheckBox) findViewById(R.id.cb_show);
 		et_door_admin_old_pass = (EditText) findViewById(R.id.et_door_admin_old_pass);
@@ -117,19 +114,20 @@ public class DoorAdminActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) { // TODO Auto-generated methodstub
+	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.cb_show:
 
 			if (cb_show.isChecked()) {
 				// Show all passwords entered
 				for (int i = 0; i < ets.length; i++) {
-					ets[i].setInputType(InputType.TYPE_CLASS_NUMBER);
+					ets[i].setInputType(InputType.TYPE_CLASS_TEXT);
 				}
 			} else {
 				Log.i("Checked", "false");
 				for (int i = 0; i < ets.length; i++) {
-					ets[i].setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD );
+					ets[i].setInputType(InputType.TYPE_CLASS_TEXT
+							| InputType.TYPE_TEXT_VARIATION_PASSWORD);
 				}
 			}
 			break;
