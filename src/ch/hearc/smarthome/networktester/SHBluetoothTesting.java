@@ -22,6 +22,7 @@ public class SHBluetoothTesting extends Activity {
 	/* View Components */
 	private EditText et_userName;
 	private EditText et_password;
+
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
 	/* Global variables */
@@ -49,10 +50,9 @@ public class SHBluetoothTesting extends Activity {
 	private BluetoothAdapter mBluetoothAdapter = null;
 
 	/* Member object for Bluetooth Command Service */
-	private BluetoothCommandService mCommandService = null;
-	
-	
-	/*Our local array of Bluetooth devices*/
+	private BluetoothChatService mCommandService = null;
+
+	/* Our local array of Bluetooth devices */
 	Set<BluetoothDevice> mBtDevices;
 
 	@Override
@@ -92,18 +92,23 @@ public class SHBluetoothTesting extends Activity {
 				// setupCommand();
 			}
 		}
-		getPairedDevices();
+		// getPairedDevices();
 	}
 
+	// TODO Used if we create a list adapter
 	private void getPairedDevices() {
-		// TODO Auto-generated method stub
 		mBtDevices = mBluetoothAdapter.getBondedDevices();
-		if (mBtDevices.size()>0) {
+		if (mBtDevices.size() > 0) {
+			Toast.makeText(getApplicationContext(), "Bluetooth devices found.",
+					Toast.LENGTH_SHORT).show();
 			for (BluetoothDevice device : mBtDevices) {
-				//listAdapter.add(device.getName()+"\n"+device.getAddress());
+				// listAdapter.add(device.getName()+"\n"+device.getAddress());
 			}
+		} else {
+			Toast.makeText(getApplicationContext(),
+					"No Bluetooth devices found.", Toast.LENGTH_SHORT).show();
 		}
-		
+
 	}
 
 	@Override
@@ -168,9 +173,17 @@ public class SHBluetoothTesting extends Activity {
 				startActivity(intent);
 
 			} else {
-				Toast.makeText(getApplicationContext(),
-						"Mauvaise combinaison login/mdp !", Toast.LENGTH_LONG)
-						.show();
+				PopupMessages
+						.launchPopup(
+								"Login",
+								"Wrong username/password combination. Please try again.",
+								getApplicationContext());
+
+				/*
+				 * Toast.makeText(getApplicationContext(),
+				 * "Mauvaise combinaison login/mdp !",
+				 * Toast.LENGTH_LONG).show();
+				 */
 			}
 		}
 

@@ -1,5 +1,5 @@
 package ch.hearc.smarthome.networktester;
 
-public class BluetoothCommandService {
+public class BluetoothChatService {
 
 }
