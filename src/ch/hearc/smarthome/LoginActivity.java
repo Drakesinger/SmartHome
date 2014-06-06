@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-
+	/*blsbla*/
 	private EditText et_userName;
 	private EditText et_password;
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
