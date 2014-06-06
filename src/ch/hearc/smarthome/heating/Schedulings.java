@@ -8,6 +8,8 @@ public class Schedulings {
 		super();
 	}
 	
+	//Ca c'est de la classe
+	
 	public Schedulings(String name, String date, String temp){
 		this.name = name;
 		this.date = date;
