@@ -2,6 +2,7 @@ package ch.hearc.smarthome;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,11 +19,11 @@ public class PopupMessages {
 		Button popupConfirmed;
 		TextView message;
 
-		// TODO Auto-generated method stub
 		myDialog = new Dialog(c);
 		myDialog.setContentView(R.layout.pop_up_messages);
 		myDialog.setTitle(messageType);
-		myDialog.setCancelable(true);
+		myDialog.setCancelable(false);
+		Log.e("PoupupMessages", "myDialog done");
 		message = (TextView) myDialog.findViewById(R.id.tv_message_text);
 		message.setText(messageContent);
 		popupConfirmed = (Button) myDialog.findViewById(R.id.b_message_seen);

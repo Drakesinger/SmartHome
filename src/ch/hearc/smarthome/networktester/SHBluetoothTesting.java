@@ -2,10 +2,6 @@ package ch.hearc.smarthome.networktester;
 
 import java.util.Set;
 
-import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.HomeActivity;
-import ch.hearc.smarthome.PopupMessages;
-import ch.hearc.smarthome.R;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,7 +14,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
@@ -27,17 +22,21 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import ch.hearc.smarthome.CredentialManager;
+import ch.hearc.smarthome.HomeActivity;
+import ch.hearc.smarthome.R;
+//import ch.hearc.smarthome.PopupMessages;
 
 public class SHBluetoothTesting extends Activity {
 
-	private static final String NAME = "BluetoothTesting";
+	private static final String NAME = "SHBluetoothTesting";
 
 	/* View Components */
 	private EditText et_userName;
 	private EditText et_password;
 	
 	/* List Layout Views */
-    private TextView 	mTitle;
+    //private TextView 	mTitle;
     private ListView 	mConversationView;
     private EditText 	mOutEditText;
     private Button		mSendButton;
@@ -86,28 +85,27 @@ public class SHBluetoothTesting extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.e(NAME, "###On Create###");
+		Log.d(NAME, "###On Create###");
 		
 		/* Start with device list 1st as testing goes */
 		//setContentView(R.layout.fragment_login);
 		
 		/* Set up the window layout */
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.main);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+		//requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 		
 		/* Set up the custom title */
-        mTitle = (TextView) findViewById(R.id.title_left_text);
-        mTitle.setText(R.string.app_name);
-        mTitle = (TextView) findViewById(R.id.title_right_text);
-		
-		
+        //mTitle = (TextView) findViewById(R.id.title_left_text);
+        //mTitle.setText(R.string.app_name);
+        //mTitle = (TextView) findViewById(R.id.title_right_text);
+
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		
 		if (mBluetoothAdapter == null) {
 			// Device does not support Bluetooth
-			PopupMessages.launchPopup("Bluetooth error.",
-					"Device is not Bluetooth compatible.",
-					getApplicationContext());
+			Toast.makeText(getApplicationContext(),"Bluetooth error.\n"+"Device is not Bluetooth compatible.",Toast.LENGTH_LONG).show();
+			//PopupMessages.launchPopup("Bluetooth error.","Device is not Bluetooth compatible.",this.getApplicationContext());
 			finish();
 			return;
 		}
@@ -117,7 +115,7 @@ public class SHBluetoothTesting extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
+		getMenuInflater().inflate(R.menu.option_menu, menu);
 		return true;
 	}
 
@@ -165,7 +163,8 @@ public class SHBluetoothTesting extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		Log.d(NAME, "### onResume ###");
+		
 		if (mBtNetworkManager != null) {
 			/*
 			 * We do not know the state yet. Check if Bluetooth service has
@@ -230,13 +229,14 @@ public class SHBluetoothTesting extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		Log.d(NAME, "onDestroy()");
+		Log.d(NAME, "### onDestroy ###");
 		super.onDestroy();
 		if (mBtNetworkManager != null) {
+			Log.d(NAME, "mBtNetworkManager != null");
+			
 			mBtNetworkManager.stop();
-			PopupMessages.launchPopup("Activity closing",
-					"Android is destroying BluetoothTesting",
-					getApplicationContext());
+			Toast.makeText(getApplicationContext(),"Activity closing.\n" + "Android is destroying BluetoothTesting",Toast.LENGTH_LONG).show();
+	
 		}
 	}
 
@@ -251,16 +251,20 @@ public class SHBluetoothTesting extends Activity {
 			case MESSAGE_STATE_CHANGE:
 				switch (_msg.arg1) {
 				case BluetoothNetworkManager.STATE_CONNECTED:
-					mTitle.setText(R.string.title_connected_to);
-					mTitle.append(mConnectedDeviceName);
+					//mTitle.setText(R.string.title_connected_to);
+					//mTitle.append(mConnectedDeviceName);
+					Toast.makeText(getApplicationContext(), "Connected to "
+                            + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
 					mConversationArrayAdapter.clear();
 					break;
 				case BluetoothNetworkManager.STATE_CONNECTING:
-					mTitle.setText(R.string.title_connecting);
+					//mTitle.setText(R.string.title_connecting);
+					Toast.makeText(getApplicationContext(), "Connecting.", Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothNetworkManager.STATE_LISTEN:
 				case BluetoothNetworkManager.STATE_NONE:
-					mTitle.setText(R.string.title_not_connected);
+					//mTitle.setText(R.string.title_not_connected);
+					Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
 				default:
 					break;
 				}
@@ -284,7 +288,7 @@ public class SHBluetoothTesting extends Activity {
                                + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                 break;
 			case MESSAGE_TOAST:
-				Toast.makeText(getApplicationContext(), _msg.getData().getShort(TOAST), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), _msg.getData().getString(TOAST), Toast.LENGTH_SHORT).show();
 				break;
 			}
 		}
@@ -333,11 +337,12 @@ public class SHBluetoothTesting extends Activity {
 				 * User has canceled the enabling of Bluetooth. Show error popup
 				 * and quit.
 				 */
-				PopupMessages
-						.launchPopup(
-								"Bluetooth not enabled.",
-								"The application needs bluetooth enabled in order to continue.",
-								getApplicationContext());
+				
+				Toast.makeText(this, "Bluetooth not enabled.\n"+"The application needs bluetooth enabled in order to continue.", Toast.LENGTH_SHORT).show();
+				/* Check if do-able with a handler */
+				//PopupMessages.launchPopup("Bluetooth not enabled.","The application needs bluetooth enabled in order to continue.",getApplicationContext());
+				
+				Log.d(NAME, "onActivityResult. Result canceled. Launch popup done.");
 				finish();
 			} else {
 
@@ -400,17 +405,10 @@ public class SHBluetoothTesting extends Activity {
 				startActivity(intent);
 
 			} else {
-				PopupMessages
-						.launchPopup(
-								"Login",
-								"Wrong username/password combination. Please try again.",
-								getApplicationContext());
+				//PopupMessages.launchPopup("Login","Wrong username/password combination. Please try again.",getApplicationContext());
 
-				/*
-				 * Toast.makeText(getApplicationContext(),
-				 * "Mauvaise combinaison login/mdp !",
-				 * Toast.LENGTH_LONG).show();
-				 */
+				Toast.makeText(getApplicationContext(),"Mauvaise combinaison login/mdp !", Toast.LENGTH_LONG).show();
+
 			}
 		}
 

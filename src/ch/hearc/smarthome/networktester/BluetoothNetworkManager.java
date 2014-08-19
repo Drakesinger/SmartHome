@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import ch.hearc.smarthome.PopupMessages;
+//import ch.hearc.smarthome.PopupMessages;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,10 +18,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+
 public class BluetoothNetworkManager {
 
 	/* SDP (Service Discovery Protocol) Name */
-	private static final String NAME = "BluetoothSmartHome";
+	private static final String NAME = "BluetoothNetworkManager";
 
 	/* Member fields */
 	private final BluetoothAdapter mAdapter;
@@ -99,8 +100,8 @@ public class BluetoothNetworkManager {
 		
 		/* Stop any previous client connection thread */
 		if (mConnectThread != null) {
-			mConnectedThread.cancel();
-			mConnectedThread = null;
+			mConnectThread.cancel();
+			mConnectThread = null;
 		}
 
 		/* Stop any previous connected thread manager */
@@ -170,7 +171,7 @@ public class BluetoothNetworkManager {
 				Log.e(NAME, "Listen Socket creation failed. listen()", e);
 				
 				// TODO use the handler to send the error message to the UI
-				exceptionManager(e, "Socket creation failed, listen() failure.", false);
+				exceptionManager("Socket creation failed, listen() failure.", false);
 			}
 			mmServerSocket = tmp;
 		}
@@ -193,7 +194,7 @@ public class BluetoothNetworkManager {
 				} catch (IOException e) {
 					Log.e(NAME, "accept() failed", e);
 					// TODO use the handler to send the error message to the UI
-					exceptionManager(e, "accept() failed.", false);
+					exceptionManager("accept() failed.", false);
 					break;
 				}
 
@@ -232,7 +233,7 @@ public class BluetoothNetworkManager {
 							} catch (Exception e) {
 								// TODO: handle exception with Handler
 								Log.e(NAME, "Could not close socket", e);
-								exceptionManager(e, "Already connected. Could not close socket.", false);
+								exceptionManager("Already connected. Could not close socket.", false);
 							}
 							break;
 						}
@@ -276,7 +277,7 @@ public class BluetoothNetworkManager {
 				tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
 			} catch (IOException e) {
 				Log.e(NAME, "create() failed", e);
-				exceptionManager(e, "Socket creation failure. create() failed.", false);
+				exceptionManager("Socket creation failure. create() failed.", false);
 			}
 			mmSocket = tmp;
 		}
@@ -302,7 +303,7 @@ public class BluetoothNetworkManager {
 							closeException);
 				}
 
-				exceptionManager(connectException, "Unable to connect device.", true);
+				exceptionManager("Unable to connect device.", true);
 				return;
 			}
 
@@ -325,7 +326,7 @@ public class BluetoothNetworkManager {
 			} catch (IOException e) {
 				Log.e(NAME, "close() of connect socket failed", e);
 				
-				exceptionManager(e, "close() of connect socket failed", false);
+				exceptionManager("close() of connect socket failed", false);
 			}
 		}
 	}
@@ -366,7 +367,7 @@ public class BluetoothNetworkManager {
 							bytes, -1, buffer).sendToTarget();
 				} catch (IOException e) {
 					Log.e(NAME, "disconnected", e);
-					exceptionManager(e, "Device connection was lost. Restarting.", true);
+					exceptionManager("Device connection was lost. Restarting.", true);
 					break;
 				}
 			}
@@ -390,6 +391,7 @@ public class BluetoothNetworkManager {
 
 		/* Call this from the main activity to shutdown the connection */
 		public void cancel() {
+			Log.e(NAME, "NEED TO CANCEL!!!");
 			try {
 				mmSocket.close();
 			} catch (IOException e) {
@@ -404,9 +406,9 @@ public class BluetoothNetworkManager {
 
 		synchronized (this) {
 			if (mState != STATE_CONNECTED) {
-				/* We are not connected so we can't write aynthing. */
-				PopupMessages.launchPopup("Write out",
-						"Not connected to any device.", null);
+				/* We are not connected so we can't write anything. */
+				exceptionManager("Cannot write.\n"+"Not connected to any device.", false);
+				//PopupMessages.launchPopup("Write out","Not connected to any device.", null);
 				Log.d(NAME, "write() failed. not connected to anything");
 				return;
 			}
@@ -492,10 +494,8 @@ public class BluetoothNetworkManager {
 	}
 
 	/** TODO documentation */
-	private void exceptionManager(Exception _e, String _errorDescription,
-			boolean _restart) {
-		Message message = mHandler
-				.obtainMessage(SHBluetoothTesting.MESSAGE_TOAST);
+	private void exceptionManager(String _errorDescription,boolean _restart) {
+		Message message = mHandler.obtainMessage(SHBluetoothTesting.MESSAGE_TOAST);
 		Bundle bundle = new Bundle();
 		bundle.putString(SHBluetoothTesting.TOAST, _errorDescription);
 		message.setData(bundle);

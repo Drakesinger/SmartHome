@@ -26,7 +26,7 @@ public class SHDeviceListActivity extends Activity {
 
 	
 	// Debugging
-    private static final String NAME = "DeviceListActivity";
+    private static final String NAME = "SHDeviceListActivity";
     private static final boolean D = true;
 
     // Return Intent extra
