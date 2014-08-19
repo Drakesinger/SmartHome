@@ -15,12 +15,6 @@ public class HeatingHistory extends Activity{
 	}
 	
 	public void showPastWeek(View v){
-<<<<<<< HEAD
-		//Test1
-=======
-		
-
->>>>>>> 34ca980c0da239df3cfe7ddbd1b9bbcfaf2a68db
 		Toast.makeText(getApplicationContext(), "No save found !" , Toast.LENGTH_SHORT).show();
 		
 	}

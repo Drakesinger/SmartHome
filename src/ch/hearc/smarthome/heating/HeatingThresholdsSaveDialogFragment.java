@@ -1,12 +1,12 @@
 package ch.hearc.smarthome.heating;
 
-import ch.hearc.smarthome.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Toast;
+import ch.hearc.smarthome.R;
 
 public class HeatingThresholdsSaveDialogFragment extends DialogFragment {
 	@Override
@@ -18,7 +18,9 @@ public class HeatingThresholdsSaveDialogFragment extends DialogFragment {
 						new DialogInterface.OnClickListener() {
 							// SAVE THRESHOLDS
 							public void onClick(DialogInterface dialog, int id) {
-								Toast.makeText(getActivity(), "Thresholds saved !", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getActivity(),
+										"Thresholds saved !",
+										Toast.LENGTH_SHORT).show();
 								getActivity().finish();
 							}
 						})

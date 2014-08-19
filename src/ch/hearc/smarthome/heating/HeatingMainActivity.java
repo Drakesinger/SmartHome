@@ -1,12 +1,11 @@
 package ch.hearc.smarthome.heating;
 
-
-import ch.hearc.smarthome.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import ch.hearc.smarthome.R;
 
 public class HeatingMainActivity extends Activity {
 
@@ -14,7 +13,7 @@ public class HeatingMainActivity extends Activity {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.heating_main_activity);
-		
+
 	}
 
 	public void intentMenu(View v) {
