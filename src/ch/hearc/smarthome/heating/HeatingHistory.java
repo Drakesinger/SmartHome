@@ -6,17 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class HeatingHistory extends Activity{
+public class HeatingHistory extends Activity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.heating_history);
 	}
-	
-	public void showPastWeek(View v){
-		Toast.makeText(getApplicationContext(), "No save found !" , Toast.LENGTH_SHORT).show();
-		
+
+	public void showPastWeek(View v) {
+		Toast.makeText(getApplicationContext(), "No save found !",
+				Toast.LENGTH_SHORT).show();
 	}
-	
+
 }

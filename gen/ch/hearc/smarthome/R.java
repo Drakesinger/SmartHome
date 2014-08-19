@@ -33,96 +33,114 @@ public final class R {
         public static final int thresholds=0x7f020003;
     }
     public static final class id {
-        public static final int Alarme=0x7f090013;
-        public static final int Chauffage=0x7f090012;
-        public static final int Connexion=0x7f090018;
-        public static final int Note=0x7f090011;
-        public static final int Porte=0x7f090010;
-        public static final int RelativeLayout1=0x7f09000b;
-        public static final int action_settings=0x7f090043;
-        public static final int auteur=0x7f09001a;
-        public static final int b_change=0x7f090008;
-        public static final int b_door_main_Open=0x7f09000c;
-        public static final int b_message_seen=0x7f090042;
-        public static final int btnAddHeating=0x7f090031;
-        public static final int btnDeleteSelected=0x7f090032;
-        public static final int btnSaveThresholds=0x7f090040;
-        public static final int btnShowPastWeek=0x7f09002b;
-        public static final int buttonHistory=0x7f09002e;
-        public static final int buttonScheduling=0x7f09002c;
-        public static final int buttonThresholds=0x7f09002d;
-        public static final int cb_door_main_Change_Password=0x7f09000d;
-        public static final int cb_show=0x7f090009;
+        public static final int Alarme=0x7f09001a;
+        public static final int Chauffage=0x7f090019;
+        public static final int Connexion=0x7f09001f;
+        public static final int Note=0x7f090018;
+        public static final int Porte=0x7f090017;
+        public static final int RelativeLayout1=0x7f090012;
+        public static final int action_settings=0x7f09004d;
+        public static final int auteur=0x7f090021;
+        public static final int b_change=0x7f09000f;
+        public static final int b_device_list_scan=0x7f090007;
+        public static final int b_door_main_Open=0x7f090013;
+        public static final int b_message_seen=0x7f09004c;
+        public static final int btnAddHeating=0x7f090038;
+        public static final int btnDeleteSelected=0x7f090039;
+        public static final int btnSaveThresholds=0x7f090047;
+        public static final int btnShowPastWeek=0x7f090032;
+        public static final int buttonHistory=0x7f090035;
+        public static final int buttonScheduling=0x7f090033;
+        public static final int buttonThresholds=0x7f090034;
+        public static final int button_send=0x7f09004a;
+        public static final int cb_door_main_Change_Password=0x7f090014;
+        public static final int cb_show=0x7f090010;
         public static final int container=0x7f090000;
-        public static final int date=0x7f09001c;
-        public static final int detail=0x7f09001d;
-        public static final int editText1=0x7f090015;
-        public static final int editText2=0x7f090017;
-        public static final int editTextDefaultTemperature=0x7f09003b;
-        public static final int editTextDialogUserInput=0x7f090034;
-        public static final int editTextTurnOffAbove=0x7f09003f;
-        public static final int editTextTurnOnBelow=0x7f09003d;
-        public static final int et_door_admin_new_pass1=0x7f090004;
-        public static final int et_door_admin_new_pass2=0x7f090006;
-        public static final int et_door_admin_old_pass=0x7f090002;
-        public static final int et_door_main_Password=0x7f09000e;
-        public static final int historyTitle=0x7f09001e;
-        public static final int imageView1=0x7f090014;
-        public static final int layout_root=0x7f090033;
-        public static final int listView1=0x7f090019;
-        public static final int listViewScheduling=0x7f090030;
-        public static final int schedulingTitle=0x7f09002f;
-        public static final int scheduling_list_item_checkbox=0x7f090038;
-        public static final int scheduling_list_item_date=0x7f090036;
-        public static final int scheduling_list_item_name=0x7f090037;
-        public static final int scheduling_list_item_temp=0x7f090035;
-        public static final int sujet=0x7f09001b;
-        public static final int textView1=0x7f09000f;
-        public static final int textView2=0x7f090016;
-        public static final int thresholdsTitle=0x7f090039;
-        public static final int tv_Conf=0x7f090007;
-        public static final int tv_New=0x7f090005;
-        public static final int tv_Old=0x7f090003;
-        public static final int tv_Title=0x7f090001;
-        public static final int tv_door_admin_Message=0x7f09000a;
-        public static final int tv_message_text=0x7f090041;
-        public static final int txtDay1=0x7f090020;
-        public static final int txtDay2=0x7f090021;
-        public static final int txtDay3=0x7f090023;
-        public static final int txtDay4=0x7f090025;
-        public static final int txtDay5=0x7f090027;
-        public static final int txtDay6=0x7f090029;
-        public static final int txtLightAbove=0x7f09003e;
-        public static final int txtLightBelow=0x7f09003c;
-        public static final int txtTemp=0x7f09003a;
-        public static final int txtTmp1=0x7f09001f;
-        public static final int txtTmp2=0x7f090022;
-        public static final int txtTmp3=0x7f090024;
-        public static final int txtTmp4=0x7f090026;
-        public static final int txtTmp5=0x7f090028;
-        public static final int txtTmp6=0x7f09002a;
+        public static final int date=0x7f090023;
+        public static final int detail=0x7f090024;
+        public static final int editText1=0x7f09001c;
+        public static final int editText2=0x7f09001e;
+        public static final int editTextDefaultTemperature=0x7f090042;
+        public static final int editTextDialogUserInput=0x7f09003b;
+        public static final int editTextTurnOffAbove=0x7f090046;
+        public static final int editTextTurnOnBelow=0x7f090044;
+        public static final int edit_text_out=0x7f090049;
+        public static final int et_door_admin_new_pass1=0x7f09000b;
+        public static final int et_door_admin_new_pass2=0x7f09000d;
+        public static final int et_door_admin_old_pass=0x7f090009;
+        public static final int et_door_main_Password=0x7f090015;
+        public static final int historyTitle=0x7f090025;
+        public static final int imageView1=0x7f09001b;
+        public static final int in=0x7f090048;
+        public static final int it_connect_scan=0x7f09004e;
+        public static final int it_discoverable=0x7f09004f;
+        public static final int layout_root=0x7f09003a;
+        public static final int listView1=0x7f090020;
+        public static final int listViewScheduling=0x7f090037;
+        public static final int lv_device_list_new_devices=0x7f090006;
+        public static final int lv_device_list_paired_devices=0x7f090004;
+        public static final int schedulingTitle=0x7f090036;
+        public static final int scheduling_list_item_checkbox=0x7f09003f;
+        public static final int scheduling_list_item_date=0x7f09003d;
+        public static final int scheduling_list_item_name=0x7f09003e;
+        public static final int scheduling_list_item_temp=0x7f09003c;
+        public static final int sujet=0x7f090022;
+        public static final int textView1=0x7f090016;
+        public static final int textView2=0x7f09001d;
+        public static final int thresholdsTitle=0x7f090040;
+        public static final int title_left_text=0x7f090001;
+        public static final int title_right_text=0x7f090002;
+        public static final int tv_Conf=0x7f09000e;
+        public static final int tv_New=0x7f09000c;
+        public static final int tv_Old=0x7f09000a;
+        public static final int tv_Title=0x7f090008;
+        public static final int tv_device_list_new_devices=0x7f090005;
+        public static final int tv_device_list_paired_devices=0x7f090003;
+        public static final int tv_door_admin_Message=0x7f090011;
+        public static final int tv_message_text=0x7f09004b;
+        public static final int txtDay1=0x7f090027;
+        public static final int txtDay2=0x7f090028;
+        public static final int txtDay3=0x7f09002a;
+        public static final int txtDay4=0x7f09002c;
+        public static final int txtDay5=0x7f09002e;
+        public static final int txtDay6=0x7f090030;
+        public static final int txtLightAbove=0x7f090045;
+        public static final int txtLightBelow=0x7f090043;
+        public static final int txtTemp=0x7f090041;
+        public static final int txtTmp1=0x7f090026;
+        public static final int txtTmp2=0x7f090029;
+        public static final int txtTmp3=0x7f09002b;
+        public static final int txtTmp4=0x7f09002d;
+        public static final int txtTmp5=0x7f09002f;
+        public static final int txtTmp6=0x7f090031;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
         public static final int activity_login=0x7f030001;
         public static final int activity_note=0x7f030002;
-        public static final int door_admin=0x7f030003;
-        public static final int door_main=0x7f030004;
-        public static final int fragment_home=0x7f030005;
-        public static final int fragment_login=0x7f030006;
-        public static final int fragment_note=0x7f030007;
-        public static final int heating_history=0x7f030008;
-        public static final int heating_main_activity=0x7f030009;
-        public static final int heating_scheduling=0x7f03000a;
-        public static final int heating_scheduling_addheatingdialog=0x7f03000b;
-        public static final int heating_scheduling_list_item=0x7f03000c;
-        public static final int heating_thresholds=0x7f03000d;
-        public static final int pop_up_messages=0x7f03000e;
+        public static final int custom_title=0x7f030003;
+        public static final int device_list=0x7f030004;
+        public static final int device_name=0x7f030005;
+        public static final int door_admin=0x7f030006;
+        public static final int door_main=0x7f030007;
+        public static final int fragment_home=0x7f030008;
+        public static final int fragment_login=0x7f030009;
+        public static final int fragment_note=0x7f03000a;
+        public static final int heating_history=0x7f03000b;
+        public static final int heating_main_activity=0x7f03000c;
+        public static final int heating_scheduling=0x7f03000d;
+        public static final int heating_scheduling_addheatingdialog=0x7f03000e;
+        public static final int heating_scheduling_list_item=0x7f03000f;
+        public static final int heating_thresholds=0x7f030010;
+        public static final int main=0x7f030011;
+        public static final int message=0x7f030012;
+        public static final int pop_up_messages=0x7f030013;
     }
     public static final class menu {
         public static final int login=0x7f080000;
         public static final int main=0x7f080001;
         public static final int note=0x7f080002;
+        public static final int option_menu=0x7f080003;
     }
     public static final class string {
         public static final int BouttonAlarme=0x7f060025;
@@ -144,6 +162,8 @@ public final class R {
          */
         public static final int add=0x7f06000e;
         public static final int app_name=0x7f060000;
+        public static final int bt_not_enabled_leaving=0x7f06002f;
+        public static final int button_scan=0x7f06003c;
         public static final int days_1=0x7f060011;
         public static final int days_2=0x7f060012;
         public static final int days_3=0x7f060013;
@@ -152,19 +172,34 @@ public final class R {
         public static final int days_6=0x7f060016;
         public static final int default_temperature=0x7f060007;
         public static final int delete_selection=0x7f06000f;
+        public static final int discoverable=0x7f060035;
         /**  Heating Thresholds 
          */
         public static final int heating=0x7f060006;
         public static final int hello_world=0x7f060001;
         public static final int history=0x7f060005;
+        public static final int insecure_connect=0x7f060034;
         public static final int light_above=0x7f060009;
         public static final int light_below=0x7f060008;
         public static final int no_quit=0x7f06000d;
+        public static final int none_found=0x7f060039;
+        public static final int none_paired=0x7f060038;
+        public static final int not_connected=0x7f06002e;
         public static final int save_before_quit=0x7f06000b;
         public static final int save_thresholds=0x7f06000a;
+        /**  DeviceListActivity 
+         */
+        public static final int scanning=0x7f060036;
         /**  Heating Main Activity 
          */
         public static final int scheduling=0x7f060003;
+        /**  Options Menu 
+         */
+        public static final int secure_connect=0x7f060033;
+        public static final int select_device=0x7f060037;
+        /**   Bluetooth Testing 
+         */
+        public static final int send=0x7f06002d;
         /**  Heating History 
          */
         public static final int show_past_week=0x7f060010;
@@ -174,6 +209,11 @@ public final class R {
         public static final int title_activity_login=0x7f060020;
         public static final int title_activity_note=0x7f060029;
         public static final int title_activity_notes_main=0x7f060026;
+        public static final int title_connected_to=0x7f060031;
+        public static final int title_connecting=0x7f060030;
+        public static final int title_not_connected=0x7f060032;
+        public static final int title_other_devices=0x7f06003b;
+        public static final int title_paired_devices=0x7f06003a;
         public static final int tmp_1=0x7f060017;
         public static final int tmp_2=0x7f060018;
         public static final int tmp_3=0x7f060019;
