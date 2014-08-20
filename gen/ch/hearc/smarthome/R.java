@@ -143,83 +143,86 @@ public final class R {
         public static final int option_menu=0x7f080003;
     }
     public static final class string {
-        public static final int BouttonAlarme=0x7f060025;
-        public static final int BouttonChauffage=0x7f060023;
-        public static final int BouttonNote=0x7f060024;
-        public static final int BouttonPorte=0x7f060022;
-        public static final int Exit=0x7f06002a;
-        public static final int NoteAdd=0x7f06002c;
-        public static final int NoteMain=0x7f060027;
-        public static final int TabPorte=0x7f060021;
+        public static final int BouttonAlarme=0x7f060028;
+        public static final int BouttonChauffage=0x7f060026;
+        public static final int BouttonNote=0x7f060027;
+        public static final int BouttonPorte=0x7f060025;
+        public static final int Exit=0x7f06002d;
+        public static final int NoteAdd=0x7f06002f;
+        public static final int NoteMain=0x7f06002a;
+        public static final int TabPorte=0x7f060024;
         /**  Login Main Activity 
  FIX this!!!! 
          */
-        public static final int TextBouton1=0x7f06001d;
-        public static final int TextMdp=0x7f06001f;
-        public static final int Welcome=0x7f06002b;
+        public static final int TextBouton1=0x7f060020;
+        public static final int TextMdp=0x7f060022;
+        public static final int Welcome=0x7f06002e;
         public static final int action_settings=0x7f060002;
         /**  Heating Scheduling 
          */
         public static final int add=0x7f06000e;
         public static final int app_name=0x7f060000;
-        public static final int bt_not_enabled_leaving=0x7f06002f;
-        public static final int button_scan=0x7f06003c;
-        public static final int days_1=0x7f060011;
-        public static final int days_2=0x7f060012;
-        public static final int days_3=0x7f060013;
-        public static final int days_4=0x7f060014;
-        public static final int days_5=0x7f060015;
-        public static final int days_6=0x7f060016;
+        public static final int bt_not_enabled_leaving=0x7f060032;
+        public static final int button_scan=0x7f06003f;
+        public static final int days_1=0x7f060014;
+        public static final int days_2=0x7f060015;
+        public static final int days_3=0x7f060016;
+        public static final int days_4=0x7f060017;
+        public static final int days_5=0x7f060018;
+        public static final int days_6=0x7f060019;
         public static final int default_temperature=0x7f060007;
         public static final int delete_selection=0x7f06000f;
-        public static final int discoverable=0x7f060035;
+        public static final int discoverable=0x7f060038;
         /**  Heating Thresholds 
          */
         public static final int heating=0x7f060006;
         public static final int hello_world=0x7f060001;
         public static final int history=0x7f060005;
-        public static final int insecure_connect=0x7f060034;
+        public static final int insecure_connect=0x7f060037;
+        public static final int item_date=0x7f060011;
+        public static final int item_name=0x7f060012;
+        public static final int item_temp=0x7f060010;
         public static final int light_above=0x7f060009;
         public static final int light_below=0x7f060008;
         public static final int no_quit=0x7f06000d;
-        public static final int none_found=0x7f060039;
-        public static final int none_paired=0x7f060038;
-        public static final int not_connected=0x7f06002e;
+        public static final int none_found=0x7f06003c;
+        public static final int none_paired=0x7f06003b;
+        public static final int not_connected=0x7f060031;
         public static final int save_before_quit=0x7f06000b;
         public static final int save_thresholds=0x7f06000a;
         /**  DeviceListActivity 
          */
-        public static final int scanning=0x7f060036;
+        public static final int scanning=0x7f060039;
         /**  Heating Main Activity 
          */
         public static final int scheduling=0x7f060003;
         /**  Options Menu 
          */
-        public static final int secure_connect=0x7f060033;
-        public static final int select_device=0x7f060037;
+        public static final int secure_connect=0x7f060036;
+        public static final int select_device=0x7f06003a;
         /**   Bluetooth Testing 
          */
-        public static final int send=0x7f06002d;
+        public static final int send=0x7f060030;
         /**  Heating History 
          */
-        public static final int show_past_week=0x7f060010;
+        public static final int show_past_week=0x7f060013;
         public static final int thresholds=0x7f060004;
-        public static final int title_activity_display_message=0x7f06001e;
-        public static final int title_activity_home=0x7f060028;
-        public static final int title_activity_login=0x7f060020;
-        public static final int title_activity_note=0x7f060029;
-        public static final int title_activity_notes_main=0x7f060026;
-        public static final int title_connected_to=0x7f060031;
-        public static final int title_connecting=0x7f060030;
-        public static final int title_not_connected=0x7f060032;
-        public static final int title_other_devices=0x7f06003b;
-        public static final int title_paired_devices=0x7f06003a;
-        public static final int tmp_1=0x7f060017;
-        public static final int tmp_2=0x7f060018;
-        public static final int tmp_3=0x7f060019;
-        public static final int tmp_4=0x7f06001a;
-        public static final int tmp_5=0x7f06001b;
-        public static final int tmp_6=0x7f06001c;
+        public static final int title_activity_display_message=0x7f060021;
+        public static final int title_activity_home=0x7f06002b;
+        public static final int title_activity_login=0x7f060023;
+        public static final int title_activity_note=0x7f06002c;
+        public static final int title_activity_notes_main=0x7f060029;
+        public static final int title_connected_to=0x7f060034;
+        public static final int title_connecting=0x7f060033;
+        public static final int title_not_connected=0x7f060035;
+        public static final int title_other_devices=0x7f06003e;
+        public static final int title_paired_devices=0x7f06003d;
+        public static final int tmp_1=0x7f06001a;
+        public static final int tmp_2=0x7f06001b;
+        public static final int tmp_3=0x7f06001c;
+        public static final int tmp_4=0x7f06001d;
+        public static final int tmp_5=0x7f06001e;
+        public static final int tmp_6=0x7f06001f;
         public static final int yes=0x7f06000c;
     }
     public static final class style {
