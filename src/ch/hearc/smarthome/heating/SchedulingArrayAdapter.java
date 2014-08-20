@@ -69,6 +69,7 @@ public class SchedulingArrayAdapter extends ArrayAdapter<Schedulings> {
 		holder.name.setText(scheduling.name);
 		holder.date.setText(scheduling.date);
 		holder.temp.setText(scheduling.temp + "°");
+		
 		holder.select.setChecked(false);
 		
 		holder.select.setOnCheckedChangeListener(new OnCheckedChangeListener() {
