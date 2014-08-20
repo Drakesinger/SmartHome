@@ -27,7 +27,7 @@ public class SHDeviceListActivity extends Activity {
 	
 	// Debugging
     private static final String NAME = "SHDeviceListActivity";
-    private static final boolean D = true;
+    private static final boolean DEBUG = true;
 
     // Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
@@ -115,7 +115,7 @@ public class SHDeviceListActivity extends Activity {
      * Start device discover with the BluetoothAdapter
      */
     private void doDiscovery() {
-        if (D) Log.d(NAME, "doDiscovery()");
+        if (DEBUG) Log.d(NAME, "doDiscovery()");
 
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
