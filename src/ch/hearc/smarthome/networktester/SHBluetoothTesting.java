@@ -29,8 +29,10 @@ import ch.hearc.smarthome.R;
 
 public class SHBluetoothTesting extends Activity {
 
-	private static final String NAME = "SHBluetoothTesting";
-
+	/* Debugging */
+	private static final String TAG = "SHBluetoothTesting";
+	private static final boolean DEBUG = true;
+	
 	/* View Components */
 	private EditText et_userName;
 	private EditText et_password;
@@ -48,20 +50,20 @@ public class SHBluetoothTesting extends Activity {
 
 	/* Intent request codes */
 	private static final int REQUEST_CONNECT_DEVICE = 1;
-	private static final int REQUEST_ENABLE_BT = 2;
+	private static final int REQUEST_ENABLE_BT 		= 2;
 
 	/* Message types sent from the BluetoothChatService Handler */
-	public static final int MESSAGE_STATE_CHANGE = 1;
-	public static final int MESSAGE_READ = 2;
-	public static final int MESSAGE_WRITE = 3;
-	public static final int MESSAGE_DEVICE_NAME = 4;
-	public static final int MESSAGE_DEVICE_ADDRESS = 5;
-	public static final int MESSAGE_TOAST = 6;
+	public static final int MESSAGE_STATE_CHANGE	= 1;
+	public static final int MESSAGE_READ 			= 2;
+	public static final int MESSAGE_WRITE 			= 3;
+	public static final int MESSAGE_DEVICE_NAME 	= 4;
+	public static final int MESSAGE_DEVICE_ADDRESS 	= 5;
+	public static final int MESSAGE_TOAST 			= 6;
 
 	/* Key names received from the BluetoothCommandService Handler */
-	public static final String DEVICE_NAME = "device_name";
-	public static final String DEVICE_ADDRESS = "device_address";
-	public static final String TOAST = "toast";
+	public static final String DEVICE_NAME 		= "device_name";
+	public static final String DEVICE_ADDRESS 	= "device_address";
+	public static final String TOAST 			= "toast";
 
 	/* Name of the connected device */
 	private String mConnectedDeviceName = null;
@@ -72,8 +74,7 @@ public class SHBluetoothTesting extends Activity {
 	/* Member object for Bluetooth Network Manager */
 	private BluetoothNetworkManager mBtNetworkManager = null;
 
-	/* Our local array of Bluetooth devices, 
-	 * if we want to connect to more than one */
+	/* Our local array of Bluetooth devices, if we want to connect to more than one */
 	Set<BluetoothDevice> mBtDevices;
 
 	/* String Buffer for outgoing messages */
@@ -85,17 +86,21 @@ public class SHBluetoothTesting extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d(NAME, "###On Create###");
+		if (DEBUG) {
+			Log.d(TAG, "### On Create ###");
+		}
+		
 		
 		/* Start with device list 1st as testing goes */
 		//setContentView(R.layout.fragment_login);
 		
 		/* Set up the window layout */
 		setContentView(R.layout.main);
+		setTitle(R.string.app_name);
 		//requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 		
-		/* Set up the custom title */
+		/* Set up the custom title, not working */
         //mTitle = (TextView) findViewById(R.id.title_left_text);
         //mTitle.setText(R.string.app_name);
         //mTitle = (TextView) findViewById(R.id.title_right_text);
@@ -135,6 +140,21 @@ public class SHBluetoothTesting extends Activity {
             /* Ensure this device is discoverable by others */
             ensureDiscoverable();
             return true;
+            
+        case R.id.it_disconnect:
+        	/* TODO make a disconnect method */
+        	if (mBtNetworkManager != null) {
+        		mBtNetworkManager.disconnect();
+			}
+        	return true;
+        	
+        case R.id.it_quit:
+        	if (mBtNetworkManager != null) {
+        		mBtNetworkManager.stop();
+        		Toast.makeText(this, "Bluetooth stooped", Toast.LENGTH_SHORT).show();
+        		finish();
+			}
+        	return true;
         }
         return false;
     }
@@ -163,7 +183,7 @@ public class SHBluetoothTesting extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.d(NAME, "### onResume ###");
+		Log.d(TAG, "### onResume ###");
 		
 		if (mBtNetworkManager != null) {
 			/*
@@ -192,13 +212,12 @@ public class SHBluetoothTesting extends Activity {
 			
 			@Override
 			public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-				// TODO Auto-generated method stub
 				// If the action is a key-up event on the return key, send the message
 	            if (actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_UP) {
 	                String message = view.getText().toString();
 	                sendMessage(message);
 	            }
-	            Log.i(NAME, "END onEditorAction");
+	            Log.i(TAG, "END onEditorAction");
 	            return true;
 			}
 		});
@@ -229,11 +248,12 @@ public class SHBluetoothTesting extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		Log.d(NAME, "### onDestroy ###");
+		Log.d(TAG, "### onDestroy ###");
 		super.onDestroy();
 		if (mBtNetworkManager != null) {
-			Log.d(NAME, "mBtNetworkManager != null");
-			
+			if (DEBUG) {
+				Log.d(TAG, "mBtNetworkManager != null");
+			}
 			mBtNetworkManager.stop();
 			Toast.makeText(getApplicationContext(),"Activity closing.\n" + "Android is destroying BluetoothTesting",Toast.LENGTH_LONG).show();
 	
@@ -245,26 +265,24 @@ public class SHBluetoothTesting extends Activity {
 		@Override
 		public void handleMessage(Message _msg) {
 			// super.handleMessage(_msg);
-			Log.d(SHBluetoothTesting.NAME, "handler::handleMessage("
+			Log.d(SHBluetoothTesting.TAG, "handler::handleMessage("
 					+ _msg.what + ")");
 			switch (_msg.what) {
 			case MESSAGE_STATE_CHANGE:
 				switch (_msg.arg1) {
 				case BluetoothNetworkManager.STATE_CONNECTED:
-					//mTitle.setText(R.string.title_connected_to);
-					//mTitle.append(mConnectedDeviceName);
-					Toast.makeText(getApplicationContext(), "Connected to "
-                            + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+					setTitle("Connected:  " + mConnectedDeviceName);
+					//Toast.makeText(getApplicationContext(), "Connected to " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
 					mConversationArrayAdapter.clear();
 					break;
 				case BluetoothNetworkManager.STATE_CONNECTING:
-					//mTitle.setText(R.string.title_connecting);
-					Toast.makeText(getApplicationContext(), "Connecting.", Toast.LENGTH_SHORT).show();
+					setTitle("Connecting...");
+					Toast.makeText(getApplicationContext(), "Connecting...", Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothNetworkManager.STATE_LISTEN:
 				case BluetoothNetworkManager.STATE_NONE:
-					//mTitle.setText(R.string.title_not_connected);
-					Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
+					setTitle(R.string.title_not_connected);
+					//Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
 				default:
 					break;
 				}
@@ -315,7 +333,7 @@ public class SHBluetoothTesting extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		Log.i(NAME, "onActivityResult(reqC: " + requestCode + ",resC: "
+		Log.i(TAG, "onActivityResult(reqC: " + requestCode + ",resC: "
 				+ resultCode + ")");
 
 		switch (requestCode) {
@@ -339,15 +357,16 @@ public class SHBluetoothTesting extends Activity {
 				 */
 				
 				Toast.makeText(this, "Bluetooth not enabled.\n"+"The application needs bluetooth enabled in order to continue.", Toast.LENGTH_SHORT).show();
+				
 				/* Check if do-able with a handler */
 				//PopupMessages.launchPopup("Bluetooth not enabled.","The application needs bluetooth enabled in order to continue.",getApplicationContext());
 				
-				Log.d(NAME, "onActivityResult. Result canceled. Launch popup done.");
+				Log.d(TAG, "onActivityResult. Result canceled. Launch popup done.");
 				finish();
 			} else {
 
 				/* In case another type of ActivityResult was called */
-				Log.i(NAME, "onActivityResult(" + resultCode + ")");
+				Log.i(TAG, "onActivityResult(" + resultCode + ")");
 			}
 			break;
 
@@ -426,16 +445,15 @@ public class SHBluetoothTesting extends Activity {
 		/* Check that there's actually something to send */
 		if (message.length() > 0) {
 			/* Get the message bytes and tell the BluetoothManager to write */
-			byte[] send = message.getBytes();
+			String message_for_PIC = message + '\r';
+			byte[] send = message_for_PIC.getBytes();
 			mBtNetworkManager.write(send);
-			Toast.makeText(getApplicationContext(), "Message sent: " + message,
+			Toast.makeText(getApplicationContext(), "Message sent: " + message_for_PIC,
 					Toast.LENGTH_SHORT).show();
 
 			/* Reset out string buffer to zero and clear the edit text field */
 			mOutStringBuffer.setLength(0);
 			
-			
-			// WARNING
 			mOutEditText.setText(mOutStringBuffer);
 		}
 	}
@@ -443,7 +461,6 @@ public class SHBluetoothTesting extends Activity {
 	private void connectDevice(Intent _data) {
 		
 		/* Get the address of the device chosen to connect with */
-		//String address = _data.getExtras().getString(DEVICE_NAME);
 		String address = _data.getExtras().getString(SHDeviceListActivity.EXTRA_DEVICE_ADDRESS);
 		
 		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
@@ -451,7 +468,7 @@ public class SHBluetoothTesting extends Activity {
 	}
 	
 	 private void ensureDiscoverable() {
-	        Log.d(NAME, "ensure discoverable");
+	        Log.d(TAG, "ensure discoverable");
 	        if (mBluetoothAdapter.getScanMode() !=
 	            BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
 	            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
