@@ -1,8 +1,9 @@
 package ch.hearc.smarthome.heating;
 
 public class Schedulings {
-
+	
 	public String name, date, temp;
+	public boolean state;
 	
 	public Schedulings(){
 		super();
@@ -14,6 +15,7 @@ public class Schedulings {
 		this.name = name;
 		this.date = date;
 		this.temp = temp;
+		this.state = false;
 	}
 	
 }

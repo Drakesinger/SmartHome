@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import ch.hearc.smarthome.R;
 
@@ -20,6 +22,9 @@ import ch.hearc.smarthome.R;
  * 
  */
 public class SchedulingArrayAdapter extends ArrayAdapter<Schedulings> {
+
+	// CONSTS
+	public boolean CHECKED = true, UNCHECKED = false;
 
 	Context context;
 	int layoutResourceId;
@@ -60,18 +65,24 @@ public class SchedulingArrayAdapter extends ArrayAdapter<Schedulings> {
 			holder = (SchedulingHolder) row.getTag();
 		}
 
-		Schedulings scheduling = data.get(position);
+		final Schedulings scheduling = data.get(position);
 		holder.name.setText(scheduling.name);
 		holder.date.setText(scheduling.date);
 		holder.temp.setText(scheduling.temp + "°");
+		holder.select.setChecked(false);
+		
+		holder.select.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				if (scheduling.state)
+					scheduling.state = UNCHECKED;
+				else
+					scheduling.state = CHECKED;
+
+			}
+		});
 
 		return row;
-
-	}
-
-	public boolean isSelected(View v) {
-
-		return false;
 
 	}
 
