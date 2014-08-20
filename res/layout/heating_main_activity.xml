@@ -42,5 +42,17 @@
         android:onClick="intentMenu"
         android:text="@string/history"
         android:textStyle="bold" />
+    
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/Exit"
+        android:fontFamily="sans-serif-thin"
+        android:onClick="intentMenu"
+        android:text="@string/Exit"
+        android:textStyle="bold" />
 
 </LinearLayout>

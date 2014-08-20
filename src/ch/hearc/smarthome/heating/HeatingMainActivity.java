@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import ch.hearc.smarthome.HomeActivity;
 import ch.hearc.smarthome.R;
 
 public class HeatingMainActivity extends Activity {
@@ -30,6 +31,10 @@ public class HeatingMainActivity extends Activity {
 		} else if (v.getId() == R.id.buttonHistory) {
 			// TODO if HISTORY
 			i = new Intent(c, HeatingHistory.class);
+		} else if (v.getId() == R.id.buttonBack) {
+			
+			// this will be a return
+			i = new Intent(c, HomeActivity.class);
 		}
 
 		// Intent to the Activity chosen
