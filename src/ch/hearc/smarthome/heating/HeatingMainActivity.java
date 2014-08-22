@@ -24,10 +24,10 @@ public class HeatingMainActivity extends Activity {
 
 		if (v.getId() == R.id.buttonScheduling) {
 			// TODO if SCHEDULING
-			i = new Intent(c, HeatingScheduling.class);
+			i = new Intent(c, HeatingSchedulingsActivity.class);
 		} else if (v.getId() == R.id.buttonThresholds) {
 			// TODO if THRESHOLDS
-			i = new Intent(c, HeatingThresholds.class);
+			i = new Intent(c, HeatingThresholdsActivity.class);
 		} else if (v.getId() == R.id.buttonHistory) {
 			// TODO if HISTORY
 			i = new Intent(c, HeatingHistory.class);
