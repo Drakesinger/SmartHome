@@ -25,7 +25,6 @@ import android.widget.Toast;
 import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.HomeActivity;
 import ch.hearc.smarthome.R;
-//import ch.hearc.smarthome.PopupMessages;
 
 public class SHBluetoothTesting extends Activity {
 
@@ -38,7 +37,6 @@ public class SHBluetoothTesting extends Activity {
 	private EditText et_password;
 	
 	/* List Layout Views */
-    //private TextView 	mTitle;
     private ListView 	mConversationView;
     private EditText 	mOutEditText;
     private Button		mSendButton;
@@ -65,23 +63,32 @@ public class SHBluetoothTesting extends Activity {
 	public static final String DEVICE_ADDRESS 	= "device_address";
 	public static final String TOAST 			= "toast";
 
+	/*	###############################################################
+		# Objects used by derived classes for bluetooth communication #
+		###############################################################	
+		
+		change to private if this is not the best method to implement
+		bluetooth communcation for the whole app
+		
+		*/
+	
 	/* Name of the connected device */
-	private String mConnectedDeviceName = null;
+	protected String mConnectedDeviceName = null;
 
 	/* Local Bluetooth adapter */
-	private BluetoothAdapter mBluetoothAdapter = null;
+	protected BluetoothAdapter mBluetoothAdapter = null;
 
 	/* Member object for Bluetooth Network Manager */
-	private BluetoothNetworkManager mBtNetworkManager = null;
+	protected SHBluetoothNetworkManagerBAK mBtNetworkManager = null;
 
 	/* Our local array of Bluetooth devices, if we want to connect to more than one */
 	Set<BluetoothDevice> mBtDevices;
 
 	/* String Buffer for outgoing messages */
-	private StringBuffer mOutStringBuffer;
+	protected StringBuffer mOutStringBuffer;
 
 	/* Array adapter for the conversation thread */
-    private ArrayAdapter<String> mConversationArrayAdapter;
+    protected ArrayAdapter<String> mConversationArrayAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,21 +97,10 @@ public class SHBluetoothTesting extends Activity {
 			Log.d(TAG, "### On Create ###");
 		}
 		
-		
-		/* Start with device list 1st as testing goes */
-		//setContentView(R.layout.fragment_login);
-		
 		/* Set up the window layout */
 		setContentView(R.layout.main);
 		setTitle(R.string.app_name);
-		//requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 		
-		/* Set up the custom title, not working */
-        //mTitle = (TextView) findViewById(R.id.title_left_text);
-        //mTitle.setText(R.string.app_name);
-        //mTitle = (TextView) findViewById(R.id.title_right_text);
-
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		
 		if (mBluetoothAdapter == null) {
@@ -169,8 +165,7 @@ public class SHBluetoothTesting extends Activity {
 			 * Request a Bluetooth enable. setupNetworkManager() called in
 			 * onActivityResult.
 			 */
-			Intent enableBtIntent = new Intent(
-					BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 		} else {
 			if (mBtNetworkManager == null) {
@@ -190,7 +185,7 @@ public class SHBluetoothTesting extends Activity {
 			 * We do not know the state yet. Check if Bluetooth service has
 			 * started. If not, start the service.
 			 */
-			if (mBtNetworkManager.getState() == BluetoothNetworkManager.STATE_NONE) {
+			if (mBtNetworkManager.getState() == SHBluetoothNetworkManagerBAK.STATE_NONE) {
 				mBtNetworkManager.start();
 			}
 		}
@@ -235,11 +230,11 @@ public class SHBluetoothTesting extends Activity {
 		
 		
 		/*
-		 * Initialize the BluetoothNetworkManager to perform Bluetooth
+		 * Initialize the SHBluetoothNetworkManagerBAK to perform Bluetooth
 		 * connections
 		 */
-		mBtNetworkManager = new BluetoothNetworkManager(this, mHandler);
-
+		mBtNetworkManager = new SHBluetoothNetworkManagerBAK(this, mHandler);
+		//mBtNetworkManager = (SHBluetoothNetworkManagerBAK) getApplicationContext();
 		// Initialize the buffer for outgoing messages
 		mOutStringBuffer = new StringBuffer("");
 
@@ -270,17 +265,17 @@ public class SHBluetoothTesting extends Activity {
 			switch (_msg.what) {
 			case MESSAGE_STATE_CHANGE:
 				switch (_msg.arg1) {
-				case BluetoothNetworkManager.STATE_CONNECTED:
+				case SHBluetoothNetworkManagerBAK.STATE_CONNECTED:
 					setTitle("Connected:  " + mConnectedDeviceName);
 					//Toast.makeText(getApplicationContext(), "Connected to " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
 					mConversationArrayAdapter.clear();
 					break;
-				case BluetoothNetworkManager.STATE_CONNECTING:
+				case SHBluetoothNetworkManagerBAK.STATE_CONNECTING:
 					setTitle("Connecting...");
 					Toast.makeText(getApplicationContext(), "Connecting...", Toast.LENGTH_SHORT).show();
 					break;
-				case BluetoothNetworkManager.STATE_LISTEN:
-				case BluetoothNetworkManager.STATE_NONE:
+				case SHBluetoothNetworkManagerBAK.STATE_LISTEN:
+				case SHBluetoothNetworkManagerBAK.STATE_NONE:
 					setTitle(R.string.title_not_connected);
 					//Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
 				default:
@@ -435,7 +430,7 @@ public class SHBluetoothTesting extends Activity {
 
 	private void sendMessage(String message) {
 		/* Check that we're actually connected before trying anything */
-		if (mBtNetworkManager.getState() != BluetoothNetworkManager.STATE_CONNECTED) {
+		if (mBtNetworkManager.getState() != SHBluetoothNetworkManagerBAK.STATE_CONNECTED) {
 			Toast.makeText(getApplicationContext(),
 					"You are not connected to any device.", Toast.LENGTH_SHORT)
 					.show();
@@ -445,7 +440,7 @@ public class SHBluetoothTesting extends Activity {
 		/* Check that there's actually something to send */
 		if (message.length() > 0) {
 			/* Get the message bytes and tell the BluetoothManager to write */
-			String message_for_PIC = message + '\r';
+			String message_for_PIC = message + '\r'; // the PIC module needs a carriage return in order to identify an end of message
 			byte[] send = message_for_PIC.getBytes();
 			mBtNetworkManager.write(send);
 			Toast.makeText(getApplicationContext(), "Message sent: " + message_for_PIC,

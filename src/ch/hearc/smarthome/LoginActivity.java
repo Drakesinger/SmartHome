@@ -12,7 +12,7 @@ public class LoginActivity extends Activity {
 	/*blsbla*/
 	private EditText et_userName;
 	private EditText et_password;
-	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+	public final static String EXTRA_MESSAGE = "extra";
 
 	public static short kfirstUse = 0;
 
@@ -26,7 +26,7 @@ public class LoginActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
+		getMenuInflater().inflate(R.menu.option_menu, menu);
 		return true;
 	}
 
