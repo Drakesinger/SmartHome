@@ -24,8 +24,11 @@
     <string name="add">Add</string>
     <string name="delete_selection">Delete Selection</string>
     <string name="item_temp">T°</string>
+    <string name="item_temperature">Temperature</string>
     <string name="item_date">Date</string>
     <string name="item_name">Name</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
     <!-- Heating History -->
     <string name="show_past_week">Show Past Week</string>

@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,13 +16,22 @@ import android.widget.ListView;
 import android.widget.Toast;
 import ch.hearc.smarthome.R;
 
-public class HeatingSchedulingsActivity extends FragmentActivity{
+public class HeatingSchedulingsActivity extends FragmentActivity {
+
+	final File SAVE_DIR = new File(Environment
+			.getExternalStorageDirectory().getAbsolutePath()
+			+ File.separator
+			+ "data"
+			+ File.separator
+			+ "SmartHome"
+			+ File.separator
+			+ "Heating");
 
 	ListView schedulingListView;
 	ArrayList<CheckBox> checkboxes = new ArrayList<CheckBox>();
 	ArrayList<HeatingScheduling> datas = new ArrayList<HeatingScheduling>();
 	HeatingSchedulingsArrayAdapter adapter;
-    FragmentManager fm = getSupportFragmentManager();
+	FragmentManager fm = getSupportFragmentManager();
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -40,12 +48,8 @@ public class HeatingSchedulingsActivity extends FragmentActivity{
 			Toast.makeText(getApplicationContext(),
 					"No external storage mounted", Toast.LENGTH_SHORT).show();
 		} else {
-			File externalDir = Environment.getExternalStorageDirectory();
-			File schedulingsDir = new File(externalDir.getAbsolutePath()
-					+ File.separator + "data" + File.separator + "SmartHome"
-					+ File.separator + "Heating");
-			schedulingsDir.mkdir();
-			File textFile = new File(schedulingsDir + File.separator
+			SAVE_DIR.mkdir();
+			File textFile = new File(SAVE_DIR + File.separator
 					+ "schedulings_save.txt");
 
 			// Check if a save exist
@@ -60,7 +64,7 @@ public class HeatingSchedulingsActivity extends FragmentActivity{
 					// Reading file
 					String fileContent = readTextFile(textFile);
 					String lines[] = fileContent.split("\n");
-					List<String> list = new ArrayList<String>();
+					// List<String> list = new ArrayList<String>();
 					for (int i = 0; i < lines.length; i++) {
 						String line[] = lines[i].split(";");
 						namesList.add(line[0]);
@@ -79,7 +83,8 @@ public class HeatingSchedulingsActivity extends FragmentActivity{
 
 		// Put the datas in the ArrayList
 		for (int i = 0; i < namesList.size(); i++) {
-			datas.add(new HeatingScheduling(namesList.get(i), datesList.get(i), tempsList.get(i)));
+			datas.add(new HeatingScheduling(namesList.get(i), datesList.get(i),
+					tempsList.get(i)));
 		}
 
 		// ListAdapter -> ListView
@@ -89,18 +94,24 @@ public class HeatingSchedulingsActivity extends FragmentActivity{
 		schedulingListView.setAdapter(adapter);
 
 	}
+
 	/*
-	 * addScheduling (View v) add a new heating scheduling to the array => save in
-	 * the XML => Then sync
+	 * addScheduling (View v) add a new heating scheduling to the array => save
+	 * in the XML => Then sync
 	 */
 	public void addSchedulingDialog(View v) {
-		
-		/*DialogFragment dialog = new HeatingThresholdsSaveDialogFragment();
-		dialog.show(getFragmentManager(), "AddSchedulingDialogFragment");*/
+
+		/*
+		 * DialogFragment dialog = new HeatingThresholdsSaveDialogFragment();
+		 * dialog.show(getFragmentManager(), "AddSchedulingDialogFragment");
+		 */
 
 		HeatingSchedulingsAddDialogFragment dFragment = new HeatingSchedulingsAddDialogFragment();
-        // Show DialogFragment
-        dFragment.show(fm, "Dialog Fragment");
+		// Set Target
+		dFragment.setTargetFragment(dFragment, 1);
+		// Show DialogFragment
+		dFragment.show(fm, "Dialog Fragment");
+
 	}
 
 	/*

@@ -2,6 +2,8 @@ package ch.hearc.smarthome;
 
 import ch.hearc.smarthome.door.DoorActivity;
 import ch.hearc.smarthome.heating.HeatingMainActivity;
+import ch.hearc.smarthome.networktester.SHBluetoothTesting;
+import ch.hearc.smarthome.networktester.SHDeviceListActivity;
 import ch.hearc.smarthome.notes.NoteActivity;
 
 
@@ -57,5 +59,10 @@ public class HomeActivity extends Activity {
 	{
 		//Intent intent = new Intent(this, AlarmeMainActivity.class);
 		//startActivity(intent);
+	}
+	
+	public void OnTesteLeBluetoothMagueule(View v){
+		Intent intent = new Intent(this, SHBluetoothTesting.class);
+		startActivity(intent);
 	}
 }
