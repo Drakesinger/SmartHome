@@ -21,17 +21,17 @@ import ch.hearc.smarthome.R;
  * This is used to create the custom ListView, with my own items
  * 
  */
-public class SchedulingArrayAdapter extends ArrayAdapter<Schedulings> {
+public class HeatingSchedulingsArrayAdapter extends ArrayAdapter<HeatingScheduling> {
 
 	// CONSTS
 	public boolean CHECKED = true, UNCHECKED = false;
 
 	Context context;
 	int layoutResourceId;
-	ArrayList<Schedulings> data = null;
+	ArrayList<HeatingScheduling> data = null;
 
-	public SchedulingArrayAdapter(Context context, int layoutResourceId,
-			ArrayList<Schedulings> data) {
+	public HeatingSchedulingsArrayAdapter(Context context, int layoutResourceId,
+			ArrayList<HeatingScheduling> data) {
 
 		super(context, layoutResourceId, data);
 
@@ -65,13 +65,13 @@ public class SchedulingArrayAdapter extends ArrayAdapter<Schedulings> {
 			holder = (SchedulingHolder) row.getTag();
 		}
 
-		final Schedulings scheduling = data.get(position);
+		final HeatingScheduling scheduling = data.get(position);
 		holder.name.setText(scheduling.name);
 		holder.date.setText(scheduling.date);
 		holder.temp.setText(scheduling.temp + "°");
-		
+
 		holder.select.setChecked(false);
-		
+
 		holder.select.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
