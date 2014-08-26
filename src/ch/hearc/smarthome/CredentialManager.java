@@ -2,10 +2,14 @@ package ch.hearc.smarthome;
 
 import java.util.Hashtable;
 
+import android.util.Log;
+
 import ch.hearc.smarthome.network.NetworkManager;
 import ch.hearc.smarthome.networktester.BluetoothActivity;
 
 public class CredentialManager extends BluetoothActivity {
+	
+	private static final String TAG = "CredentialManager";
 	
 	static String default_pass = "default";
 	static String actual_pass = default_pass;
@@ -44,27 +48,29 @@ public class CredentialManager extends BluetoothActivity {
 	}
 
 	public static void setCredential(String _username, String _password) {
+		Log.d(TAG, "setCredential" + _username +"with pass" + _password);
 		cptJackSparrow.put(_username, _password);
 	}
 	
 	public static String getCredential(String _username) {
-		if(cptJackSparrow.containsValue(_username)){
+		if(cptJackSparrow.containsKey(_username)){
 			return (_username +"," + cptJackSparrow.get(_username));
 		}else{
 			return "no such user";
 		}
 	}
 
+	/** Returns true if the user exits */
 	public static boolean bUserExists(String _username){
-		if(cptJackSparrow.containsValue(_username)){
+		if(cptJackSparrow.containsKey(_username)){
 			return true;
 		}else{
 			return false;
 		}
 	}
-	
+	/** Returns true if the password for the user is correct.*/
 	public static boolean bPasswordCorrect(String _username, String _password){
-		if (cptJackSparrow.containsValue(_username)) {
+		if (cptJackSparrow.containsKey(_username)) {
 			String pass = cptJackSparrow.get(_username);
 			if (_password.compareTo(pass) == 0) {
 				return true;

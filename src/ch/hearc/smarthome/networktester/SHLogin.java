@@ -2,6 +2,7 @@ package ch.hearc.smarthome.networktester;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,8 +17,9 @@ public class SHLogin extends BluetoothActivity {
 	private EditText et_password;
 	public final static String EXTRA_MESSAGE = "extra";
 
-	public static short kfirstUse = 0;
+	public static short kfirstUse = 1;
 
+	
 	/* Debugging */
 	private static final String TAG = "SHBluetoothTesting";	
 
@@ -41,7 +43,11 @@ public class SHLogin extends BluetoothActivity {
 			 * First use of our application. So we login with the details
 			 * entered and send them to the other device.
 			 */
-
+			
+			if (SHBluetoothNetworkManager.DEBUG) {
+				Log.d(TAG, "Login. First use");
+			}
+			
 			CredentialManager.setCredential(username, password);
 			write(CredentialManager.getCredential(username));
 
@@ -64,10 +70,10 @@ public class SHLogin extends BluetoothActivity {
 					intent.putExtra(EXTRA_MESSAGE, username);
 					startActivity(intent);
 				}else {
-					Toast.makeText(SHLogin.this,"Mauvaise combinaison login/mdp !", Toast.LENGTH_LONG).show();
+					Toast.makeText(SHLogin.this,"Wrong password or username.", Toast.LENGTH_LONG).show();
 				}
 			} else {
-				Toast.makeText(SHLogin.this,"Username does not exist", Toast.LENGTH_LONG).show();
+				Toast.makeText(SHLogin.this,"Username does not exist.", Toast.LENGTH_LONG).show();
 			}
 		}
 

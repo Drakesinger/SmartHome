@@ -42,9 +42,6 @@ public class SHBluetoothNetworkManager extends Application{
 	/* This is the base UUID in order to establish an RFCOMM channel with the PIC module */
 	private static final UUID BASE_UUID		= UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 	
-		
-
-
 	/* Constants to indicate message contents */
 	public static final int MSG_OK 			= 0;
 	public static final int MSG_READ 		= 1;
@@ -57,7 +54,6 @@ public class SHBluetoothNetworkManager extends Application{
 	public static final int STATE_LISTEN 		= 1; // now listening for incoming connections
 	public static final int STATE_CONNECTING 	= 2; // now initiating an outgoing connection
 	public static final int STATE_CONNECTED 	= 3; // now connected to a remote device
-
 
 	
 	/** Constructor for the network manager */

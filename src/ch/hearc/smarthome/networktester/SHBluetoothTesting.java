@@ -68,7 +68,7 @@ public class SHBluetoothTesting extends Activity {
 		###############################################################	
 		
 		change to private if this is not the best method to implement
-		bluetooth communcation for the whole app
+		bluetooth communication for the whole app
 		
 		*/
 	
