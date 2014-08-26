@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="login.p1.AjouterNote" >
+    
+        <EditText
+        android:id="@+id/destinataire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/detail"
+        android:layout_below="@+id/detail"
+        android:ems="10"
+        android:inputType="text"/>
+    
+
+    <TextView
+        android:id="@+id/txtDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/detail"
+        android:layout_alignBottom="@+id/detail"
+        android:text="@string/detail"
+        android:labelFor="@+id/detail" />
+
+
+    <TextView
+        android:id="@+id/txtDestinataire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/destinataire"
+        android:layout_alignBottom="@+id/destinataire"
+        android:text="@string/destinataire"
+        android:labelFor="@+id/destinataire" />
+
+    <EditText
+        android:id="@+id/sujet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="120dp"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sujet"
+        android:layout_below="@+id/sujet"
+        android:layout_marginLeft="14dp"
+        android:ems="10"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/txtSujet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/sujet"
+        android:layout_alignBottom="@+id/sujet"
+        android:layout_alignRight="@+id/txtDetail"
+        android:text="@string/sujet"
+        android:labelFor="@+id/sujet" />
+
+    <Button
+        android:id="@+id/AddNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/destinataire"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="78dp"
+        android:text="@string/NoteAdd" 
+        android:onClick="AddNote"/>
+    
+</RelativeLayout>

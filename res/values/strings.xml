@@ -64,6 +64,17 @@
     <string name="Welcome">Bienvenue à la maison</string>
     <string name="NoteAdd">Add</string>
 
+    <!-- Add and deleting notes -->
+    <string name="title_activity_note_menu">Menu des notes</string>
+    <string name="NoteMenu">Bienvenue dans le menu des notes, que voulez-vous faire ?</string>
+    <string name="SupprimerNote">Visualiser et/ou supprimer des notes</string>
+    <string name="AjouterNote">Ajouter des notes</string>
+    <string name="title_activity_ajouter_note">Ajouter des notes</string>
+    <string name="sujet">Sujet :</string>
+    <string name="detail">Détails :</string>
+    <string name="destinataire">Destinataire :</string>
+    <string name="NoteAdd">Ajouter</string>
+    
     <!-- Bluetooth Testing -->
     <string name="send">Send</string>
     <string name="not_connected">You are not connected to a device</string>
