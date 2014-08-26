@@ -573,6 +573,40 @@ public class SHBluetoothNetworkManager extends Application{
 			}
 			return false;
 		}
+		
+		public String read(){
+			
+			byte[] buffer = new byte[1024]; // buffer store for the stream
+			int bytes; 						// bytes returned from read()
+			String Input;
+				
+			/* Keep listening to the InputStream until an exception occurs */
+			while (true) {
+				try {
+					if(DEBUG) Log.d(TAG, "Reading from InputStream");
+					/* Read from the InputStream */
+					bytes = mmInStream.read(buffer);
+					
+					if (bytes >0) {
+						if(DEBUG) Log.d(TAG, "Trying to show input");
+						Input = new String(buffer, "UTF-8").substring(0, bytes - 1);
+						if(DEBUG) Log.v(TAG, "Read: " + Input);
+						sendMessage(MSG_READ, Input);
+					}
+					
+					/* Send the obtained bytes to the UI activity */
+					//mHandler.obtainMessage(SHBluetoothTesting.MESSAGE_READ,bytes, -1, buffer).sendToTarget();
+				} catch (IOException e) {
+					Log.e(TAG, "Disconnected from device.", e);
+					exceptionManager("Device connection was lost. Restarting.", true);
+					break;
+				}
+				
+				bBusy = false;
+			}
+			
+			return "no message";
+		}
 
 		/* Call this from the main activity to shutdown the connection */
 		public void cancel() {

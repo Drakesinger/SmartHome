@@ -292,7 +292,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 			setTitle(getResources().getString(R.string.title_connected_to) + " " + mConnectedDevice.getName());
 			
 			// TODO
-			startActivityForResult(new Intent(getApplicationContext(), SHActionListActivity.class), REQUEST_ACTION_LIST);
+			startActivityForResult(new Intent(getApplicationContext(), SHLogin.class), REQUEST_ACTION_LIST);
 			break;
 		}
 		return false;
