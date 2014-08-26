@@ -34,6 +34,14 @@ public class BluetoothActivity extends Activity implements Handler.Callback
 		// Send command to the Bluetooth device
 		return mBtNetworkManager.write(message);
 	}
+	
+	protected String read()
+	{
+		// Read response from the Bluetooth device
+		return mBtNetworkManager.read();
+	}
+	
+	
 
 	protected void disconnect()
 	{

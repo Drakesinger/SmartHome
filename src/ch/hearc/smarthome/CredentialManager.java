@@ -4,12 +4,12 @@ import java.util.Hashtable;
 
 import android.util.Log;
 
-import ch.hearc.smarthome.network.NetworkManager;
-import ch.hearc.smarthome.networktester.BluetoothActivity;
-
-public class CredentialManager extends BluetoothActivity {
+public class CredentialManager{
 	
 	private static final String TAG = "CredentialManager";
+	
+	public static int kUsernameMaxLength = 8;
+	public static int kPasswordMaxLength = 8;
 	
 	static String default_pass = "default";
 	static String actual_pass = default_pass;
@@ -20,11 +20,6 @@ public class CredentialManager extends BluetoothActivity {
 	static String server_user;
 
 	static Hashtable<String,String> cptJackSparrow = new Hashtable<String, String>();
-	
-	/**
-	 * TODO Create either a hashtable containing our passwords with users or
-	 * create a dynamic string array for each
-	 */
 
 	/**
 	 * @return the actual_pass
@@ -39,8 +34,6 @@ public class CredentialManager extends BluetoothActivity {
 	 */
 	public static void setActualPass(String _password) {
 		actual_pass = _password;
-		NetworkManager.sendPassword(_password);
-		
 	}
 
 	public static  String getActualUser() {
@@ -49,15 +42,37 @@ public class CredentialManager extends BluetoothActivity {
 
 	public static void setCredential(String _username, String _password) {
 		Log.d(TAG, "setCredential" + _username +"with pass" + _password);
-		cptJackSparrow.put(_username, _password);
+		
+		if (_username.length() <= kUsernameMaxLength) {
+			if (_password.length() <= kPasswordMaxLength) {
+				cptJackSparrow.put(_username, _password);
+			}	
+		}
 	}
 	
 	public static String getCredential(String _username) {
 		if(cptJackSparrow.containsKey(_username)){
-			return (_username +"," + cptJackSparrow.get(_username));
+			
+			// Need to generate a username and password of the max length
+			int userLength = _username.length();
+			int passLength = cptJackSparrow.get(_username).length();
+			
+			String toAppendtoUser = new String("*".toCharArray(), 0, userLength);
+			String toAppendtoPass = new String("*".toCharArray(), 0, passLength);
+			
+			return (_username + toAppendtoUser + "," + cptJackSparrow.get(_username) + toAppendtoPass);
 		}else{
 			return "no such user";
 		}
+	}
+
+	public static boolean bIsValid(String _username, String _password) {
+		if (_username.length() <= kUsernameMaxLength) {
+			if (_password.length() <= kPasswordMaxLength) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/** Returns true if the user exits */
