@@ -41,8 +41,6 @@ public class BluetoothActivity extends Activity implements Handler.Callback
 		return mBtNetworkManager.read();
 	}
 	
-	
-
 	protected void disconnect()
 	{
 		// Disconnect from the Bluetooth device

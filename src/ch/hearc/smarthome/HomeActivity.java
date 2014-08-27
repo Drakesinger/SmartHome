@@ -1,19 +1,15 @@
 package ch.hearc.smarthome;
 
-import ch.hearc.smarthome.door.DoorActivity;
-import ch.hearc.smarthome.heating.HeatingMainActivity;
-import ch.hearc.smarthome.networktester.BluetoothActivity;
-import ch.hearc.smarthome.networktester.SHBluetoothTesting;
-import ch.hearc.smarthome.networktester.SHDeviceListActivity;
-import ch.hearc.smarthome.notes.NoteActivity;
-
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import ch.hearc.smarthome.door.DoorActivity;
+import ch.hearc.smarthome.heating.HeatingMainActivity;
+import ch.hearc.smarthome.networktester.BluetoothActivity;
+import ch.hearc.smarthome.networktester.SHBluetoothTesting;
+import ch.hearc.smarthome.notes.NoteMenu;
 
 
 public class HomeActivity extends BluetoothActivity {
