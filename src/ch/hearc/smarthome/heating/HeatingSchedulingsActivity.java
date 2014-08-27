@@ -1,8 +1,6 @@
 package ch.hearc.smarthome.heating;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,18 +12,24 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
+import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 
 public class HeatingSchedulingsActivity extends FragmentActivity {
 
-	final File SAVE_DIR = new File(Environment
-			.getExternalStorageDirectory().getAbsolutePath()
+	// Save Directory
+	static File MAIN_DIR = new File(Environment.getExternalStorageDirectory()
+			.getAbsolutePath()
 			+ File.separator
 			+ "data"
 			+ File.separator
-			+ "SmartHome"
-			+ File.separator
-			+ "Heating");
+			+ "SmartHome" + File.separator);
+
+	static File HEATING_DIR = new File(MAIN_DIR.getAbsolutePath()
+			+ File.separator + "Heating" + File.separator);
+	static String SAVE_NAME = "save.txt";
+	static File SAVE_FILEPATH = new File(HEATING_DIR.getAbsolutePath()
+			+ File.separator + SAVE_NAME);
 
 	ListView schedulingListView;
 	ArrayList<CheckBox> checkboxes = new ArrayList<CheckBox>();
@@ -38,60 +42,14 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.heating_scheduling);
 
-		ArrayList<String> namesList = new ArrayList<String>();
-		ArrayList<String> datesList = new ArrayList<String>();
-		ArrayList<String> tempsList = new ArrayList<String>();
-
-		/* Get Scheduling save */
-		String state = Environment.getExternalStorageState();
-		if (!state.equals(Environment.MEDIA_MOUNTED)) {
-			Toast.makeText(getApplicationContext(),
-					"No external storage mounted", Toast.LENGTH_SHORT).show();
-		} else {
-			SAVE_DIR.mkdir();
-			File textFile = new File(SAVE_DIR + File.separator
-					+ "schedulings_save.txt");
-
-			// Check if a save exist
-			if (!textFile.exists()) {
-
-				Toast.makeText(getApplicationContext(),
-						"There isn't any scheduled heating", Toast.LENGTH_SHORT)
-						.show();
-
-			} else {
-				try {
-					// Reading file
-					String fileContent = readTextFile(textFile);
-					String lines[] = fileContent.split("\n");
-					// List<String> list = new ArrayList<String>();
-					for (int i = 0; i < lines.length; i++) {
-						String line[] = lines[i].split(";");
-						namesList.add(line[0]);
-						datesList.add(line[1]);
-						tempsList.add(line[2]);
-					}
-
-				} catch (IOException e) {
-					Toast.makeText(getApplicationContext(),
-							"Something went wrong! " + e.getMessage(),
-							Toast.LENGTH_SHORT).show();
-
-				}
-			}
-		}
-
-		// Put the datas in the ArrayList
-		for (int i = 0; i < namesList.size(); i++) {
-			datas.add(new HeatingScheduling(namesList.get(i), datesList.get(i),
-					tempsList.get(i)));
-		}
-
 		// ListAdapter -> ListView
 		schedulingListView = (ListView) findViewById(R.id.listViewScheduling);
+
 		adapter = new HeatingSchedulingsArrayAdapter(this,
 				R.layout.heating_scheduling_list_item, datas);
 		schedulingListView.setAdapter(adapter);
+
+		updateList();
 
 	}
 
@@ -101,55 +59,103 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 	 */
 	public void addSchedulingDialog(View v) {
 
-		/*
-		 * DialogFragment dialog = new HeatingThresholdsSaveDialogFragment();
-		 * dialog.show(getFragmentManager(), "AddSchedulingDialogFragment");
-		 */
-
+		// Create DialogFragment
 		HeatingSchedulingsAddDialogFragment dFragment = new HeatingSchedulingsAddDialogFragment();
-		// Set Target
-		dFragment.setTargetFragment(dFragment, 1);
 		// Show DialogFragment
 		dFragment.show(fm, "Dialog Fragment");
-
 	}
 
 	/*
 	 * deleteSelection(View v)
 	 * 
-	 * This deletes the checked items
+	 * This deletes the checked items, called from XML
 	 */
 	public void deleteSelection(View v) {
 
-		int size = datas.size();
-		for (int i = size - 1; i >= 0; i--) {
-			if (datas.get(i).state) {
+		String save = "";
+		int count = 0;
+
+		// Remove selected items from list
+		for (int i = datas.size() - 1; i >= 0; i--) {
+			if (datas.get(i).getState()) {
 				datas.remove(i);
+				count++;
 			}
 		}
 
-		for (int i = 0; i < datas.size(); i++) {
-			datas.get(i).state = false;
+		Toast.makeText(getApplicationContext(), count + "Item(s) deleted",
+				Toast.LENGTH_SHORT).show();
+
+		// Create the String to save
+		for (HeatingScheduling s : datas) {
+			save += s.getName() + ";" + s.getDate() + ";" + s.getTemp() + "\n";
 		}
 
-		adapter.notifyDataSetChanged();
-
-		Toast.makeText(getApplicationContext(), "Deleting", Toast.LENGTH_SHORT)
-				.show();
-		// Log.d("CheckState", s);
-	}
-
-	/**** Reading Text File ****/
-	private String readTextFile(File file) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		StringBuilder text = new StringBuilder();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			text.append(line);
-			text.append("\n");
+		//Modify the file
+		if (FileUtil.isMediaMounted()) {
+			try {
+				FileUtil.writeTextFile(SAVE_FILEPATH, save, false);
+			} catch (IOException e) {
+				Toast.makeText(getApplicationContext(),
+						"File writing error: " + e.getMessage(),
+						Toast.LENGTH_SHORT).show();
+			}
 		}
-		reader.close();
-		return text.toString();
+
+		// Update the listview with the modified file
+		updateList();
+
 	}
 
+	public void updateList() {
+
+		String content = null, info = "";
+
+		if (FileUtil.isMediaMounted()) {
+			if (HEATING_DIR.exists()) {
+				if (SAVE_FILEPATH.exists()) {
+					try {
+						content = FileUtil.readTextFile(SAVE_FILEPATH);
+					} catch (IOException e) {
+						info = "File reading error: " + e.getMessage();
+					}
+				} else {
+					// Create File and restart function
+					FileUtil.createFile(SAVE_FILEPATH);
+					updateList();
+					return;
+				}
+			} else {
+				// Create Tree and restart function
+				FileUtil.createTree(HEATING_DIR);
+				updateList();
+				return;
+			}
+		} else {
+			info = "No SD found";
+		}
+
+		if (!info.equals("")) {
+			Toast.makeText(getApplicationContext(), info, Toast.LENGTH_SHORT)
+					.show();
+		}
+
+		if (content.equals("")) {
+			Toast.makeText(getApplicationContext(), "No save found",
+					Toast.LENGTH_SHORT).show();
+		} else {
+			String lines[] = content.split("\n"); 
+			// Clear 'datas'
+			datas.clear();
+
+			// Update 'datas' array with the new list content
+			for (String l : lines) {
+				String s[] = l.split(";");
+				datas.add(new HeatingScheduling(s[0], s[1], s[2]));
+			}
+
+			adapter.notifyDataSetChanged();
+		}
+
+	}
 }

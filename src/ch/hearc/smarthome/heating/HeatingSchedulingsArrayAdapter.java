@@ -66,19 +66,19 @@ public class HeatingSchedulingsArrayAdapter extends ArrayAdapter<HeatingScheduli
 		}
 
 		final HeatingScheduling scheduling = data.get(position);
-		holder.name.setText(scheduling.name);
-		holder.date.setText(scheduling.date);
-		holder.temp.setText(scheduling.temp + "°");
+		holder.name.setText(scheduling.getName());
+		holder.date.setText(scheduling.getDate());
+		holder.temp.setText(scheduling.getTemp() + "°");
 
 		holder.select.setChecked(false);
 
 		holder.select.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				if (scheduling.state)
-					scheduling.state = UNCHECKED;
+				if (scheduling.getState() == CHECKED)
+					scheduling.setState(UNCHECKED);
 				else
-					scheduling.state = CHECKED;
+					scheduling.setState(CHECKED);
 
 			}
 		});
