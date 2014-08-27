@@ -296,7 +296,6 @@ public class SHBluetoothNetworkManager extends Application{
 			} catch (IOException e) {
 				Log.e(TAG, "Listen Socket creation failed. listen()", e);
 				
-				// TODO use the handler to send the error message to the UI
 				exceptionManager("Socket creation failed, listen() failure.", false);
 
 			}
@@ -322,7 +321,7 @@ public class SHBluetoothNetworkManager extends Application{
 					socket = mmServerSocket.accept();
 				} catch (IOException e) {
 					Log.e(TAG, "accept() failed", e);
-					// TODO use the handler to send the error message to the UI
+					
 					exceptionManager("accept() failed.", false);
 					break;
 				}
@@ -367,11 +366,6 @@ public class SHBluetoothNetworkManager extends Application{
 							 * newly created socket
 							 */
 							try {
-								/*
-								 * TODO Do work to manage the connection (in a
-								 * separate thread)
-								 */
-								// manageConnectedSocket(socket);
 								socket.close();
 							} catch (Exception e) {
 								Log.e(TAG, "Could not close socket", e);
@@ -461,9 +455,6 @@ public class SHBluetoothNetworkManager extends Application{
 			/* Start the connected thread manager */
 			connected(mmSocket, mmDevice);
 
-			// TODO Do work to manage the connection (in a separate thread)
-			// manageConnectedSocket(mmSocket);
-			
 			if (INFO) Log.i(TAG, "END mConnectThread");
 		}
 
@@ -569,8 +560,9 @@ public class SHBluetoothNetworkManager extends Application{
 			}
 			return false;
 		}
-		
-		public String read(){
+
+		/** TODO check if works */
+		public String read() {
 			
 			byte[] buffer = new byte[1024]; // buffer store for the stream
 			int bytes; 						// bytes returned from read()
@@ -624,7 +616,6 @@ public class SHBluetoothNetworkManager extends Application{
 			if (mState != STATE_CONNECTED) {
 				/* We are not connected so we can't write anything. */
 				exceptionManager("Cannot write.\n"+"Not connected to any device.", false);
-				// TODO PopupMessages.launchPopup("Write out","Not connected to any device.", null);
 				
 				if (DEBUG) {
 					Log.d(TAG, "write() failed. not connected to anything");

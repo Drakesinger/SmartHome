@@ -39,14 +39,17 @@ public class SHLogin extends BluetoothActivity {
 		String username = et_userName.getText().toString();
 
 		
-		if (CredentialManager.bIsValid(username, password)) {
-			if (kfirstUse == 1) {
+		if (CredentialManager.bIsValid(username, password)) 
+		{
+			if (kfirstUse == 1) 
+			{
 				/*
 				 * First use of our application. So we login with the details
 				 * entered and send them to the other device.
 				 */
 
-				if (SHBluetoothNetworkManager.DEBUG) {
+				if (SHBluetoothNetworkManager.DEBUG)
+				{
 					Log.d(TAG, "Login. First use");
 				}
 
@@ -64,21 +67,36 @@ public class SHLogin extends BluetoothActivity {
 			{
 				/* Already logged in once, so check if data entered is correct */
 
-				if (CredentialManager.bUserExists(username)) {
-					if (CredentialManager.bPasswordCorrect(username, password)) {
+				if (CredentialManager.bUserExists(username))
+				{
+					if (CredentialManager.bPasswordCorrect(username, password))
+					{
 						notifyUser("Login OK !");
 
-						// TODO find a way to get all users and password from PIC?
 						write(CredentialManager.getCredential(username));
+						// TODO read response from PIC
+						String response = read();
 
-						Intent intent = new Intent(this, HomeActivity.class);
-						intent.putExtra(EXTRA_MESSAGE, username);
-						startActivity(intent);
-					} else {
-						notifyUser("Wrong password.");
-						
+						// Response must be [user][login ok]
+						if (response == username + "," + "login ok")
+						{
+							Intent intent = new Intent(this, HomeActivity.class);
+							intent.putExtra(EXTRA_MESSAGE, username);
+							startActivity(intent);
+						} 
+						else
+						{
+							notifyUser("Login fail");
+						}
+
 					}
-				} else {
+					else
+					{
+						notifyUser("Wrong password.");	
+					}
+				} 
+				else 
+				{
 					notifyUser("Username does not exist.");
 				}
 			}
