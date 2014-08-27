@@ -58,24 +58,6 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 	private static final int REQUEST_ACTION_LIST = 0;
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
-
-	/* Message types sent from the BluetoothChatService Handler */
-	public static final int MESSAGE_STATE_CHANGE	= 1;
-	public static final int MESSAGE_READ 			= 2;
-	public static final int MESSAGE_WRITE 			= 3;
-	public static final int MESSAGE_DEVICE_NAME 	= 4;
-	public static final int MESSAGE_DEVICE_ADDRESS 	= 5;
-	public static final int MESSAGE_TOAST 			= 6;
-
-	
-	/* Key names received from the BluetoothCommandService Handler */
-	/*
-	public static final String DEVICE_NAME 		= "device_name";
-	public static final String DEVICE_ADDRESS 	= "device_address";
-	public static final String TOAST 			= "toast";
-	*/
-	
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

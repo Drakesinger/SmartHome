@@ -38,44 +38,60 @@ public class SHLogin extends BluetoothActivity {
 		String password = et_password.getText().toString();
 		String username = et_userName.getText().toString();
 
-		if (kfirstUse == 1) {
-			/*
-			 * First use of our application. So we login with the details
-			 * entered and send them to the other device.
-			 */
-			
-			if (SHBluetoothNetworkManager.DEBUG) {
-				Log.d(TAG, "Login. First use");
-			}
-			
-			CredentialManager.setCredential(username, password);
-			write(CredentialManager.getCredential(username));
+		
+		if (CredentialManager.bIsValid(username, password)) {
+			if (kfirstUse == 1) {
+				/*
+				 * First use of our application. So we login with the details
+				 * entered and send them to the other device.
+				 */
 
-			kfirstUse = 0;
-
-			Intent intent = new Intent(this, HomeActivity.class);
-			intent.putExtra(EXTRA_MESSAGE, username);
-			startActivity(intent);
-
-		} else {
-			/* Already logged in once, so check if data entered is correct */
-			if (CredentialManager.bUserExists(username)) {
-				if(CredentialManager.bPasswordCorrect(username, password)){
-					Toast.makeText(SHLogin.this, "Login OK !",Toast.LENGTH_LONG).show();
-					
-					// TODO find a way to get all users and password from PIC?
-					write(CredentialManager.getCredential(username));
-					
-					Intent intent = new Intent(this, HomeActivity.class);
-					intent.putExtra(EXTRA_MESSAGE, username);
-					startActivity(intent);
-				}else {
-					Toast.makeText(SHLogin.this,"Wrong password or username.", Toast.LENGTH_LONG).show();
+				if (SHBluetoothNetworkManager.DEBUG) {
+					Log.d(TAG, "Login. First use");
 				}
-			} else {
-				Toast.makeText(SHLogin.this,"Username does not exist.", Toast.LENGTH_LONG).show();
+
+				CredentialManager.setCredential(username, password);
+
+				write(CredentialManager.getCredential(username));
+
+				kfirstUse = 0;
+
+				Intent intent = new Intent(this, HomeActivity.class);
+				intent.putExtra(EXTRA_MESSAGE, username);
+				startActivity(intent);
+			} 
+			else
+			{
+				/* Already logged in once, so check if data entered is correct */
+
+				if (CredentialManager.bUserExists(username)) {
+					if (CredentialManager.bPasswordCorrect(username, password)) {
+						notifyUser("Login OK !");
+
+						// TODO find a way to get all users and password from PIC?
+						write(CredentialManager.getCredential(username));
+
+						Intent intent = new Intent(this, HomeActivity.class);
+						intent.putExtra(EXTRA_MESSAGE, username);
+						startActivity(intent);
+					} else {
+						notifyUser("Wrong password.");
+						
+					}
+				} else {
+					notifyUser("Username does not exist.");
+				}
 			}
 		}
+		else 
+		{
+			notifyUser("Invalid user/password length. Max: "+ CredentialManager.kPasswordMaxLength + " chars.");
+		}
 
+	}
+
+	private void notifyUser(String _string) {
+		Toast.makeText(SHLogin.this,_string, Toast.LENGTH_LONG).show();
+		
 	}
 }

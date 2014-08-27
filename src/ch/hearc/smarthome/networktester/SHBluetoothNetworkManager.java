@@ -510,7 +510,7 @@ public class SHBluetoothNetworkManager extends Application{
 				Log.i(TAG, "BEGIN mConnectedThread");
 			}
 			
-			//setName("ConnectedThread");
+			setName("ConnectedThread"); // Does this change anything?
 			
 			byte[] buffer = new byte[1024]; // buffer store for the stream
 			int bytes; 						// bytes returned from read()
@@ -576,22 +576,22 @@ public class SHBluetoothNetworkManager extends Application{
 			int bytes; 						// bytes returned from read()
 			String Input;
 				
-			/* Keep listening to the InputStream until an exception occurs */
+			/* Keep listening to the InputStream */
+			// TODO need to check if we need an end character, probably best if we use \r
 			while (true) {
 				try {
 					if(DEBUG) Log.d(TAG, "Reading from InputStream");
 					/* Read from the InputStream */
 					bytes = mmInStream.read(buffer);
 					
-					if (bytes >0) {
+					if (bytes > 0) {
 						if(DEBUG) Log.d(TAG, "Trying to show input");
+						// TODO CHECK CHECK CHECK DEBUG
 						Input = new String(buffer, "UTF-8").substring(0, bytes - 1);
 						if(DEBUG) Log.v(TAG, "Read: " + Input);
 						sendMessage(MSG_READ, Input);
+						return Input;
 					}
-					
-					/* Send the obtained bytes to the UI activity */
-					//mHandler.obtainMessage(SHBluetoothTesting.MESSAGE_READ,bytes, -1, buffer).sendToTarget();
 				} catch (IOException e) {
 					Log.e(TAG, "Disconnected from device.", e);
 					exceptionManager("Device connection was lost. Restarting.", true);
@@ -601,7 +601,7 @@ public class SHBluetoothNetworkManager extends Application{
 				bBusy = false;
 			}
 			
-			return "no message";
+			return null;
 		}
 
 		/* Call this from the main activity to shutdown the connection */
@@ -634,6 +634,26 @@ public class SHBluetoothNetworkManager extends Application{
 			conThread = mConnectedThread;
 		}
 		return conThread.write(_out);
+	}
+	
+	/** TODO documentation */
+	public String read() {
+		ConnectedThread conThread;
+
+		synchronized (this) {
+			if (mState != STATE_CONNECTED) {
+				/* We are not connected so we can't write anything. */
+				exceptionManager("Cannot read.\n"+"Not connected to any device.", false);
+				
+				
+				if (DEBUG) {
+					Log.d(TAG, "read() failed. not connected to anything");
+				}
+				return null;
+			}
+			conThread = mConnectedThread;
+		}
+		return conThread.read();
 	}
 
 
