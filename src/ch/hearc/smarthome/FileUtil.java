@@ -7,10 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Util class used to read/write/check files
@@ -35,8 +33,6 @@ public class FileUtil {
 	 * 
 	 * @throws IOException
 	 *             Input/Output exceptions
-	 * 
-	 * @return content of 'file'
 	 */
 	public static void writeTextFile(File file, String text, boolean append)
 			throws IOException {
@@ -68,53 +64,25 @@ public class FileUtil {
 		return text.toString();
 	}
 
+	/**
+	 * Return if the state of the media is Mounted
+	 * 
+	 * @return boolean if a SD is mounted on the device
+	 */
 	public static boolean isMediaMounted() {
 		return Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED);
 	}
 
+	/**
+	 * Creates the directory named by this file, creating missing parent
+	 * directories if necessary.
+	 * 
+	 * @param tree
+	 *            The directory name by this file
+	 */
 	public static void createTree(File tree) {
 		tree.mkdirs();
-	}
-
-	/**
-	 * Return if a file is accessible
-	 * 
-	 * @param c
-	 *            The context is used to toast the user about why a problem
-	 *            could have happened
-	 * 
-	 * @param file
-	 *            The file which is checked
-	 * 
-	 * @return if the file is accessible
-	 */
-	public static boolean isFileUsable(Context c, File folder, String filename) {
-		String state = Environment.getExternalStorageState();
-		boolean fileState = false;
-
-		// Check if there's a SD card
-		if (state.equals(Environment.MEDIA_MOUNTED)) {
-			// Create folder if not existing
-			if (!folder.exists()) {
-				folder.mkdirs();
-				Log.d("RDWR", "Create: Directory: " + folder.getAbsolutePath());
-			}
-
-			File file = new File(folder.getAbsolutePath() + File.separator
-					+ filename);
-			// Try creating file if not existing
-			if (file.exists()) {
-				fileState = true;
-			}
-
-			Toast.makeText(c, "No save yet", Toast.LENGTH_SHORT).show();
-
-		} else {
-			Toast.makeText(c, "No SD mounted", Toast.LENGTH_SHORT).show();
-		}
-
-		return fileState;
 	}
 
 	/**
