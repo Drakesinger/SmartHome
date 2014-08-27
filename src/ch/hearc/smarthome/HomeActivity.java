@@ -52,7 +52,7 @@ public class HomeActivity extends BluetoothActivity {
 	
 	public void NotesMainActivity(View view)
 	{
-		Intent intent = new Intent(this, NoteActivity.class);
+		Intent intent = new Intent(this, NoteMenu.class);
 		startActivity(intent);
 	}
 	
