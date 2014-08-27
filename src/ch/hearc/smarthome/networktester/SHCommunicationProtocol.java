@@ -1,85 +1,47 @@
 package ch.hearc.smarthome.networktester;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 
+import android.util.Log;
 
 /**
----------------
-LOGIN
----------------
-login
----------------
-ADMIN
----------------
-a change pass
-
-[user][password][change pass][old pass][new pass]
-
-a change user
-a get users
-a delete user
-a add user
-a block user
-a unblock user
----------------
-HEATING
----------------
-h get temp
-h get temp prog
-h add temp
-h del temp
----------------
-DOOR
----------------
-d set pass
-d change pass
-d open
-d block user
-d unblock user
-d get times
----------------
-POST-IT
----------------
-p get postit
-p add postit
-p del postit
----------------
-VIDEO
----------------
-
-
-*/
+ * This class contains a Hashtable and a String array containing all the
+ * functions used in the application.The hashtable is generated when the class constructor is called.
+ * <p>
+ * In order to send data through bluetooth, the following format must be
+ * respected:
+ * 
+ * <pre>
+ * [user][function ID][params]
+ * </pre>
+ * <p>
+ * The function ID can be obtained using:
+ * <li>{@code getFunctionID(function name)}
+ */
 public class SHCommunicationProtocol {
 
+	private static Hashtable<String, Integer> functions = new Hashtable<String, Integer>();
 
-	
-	public static Hashtable<String, Integer> functions = new Hashtable<String, Integer>();
-	
-	private static String[] functionNames = {"login", "change pass","change username", "get users"};
-	private String generatedMessage;
-	
+	private static String[] functionNames = { "login", "a change pass",
+			"a change username", "a get users", "d open", "d change pass" };
+
+	/** Constructor, builds the {@code functions} hashtable */
 	public SHCommunicationProtocol() {
 		// Initialize functions hashtable
+		Log.d("Communication Protocol", "constructing Communication Protocol");
+
 		for (int i = 0; i < functionNames.length; i++) {
 			functions.put(functionNames[i], i);
 		}
-		
+
 	}
-	
-	private String generateMessage(String _function){
-		
+
+	public int getFunctionID(String _function) {
+		Log.d("Communication Protocol", "generateMessage called with "
+				+ _function);
 		int funcNr = functions.get(_function);
-		try {
-			generatedMessage = new String("hdha".getBytes("UTF-8"), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		return generatedMessage;
-		
+
+		return funcNr;
 	}
-	
+
 }

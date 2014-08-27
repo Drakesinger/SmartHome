@@ -2,6 +2,7 @@ package ch.hearc.smarthome.networktester;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,9 +20,13 @@ public class SHLogin extends BluetoothActivity {
 
 	public static short kfirstUse = 1;
 
+	/* Functions of SHLogin */
+	private static final String login = "login";
 	
 	/* Debugging */
-	private static final String TAG = "SHBluetoothTesting";	
+	private static final String TAG = "SHLogin";
+	
+	private static String response = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,8 @@ public class SHLogin extends BluetoothActivity {
 
 		String password = et_password.getText().toString();
 		String username = et_userName.getText().toString();
-
+		
+		write("\r");
 		
 		if (CredentialManager.bIsValid(username, password)) 
 		{
@@ -54,14 +60,8 @@ public class SHLogin extends BluetoothActivity {
 				}
 
 				CredentialManager.setCredential(username, password);
-
-				write(CredentialManager.getCredential(username));
-
-				kfirstUse = 0;
-
-				Intent intent = new Intent(this, HomeActivity.class);
-				intent.putExtra(EXTRA_MESSAGE, username);
-				startActivity(intent);
+				CredentialManager.setActualUser(username);
+				sendDataAndCheckResponse(CredentialManager.getCredential(username, false));
 			} 
 			else
 			{
@@ -71,24 +71,8 @@ public class SHLogin extends BluetoothActivity {
 				{
 					if (CredentialManager.bPasswordCorrect(username, password))
 					{
-						notifyUser("Login OK !");
-
-						write(CredentialManager.getCredential(username));
-						// TODO read response from PIC
-						String response = read();
-
-						// Response must be [user][login ok]
-						if (response == username + "," + "login ok")
-						{
-							Intent intent = new Intent(this, HomeActivity.class);
-							intent.putExtra(EXTRA_MESSAGE, username);
-							startActivity(intent);
-						} 
-						else
-						{
-							notifyUser("Login fail");
-						}
-
+						CredentialManager.setActualUser(username);
+						sendDataAndCheckResponse(CredentialManager.getCredential(username, true));	
 					}
 					else
 					{
@@ -108,8 +92,52 @@ public class SHLogin extends BluetoothActivity {
 
 	}
 
+	private void sendDataAndCheckResponse(String _credential) {
+		Log.d(TAG, "sendDataAndCheckResponse("+_credential+")");
+		
+		SHCommunicationProtocol Protocol = new SHCommunicationProtocol();
+		
+		String DataToSend = _credential + "," + Protocol.getFunctionID(login);
+		write(DataToSend);
+		
+		notifyUser("Sent data:\n" + DataToSend);
+		//response = "login ok";
+		Log.d(TAG,"Response variable is in SendData:" + response);
+		if (response == null) {
+			notifyUser("No reponse received");
+			Log.d(TAG,"No reponse received");
+			return;
+		}
+		
+		Log.d(TAG, "Response contains: " + response);
+		// Response must be [user][login ok]
+		if (response.contains("login ok"))
+		{
+			notifyUser("Login OK !");
+			Intent intent = new Intent(this, HomeActivity.class);
+			//intent.putExtra(EXTRA_MESSAGE, username);
+			startActivity(intent);
+		} 
+		else
+		{
+			notifyUser("Login fail");
+		}
+	}
+
 	private void notifyUser(String _string) {
 		Toast.makeText(SHLogin.this,_string, Toast.LENGTH_LONG).show();
-		
 	}
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		if (msg.what == SHBluetoothNetworkManager.MSG_READ){
+			Log.d(TAG, "Response found, changing response string");
+			response = ((String) msg.obj).toLowerCase();
+			notifyUser("Received:" + response);
+		}
+		notifyUser("Response variable is:" + response);
+		return super.handleMessage(msg);
+	}
+	
+	
 }

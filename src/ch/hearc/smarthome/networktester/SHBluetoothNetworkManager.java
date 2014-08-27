@@ -504,25 +504,35 @@ public class SHBluetoothNetworkManager extends Application{
 			setName("ConnectedThread"); // Does this change anything?
 			
 			byte[] buffer = new byte[1024]; // buffer store for the stream
+			byte ch; 						// byte returned from read();
 			int bytes; 						// bytes returned from read()
+			
 			String Input;
 				
 			/* Keep listening to the InputStream until an exception occurs */
 			while (true) {
 				try {
-					if(DEBUG) Log.d(TAG, "Reading from InputStream");
-					/* Read from the InputStream */
-					bytes = mmInStream.read(buffer);
 					
-					if (bytes >0) {
-						if(DEBUG) Log.d(TAG, "Trying to show input");
-						Input = new String(buffer, "UTF-8").substring(0, bytes - 1);
-						if(DEBUG) Log.v(TAG, "Read: " + Input);
-						sendMessage(MSG_READ, Input);
+					bytes = 0;
+					// read byte by byte until carriage return
+					while((ch = (byte) mmInStream.read()) != '\r')
+					{
+						buffer[bytes++] = ch;
 					}
 					
-					/* Send the obtained bytes to the UI activity */
-					//mHandler.obtainMessage(SHBluetoothTesting.MESSAGE_READ,bytes, -1, buffer).sendToTarget();
+					// this method doesn't work, PIC sends multiple "buffers"
+					//bytes = mmInStream.read(buffer);
+					
+					if (bytes > 0) {
+						if(DEBUG) Log.d(TAG, "RUN Trying to create input string from " + bytes +" bytes");
+						
+						Input = new String(buffer, "UTF-8").substring(0, bytes);
+						
+						if(DEBUG) Log.v(TAG, "RUN Input: " + Input);
+						// Send the input to the UI
+						sendMessage(MSG_READ, Input);
+						
+					}
 				} catch (IOException e) {
 					Log.e(TAG, "Disconnected from device.", e);
 					exceptionManager("Device connection was lost. Restarting.", true);
@@ -537,7 +547,7 @@ public class SHBluetoothNetworkManager extends Application{
 			}
 		}
 
-		/* Call this from the main activity to send data to the remote device */
+		/** Call this from the main activity to send data to the remote device */
 		public boolean write(/*byte[]*/ String bytes) {
 			try {
 				if (DEBUG) {
@@ -545,6 +555,7 @@ public class SHBluetoothNetworkManager extends Application{
 				}
 				if (bytes != null) {
 					sendMessage(MSG_WRITE, bytes.toString());
+					if(DEBUG) Log.d(TAG, "Sending: " + bytes);
 					mmOutStream.write(bytes.getBytes());
 					
 					/*
@@ -559,41 +570,6 @@ public class SHBluetoothNetworkManager extends Application{
 				Log.e(TAG, "Exception during write", e);
 			}
 			return false;
-		}
-
-		/** TODO check if works */
-		public String read() {
-			
-			byte[] buffer = new byte[1024]; // buffer store for the stream
-			int bytes; 						// bytes returned from read()
-			String Input;
-				
-			/* Keep listening to the InputStream */
-			// TODO need to check if we need an end character, probably best if we use \r
-			while (true) {
-				try {
-					if(DEBUG) Log.d(TAG, "Reading from InputStream");
-					/* Read from the InputStream */
-					bytes = mmInStream.read(buffer);
-					
-					if (bytes > 0) {
-						if(DEBUG) Log.d(TAG, "Trying to show input");
-						// TODO CHECK CHECK CHECK DEBUG
-						Input = new String(buffer, "UTF-8").substring(0, bytes - 1);
-						if(DEBUG) Log.v(TAG, "Read: " + Input);
-						sendMessage(MSG_READ, Input);
-						return Input;
-					}
-				} catch (IOException e) {
-					Log.e(TAG, "Disconnected from device.", e);
-					exceptionManager("Device connection was lost. Restarting.", true);
-					break;
-				}
-				
-				bBusy = false;
-			}
-			
-			return null;
 		}
 
 		/* Call this from the main activity to shutdown the connection */
@@ -625,26 +601,6 @@ public class SHBluetoothNetworkManager extends Application{
 			conThread = mConnectedThread;
 		}
 		return conThread.write(_out);
-	}
-	
-	/** TODO documentation */
-	public String read() {
-		ConnectedThread conThread;
-
-		synchronized (this) {
-			if (mState != STATE_CONNECTED) {
-				/* We are not connected so we can't write anything. */
-				exceptionManager("Cannot read.\n"+"Not connected to any device.", false);
-				
-				
-				if (DEBUG) {
-					Log.d(TAG, "read() failed. not connected to anything");
-				}
-				return null;
-			}
-			conThread = mConnectedThread;
-		}
-		return conThread.read();
 	}
 
 
@@ -679,6 +635,8 @@ public class SHBluetoothNetworkManager extends Application{
 		if(mHandler != null)
 		{
 			mHandler.obtainMessage(type, value).sendToTarget();
+			//mHandler.obtainMessage(type, bytes, -1, value).sendToTarget();
+			//      .obtainMessage(int what, int arg1, int arg2, Object obj)
 		}
 	}
 

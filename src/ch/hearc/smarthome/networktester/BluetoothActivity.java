@@ -29,29 +29,54 @@ public class BluetoothActivity extends Activity implements Handler.Callback
 		mBtNetworkManager = (SHBluetoothNetworkManager) getApplicationContext();
 	}
 
+	/**
+	 * Function used to send string data through bluetooth
+	 * 
+	 * @param message
+	 *            the string that we want to send
+	 * @return True if message was sent
+	 *         <dl>
+	 *         False if we got an error
+	 * */
 	protected boolean write(String message)
 	{
 		// Send command to the Bluetooth device
 		return mBtNetworkManager.write(message);
 	}
 	
-	protected String read()
-	{
-		// Read response from the Bluetooth device
-		return mBtNetworkManager.read();
-	}
-	
+	/** Disconnect from the Bluetooth device */
 	protected void disconnect()
 	{
-		// Disconnect from the Bluetooth device
 		if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection end request");
 		mBtNetworkManager.disconnect();
 	}
 
+	/**
+	 * Can be implemented in derived classes in case a response from the PIC
+	 * module is needed.
+	 * <dl>
+	 * 
+	 * Example:
+	 * <dl>
+	 * <code>
+	 * if (msg.what == SHBluetoothNetworkManager.MSG_READ)
+	 * <br>
+	 * response = ((String) msg.obj).toLowerCase();
+	 * </code>
+	 * </dl>
+	 * 
+	 * @param msg
+	 *            the message received
+	 * @return false
+	 * */
 	public boolean handleMessage(Message msg)
 	{
 		switch(msg.what)
 		{
+		case SHBluetoothNetworkManager.MSG_WRITE:
+			
+			if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "writing out" );
+			break;
 		case SHBluetoothNetworkManager.MSG_OK:
 			// When a child activity returns safely
 			if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Result of child activity OK");
@@ -62,6 +87,12 @@ public class BluetoothActivity extends Activity implements Handler.Callback
 			setResult(SHBluetoothNetworkManager.MSG_CANCEL, new Intent());
 			finish();
 			break;
+		/*
+		case SHBluetoothNetworkManager.MSG_READ:
+			String readBuf = (String) msg.obj;
+            // construct a string from the valid bytes in the buffer
+            if(SHBluetoothNetworkManager.DEBUG) Log.e(TAG, "Reading reponse: " + readBuf);
+			break;*/
 		}
 		return false;
 	}

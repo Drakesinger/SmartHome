@@ -270,12 +270,8 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		case SHBluetoothNetworkManager.MSG_CONNECTED:
 			// When connected to a device start the activity select
 			if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection successful to " + msg.obj);
-			/* This will be the part where the user can choose any of our 4 activities */
-			
-			
+			/* User now needs to login */
 			setTitle(getResources().getString(R.string.title_connected_to) + " " + mConnectedDevice.getName());
-			
-			// TODO
 			startActivityForResult(new Intent(getApplicationContext(), SHLogin.class), REQUEST_ACTION_LIST);
 			break;
 		}
@@ -298,14 +294,12 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 				public void onCancel(DialogInterface _di) {
 					// The user can back out at any moment
 					mConnectionProgressDialog.dismiss();
-					mBtNetworkManager.disconnect(); // TODO check if the same happpens on other app
+					mBtNetworkManager.disconnect();
 					if (DEBUG) Log.i(NAME, "Canceled connection progress");
 					return;
 					}
 				});
 
-			// Try to connect to the selected device, once connected the handler will do the rest
-			// TODO
 			mConnectedDevice = device;
 			mBtNetworkManager.connect(BluetoothAdapter.getDefaultAdapter().getRemoteDevice(device.getAddress()));
 		}

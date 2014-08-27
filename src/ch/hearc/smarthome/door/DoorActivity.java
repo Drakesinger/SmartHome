@@ -1,6 +1,5 @@
 package ch.hearc.smarthome.door;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,13 +9,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.LoginActivity;
 import ch.hearc.smarthome.PopupMessages;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.networktester.BluetoothActivity;
 
-public class DoorActivity extends Activity {
+public class DoorActivity extends BluetoothActivity {
 
 	/* Our view references */
 	Button b_door_main_Open;
@@ -25,6 +23,9 @@ public class DoorActivity extends Activity {
 
 	/* Our password string */
 	String myPassword;
+	
+	/* Functions of SHDoorActivity */
+	private static final String open = "d open";
 
 	/* Our intent and context in case of password change decision */
 	Intent i;
@@ -37,9 +38,6 @@ public class DoorActivity extends Activity {
 		setContentView(R.layout.door_main);
 
 		initializeReferences();
-
-		//We initialize the password just in case
-		//CredentialManager.setActualPass("1111");
 
 		b_door_main_Open.setOnClickListener(new OnClickListener() {
 
@@ -58,7 +56,6 @@ public class DoorActivity extends Activity {
 				 * intent
 				 */
 				
-				//TODO try and catch
 				myPassword = convertEditTextContentToStrings(et_door_main_Password);
 				boolean password_ok = myPassword.equals(CredentialManager.getDoorPass());
 				
