@@ -62,7 +62,6 @@
     <string name="title_activity_note">NoteActivity</string>
     <string name="Exit">Exit</string>
     <string name="Welcome">Bienvenue à la maison</string>
-    <string name="NoteAdd">Add</string>
 
     <!-- Add and deleting notes -->
     <string name="title_activity_note_menu">Menu des notes</string>
