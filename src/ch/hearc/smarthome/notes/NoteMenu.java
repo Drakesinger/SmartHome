@@ -1,4 +1,4 @@
-package login.p1;
+package ch.hearc.smarthome.notes;
 
 import android.app.Activity;
 import android.content.Intent;

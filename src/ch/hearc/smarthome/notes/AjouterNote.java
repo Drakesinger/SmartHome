@@ -1,4 +1,4 @@
-package login.p1;
+package ch.hearc.smarthome.notes;
 
 import java.util.Calendar;
 import android.app.Activity;
