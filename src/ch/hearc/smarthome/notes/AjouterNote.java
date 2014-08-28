@@ -1,23 +1,55 @@
 package ch.hearc.smarthome.notes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 
+import ch.hearc.smarthome.FileUtil;
+import ch.hearc.smarthome.notes.NoteActivity;
+import ch.hearc.smarthome.R;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import ch.hearc.smarthome.R;
+import android.widget.Toast;
+
 
 public class AjouterNote extends Activity {
 	
-	public EditText strDestinataire;
-	public EditText strSujet;
-	public EditText strDetail;
+	public String strDestinataire;
+	public String strSujet;
+	public String strDetail;
 	public String date;
+	public String save;
+	
+	// Save Directory
+		static File MAIN_DIR = new File(Environment.getExternalStorageDirectory()
+				.getAbsolutePath()
+				+ File.separator
+				+ "data"
+				+ File.separator
+				+ "SmartHome" + File.separator);
+
+		static File NOTE_DIR = new File(MAIN_DIR.getAbsolutePath()
+				+ File.separator + "Note" + File.separator);
+		static String SAVE_NAME = "Note.txt";
+		static File SAVE_FILEPATH = new File(NOTE_DIR.getAbsolutePath()
+				+ File.separator + SAVE_NAME);
 		
+		/* Checks if external storage is available for read and write */
+		public boolean isExternalStorageWritable() {
+		    String state = Environment.getExternalStorageState();
+		    if (Environment.MEDIA_MOUNTED.equals(state)) {
+		        return true;
+		    }
+		    return false;
+		}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,28 +78,51 @@ public class AjouterNote extends Activity {
 	public void AddNote(View view)
 	{
 		EditText destinataire =(EditText) findViewById(R.id.destinataire);
-		String strDestinataire = destinataire.getText().toString();
+		strDestinataire = destinataire.getText().toString();
 		destinataire.setText("");
 		
 		EditText sujet = (EditText) findViewById(R.id.sujet);
-		String strSujet = sujet.getText().toString();
+		strSujet = sujet.getText().toString();
 		sujet.setText("");
 		
 		EditText detail = (EditText) findViewById(R.id.detail);
-		String strDetail = detail.getText().toString();
+		strDetail = detail.getText().toString();
 		detail.setText("");
+		
 		
 		Calendar rightNow = Calendar.getInstance();
         date = rightNow.get(Calendar.DAY_OF_MONTH)+"/"+rightNow.get(Calendar.MONTH)+"/"+rightNow.get(Calendar.YEAR);
 		
-        
-        Intent intent = new Intent(AjouterNote.this, NoteActivity.class);
-		intent.putExtra("destinataire", strDestinataire);
-		intent.putExtra("sujet", strSujet);
-		intent.putExtra("detail", strDetail);
-		intent.putExtra("date", date);
-		
-		startActivity(intent);
-        
+        if(strDestinataire.matches("") || strSujet.matches("") || strDetail.matches(""))
+		{
+        	Toast.makeText(AjouterNote.this, "Veuillez remplir tous les champs !", Toast.LENGTH_SHORT).show();
+		}
+		else
+		{		
+	        if(isExternalStorageWritable() == false)
+	        {
+	        	Toast.makeText(AjouterNote.this, "No MEDIA", Toast.LENGTH_SHORT).show();
+	        }
+	        else
+	        {
+	        save += strDestinataire + ";" + strSujet + ";" + date + ";" + strDetail + "\n";
+	        WriteSettings(getBaseContext());
+	        Intent intent = new Intent(AjouterNote.this, NoteActivity.class);
+	    	startActivity(intent);
+	        }
+		}      
 	}
+	public void WriteSettings(Context context){  
+      //Modify the file
+      		if (FileUtil.isMediaMounted()) {
+      			try {
+      				FileUtil.writeTextFile(SAVE_FILEPATH, save, false);
+      			} catch (IOException e) {
+      				Toast.makeText(getApplicationContext(),
+      						"File writing error: " + e.getMessage(),
+      						Toast.LENGTH_SHORT).show();
+      			}
+      		} 
+       }
+	
 }
