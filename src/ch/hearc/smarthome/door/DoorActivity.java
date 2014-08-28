@@ -12,22 +12,22 @@ import android.widget.Toast;
 import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.PopupMessages;
 import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.networktester.BluetoothActivity;
+import ch.hearc.smarthome.networktester.SHBluetoothActivity;
 
-public class DoorActivity extends BluetoothActivity {
+public class DoorActivity extends SHBluetoothActivity {
 
-	/* Our view references */
+	// Our view references 
 	Button b_door_main_Open;
 	CheckBox cb_door_main_Change_Password;
 	EditText et_door_main_Password;
 
-	/* Our password string */
+	// Our password string 
 	String myPassword;
 	
-	/* Functions of SHDoorActivity */
-	private static final String open = "d open";
+	// Functions of SHDoorActivity 
+	private static final String	open = "d open";
 
-	/* Our intent and context in case of password change decision */
+	// Our intent and context in case of password change decision 
 	Intent i;
 	Context c;
 
@@ -43,18 +43,13 @@ public class DoorActivity extends BluetoothActivity {
 
 			@Override
 			public void onClick(View v) {
-				/*
-				 * When we click on our open button we send the password but
-				 * since we don't have a send method yet, let's show it
-				 */
+				//When we click on our open button we send the password but since we don't have a send method yet, let's show it
+				 
 				c = DoorActivity.this;
 
 				boolean checker = cb_door_main_Change_Password.isChecked();
-				/*
-				 * If the user checked that he wants to change password: we
-				 * compare the password, then send it, and then launch a new
-				 * intent
-				 */
+				//If the user checked that he wants to change password: we compare the password, then send it, and then launch a new intent
+				 
 				
 				myPassword = convertEditTextContentToStrings(et_door_main_Password);
 				boolean password_ok = myPassword.equals(CredentialManager.getDoorPass());
@@ -82,7 +77,6 @@ public class DoorActivity extends BluetoothActivity {
 	 * {@link String}.
 	 */
 	public static String convertEditTextContentToStrings(EditText et) {
-		// String textContent = et.getText().toString();
 		return et.getText().toString();
 	}
 

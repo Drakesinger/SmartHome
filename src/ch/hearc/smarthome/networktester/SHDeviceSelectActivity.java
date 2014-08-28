@@ -55,8 +55,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
     
     
     /* Intent request codes */
-	private static final int REQUEST_ACTION_LIST = 0;
-	private static final int REQUEST_CONNECT_DEVICE = 1;
+	private static final int REQUEST_LOGIN = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	
 	@Override
@@ -218,7 +217,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		
 		switch(requestCode)
 		{
-		case REQUEST_ACTION_LIST:
+		case REQUEST_LOGIN:
 			// Send messages from the parent to the handler
 			Message.obtain(new Handler(this), resultCode);
 			break;
@@ -272,7 +271,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 			if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection successful to " + msg.obj);
 			/* User now needs to login */
 			setTitle(getResources().getString(R.string.title_connected_to) + " " + mConnectedDevice.getName());
-			startActivityForResult(new Intent(getApplicationContext(), SHLogin.class), REQUEST_ACTION_LIST);
+			startActivityForResult(new Intent(getApplicationContext(), SHLogin.class), REQUEST_LOGIN);
 			break;
 		}
 		return false;

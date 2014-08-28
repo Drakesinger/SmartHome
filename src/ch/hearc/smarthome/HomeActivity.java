@@ -7,59 +7,69 @@ import android.view.View;
 import android.widget.TextView;
 import ch.hearc.smarthome.door.DoorActivity;
 import ch.hearc.smarthome.heating.HeatingMainActivity;
-import ch.hearc.smarthome.networktester.BluetoothActivity;
+import ch.hearc.smarthome.networktester.SHBluetoothActivity;
 import ch.hearc.smarthome.networktester.SHBluetoothTesting;
 import ch.hearc.smarthome.notes.NoteMenu;
 
-
-public class HomeActivity extends BluetoothActivity {
-	public final static String EXTRA_MESSAGENOTE = "com.example.myfirstapp.MESSAGE";
+/** Activity containing the links to our 4 other activities */
+public class HomeActivity extends SHBluetoothActivity
+{
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
-		 
-		 TextView textView = new TextView(this);
-		 textView.setTextSize(35);
-		 textView.setText("Bienvenue à la maison ");
 
-		 setContentView(textView);
-		 setContentView(R.layout.fragment_home);
+		TextView textView = new TextView(this);
+		textView.setTextSize(35);
+		textView.setText("Welcome home");
+
+		setContentView(textView);
+		setContentView(R.layout.fragment_home);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
-	}
-	
+	/*
+	 * Not needed
+	 * @Override
+	 * public boolean onCreateOptionsMenu(Menu menu) {
+	 * // Inflate the menu; this adds items to the action bar if it is present.
+	 * getMenuInflater().inflate(R.menu.login, menu);
+	 * return true;
+	 * }
+	 */
+
 	public void DoorMainActivity(View view)
 	{
 		Intent intent = new Intent(this, DoorActivity.class);
+		preventCancel = true;
 		startActivity(intent);
-	}	
-	
+	}
+
 	public void HeatMainActivity(View view)
 	{
 		Intent intent = new Intent(this, HeatingMainActivity.class);
+		preventCancel = true;
 		startActivity(intent);
 	}
-	
+
 	public void NotesMainActivity(View view)
 	{
 		Intent intent = new Intent(this, NoteMenu.class);
+		preventCancel = true;
 		startActivity(intent);
 	}
-	
+
 	public void AlarmMainActivity(View view)
 	{
-		//Intent intent = new Intent(this, AlarmeMainActivity.class);
-		//startActivity(intent);
+		// Intent intent = new Intent(this, AlarmeMainActivity.class);
+		// preventCancel = true;
+		// startActivity(intent);
 	}
-	
-	public void OnTesteLeBluetoothMagueule(View v){
+
+	public void OnTesteLeBluetoothMagueule(View v)
+	{
 		Intent intent = new Intent(this, SHBluetoothTesting.class);
+		preventCancel = true;
 		startActivity(intent);
 	}
 }

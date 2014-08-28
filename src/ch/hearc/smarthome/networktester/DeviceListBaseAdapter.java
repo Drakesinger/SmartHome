@@ -10,15 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import ch.hearc.smarthome.R;
 
-
 /**
  * Device list base adapter to show the devices in a custom ListView.
  */
 public class DeviceListBaseAdapter extends BaseAdapter
 {
-	private ArrayList<Device> deviceArrayList;
+	private ArrayList<Device>	deviceArrayList;
 
-	private LayoutInflater mInflater;
+	private LayoutInflater		mInflater;
 
 	public DeviceListBaseAdapter(Context context, ArrayList<Device> results)
 	{
@@ -26,9 +25,9 @@ public class DeviceListBaseAdapter extends BaseAdapter
 		mInflater = LayoutInflater.from(context);
 	}
 
-	public int getCount()
+	public int getCount( )
 	{
-		return deviceArrayList.size();
+		return deviceArrayList.size( );
 	}
 
 	public Object getItem(int position)
@@ -48,7 +47,7 @@ public class DeviceListBaseAdapter extends BaseAdapter
 		if(convertView == null)
 		{
 			convertView = mInflater.inflate(R.layout.device_row_view, null);
-			holder = new ViewHolder();
+			holder = new ViewHolder( );
 			holder.tvName = (TextView) convertView.findViewById(R.id.tvName);
 			holder.tvAddress = (TextView) convertView.findViewById(R.id.tvAddress);
 
@@ -56,18 +55,18 @@ public class DeviceListBaseAdapter extends BaseAdapter
 		}
 		else
 		{
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ViewHolder) convertView.getTag( );
 		}
 
-		holder.tvName.setText(deviceArrayList.get(position).getName());
-		holder.tvAddress.setText(deviceArrayList.get(position).getAddress());
+		holder.tvName.setText(deviceArrayList.get(position).getName( ));
+		holder.tvAddress.setText(deviceArrayList.get(position).getAddress( ));
 		return convertView;
 	}
 
 	static class ViewHolder
 	{
-		TextView tvName;
-		TextView tvAddress;
-		TextView tvSignal;
+		TextView	tvName;
+		TextView	tvAddress;
+		TextView	tvSignal;
 	}
 }

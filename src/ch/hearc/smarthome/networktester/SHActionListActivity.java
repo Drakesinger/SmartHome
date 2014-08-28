@@ -7,7 +7,7 @@ import android.os.Message;
 import android.widget.ListView;
 
 
-public class SHActionListActivity extends BluetoothActivity{
+public class SHActionListActivity extends SHBluetoothActivity{
 
 	private ArrayList<Action> activityList = new ArrayList<Action>();
 	private ListView lvActionList;
