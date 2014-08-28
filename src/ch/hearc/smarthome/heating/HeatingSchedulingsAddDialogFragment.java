@@ -34,7 +34,7 @@ public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
 
 	static File HEATING_DIR = new File(MAIN_DIR.getAbsolutePath()
 			+ File.separator + "Heating" + File.separator);
-	static String SAVE_NAME = "save.txt";
+	static String SAVE_NAME = "schedulings_save.txt";
 	static File SAVE_FILEPATH = new File(HEATING_DIR.getAbsolutePath()
 			+ File.separator + SAVE_NAME);
 

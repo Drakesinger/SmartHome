@@ -17,93 +17,63 @@
 
     <!-- Heating -->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <TextView
+        android:id="@+id/heating_thresholds_txt_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:text="@string/default_temperature"
+        android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/txtTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-        	android:layout_alignParentLeft="true"
-        	android:layout_marginLeft="5dip"
-            android:text="@string/default_temperature"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editTextDefaultTemperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="4"
-        	android:layout_alignParentRight="true"
-            android:gravity="center_vertical"
-            android:inputType="numberDecimal" >
-        </EditText>
-
-    </RelativeLayout>
-
-    
-    <!-- Light -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/txtLightBelow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-        	android:layout_alignParentLeft="true"
-        	android:layout_marginLeft="5dip"
-            android:text="@string/light_below"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editTextTurnOnBelow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="4"
-        	android:layout_alignParentRight="true"
-            android:gravity="center_vertical"
-            android:inputType="numberDecimal" >
-        </EditText>
-
-    </RelativeLayout>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:id="@+id/txtLightAbove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-        	android:layout_alignParentLeft="true"
-        	android:layout_marginLeft="5dip"
-            android:text="@string/light_above"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editTextTurnOffAbove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="4"
-        	android:layout_alignParentRight="true"
-            android:gravity="center_vertical"
-            android:inputType="numberDecimal" >
-        </EditText>
-
-    <Button
-        android:id="@+id/btnSaveThresholds"
+    <SeekBar
+        android:id="@+id/heating_thresholds_default"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:max="25" />
+
+    <!-- Light -->
+
+    <TextView
+        android:id="@+id/heating_thresholds_txt_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:text="@string/light_below"
+        android:textSize="18sp" />
+
+    <SeekBar
+        android:id="@+id/heating_thresholds_min"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
+
+    <TextView
+        android:id="@+id/heating_thresholds_txt_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:text="@string/light_above"
+        android:textSize="18sp" />
+
+    <SeekBar
+        android:id="@+id/heating_thresholds_max"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnSaveThresholds"
             style="?android:attr/buttonBarButtonStyle"
-        android:layout_alignParentLeft="true"
-        android:onClick="saveThresholds"
-        android:text="@string/save_thresholds" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="saveThresholds"
+            android:text="@string/save_thresholds" >
+        </Button>
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    
 </LinearLayout>

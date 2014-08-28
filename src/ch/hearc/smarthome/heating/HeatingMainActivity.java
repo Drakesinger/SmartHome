@@ -30,7 +30,7 @@ public class HeatingMainActivity extends Activity {
 			i = new Intent(c, HeatingThresholdsActivity.class);
 		} else if (v.getId() == R.id.buttonHistory) {
 			// TODO if HISTORY
-			i = new Intent(c, HeatingHistory.class);
+			i = new Intent(c, HeatingHistoryActivity.class);
 		} else if (v.getId() == R.id.buttonBack) {
 			
 			// this will be a return

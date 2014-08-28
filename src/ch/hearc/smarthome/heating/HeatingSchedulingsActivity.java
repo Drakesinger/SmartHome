@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -18,20 +17,12 @@ import ch.hearc.smarthome.R;
 public class HeatingSchedulingsActivity extends FragmentActivity {
 
 	// Save Directory
-	static File MAIN_DIR = new File(Environment.getExternalStorageDirectory()
-			.getAbsolutePath()
-			+ File.separator
-			+ "data"
-			+ File.separator
-			+ "SmartHome" + File.separator);
-
-	static File HEATING_DIR = new File(MAIN_DIR.getAbsolutePath()
-			+ File.separator + "Heating" + File.separator);
-	static String SAVE_NAME = "save.txt";
-	static File SAVE_FILEPATH = new File(HEATING_DIR.getAbsolutePath()
+	static String SAVE_NAME = "schedulings_save.txt";
+	static File SAVE_FILEPATH = new File(FileUtil.HEATING_DIR.getAbsolutePath()
 			+ File.separator + SAVE_NAME);
 
 	ListView schedulingListView;
+	
 	ArrayList<CheckBox> checkboxes = new ArrayList<CheckBox>();
 	ArrayList<HeatingScheduling> datas = new ArrayList<HeatingScheduling>();
 	HeatingSchedulingsArrayAdapter adapter;
@@ -112,7 +103,7 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 		String content = null, info = "";
 
 		if (FileUtil.isMediaMounted()) {
-			if (HEATING_DIR.exists()) {
+			if (FileUtil.HEATING_DIR.exists()) {
 				if (SAVE_FILEPATH.exists()) {
 					try {
 						content = FileUtil.readTextFile(SAVE_FILEPATH);
@@ -127,7 +118,7 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 				}
 			} else {
 				// Create Tree and restart function
-				FileUtil.createTree(HEATING_DIR);
+				FileUtil.createTree(FileUtil.HEATING_DIR);
 				updateList();
 				return;
 			}

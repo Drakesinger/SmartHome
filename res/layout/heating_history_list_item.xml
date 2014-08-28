@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip" >
+
+    <TextView
+        android:id="@+id/heating_history_list_item_temp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/heating_history_list_item_date"
+        android:layout_alignParentRight="true"
+        android:text="@string/item_temp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/heating_history_list_item_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/heating_history_list_item_temp"
+        android:gravity="center_vertical"
+        android:text="@string/item_name"
+        android:textSize="16sp" />
+
+</RelativeLayout> 

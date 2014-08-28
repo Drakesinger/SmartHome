@@ -27,16 +27,16 @@ public class HeatingSchedulingsArrayAdapter extends ArrayAdapter<HeatingScheduli
 	public boolean CHECKED = true, UNCHECKED = false;
 
 	Context context;
-	int layoutResourceId;
+	int resource;
 	ArrayList<HeatingScheduling> data = null;
 
-	public HeatingSchedulingsArrayAdapter(Context context, int layoutResourceId,
+	public HeatingSchedulingsArrayAdapter(Context context, int resource,
 			ArrayList<HeatingScheduling> data) {
 
-		super(context, layoutResourceId, data);
+		super(context, resource, data);
 
 		this.context = context;
-		this.layoutResourceId = layoutResourceId;
+		this.resource = resource;
 		this.data = data;
 	}
 
@@ -48,7 +48,7 @@ public class HeatingSchedulingsArrayAdapter extends ArrayAdapter<HeatingScheduli
 
 		if (row == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			row = inflater.inflate(layoutResourceId, parent, false);
+			row = inflater.inflate(resource, parent, false);
 
 			holder = new SchedulingHolder();
 			holder.name = (TextView) row

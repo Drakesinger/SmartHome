@@ -13,12 +13,25 @@ import android.util.Log;
 /**
  * Util class used to read/write/check files
  * 
+ * <h1> How to use it ? </h1>
+ * <p> Try....</p>
+ * 
  * @author Roulin, 26.08.14
  * 
  */
 
 public class FileUtil {
+	
+	public static File SMARTHOME_DIR = new File(Environment.getExternalStorageDirectory()
+			.getAbsolutePath()
+			+ File.separator
+			+ "data"
+			+ File.separator
+			+ "SmartHome" + File.separator);
 
+	public static File HEATING_DIR = new File(SMARTHOME_DIR.getAbsolutePath()
+			+ File.separator + "Heating" + File.separator);
+	
 	/**
 	 * Write in a text file
 	 * 
