@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.networktester.SHBluetoothActivity;
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 
 public class NoteMenu extends SHBluetoothActivity {
 
