@@ -76,7 +76,7 @@ public class NoteActivity extends Activity {
         map = new HashMap<String, String>();
  
         //Création d'un SimpleAdapter qui se chargera de mettre les items présent dans notre list (listItem) dans la vue affichageitem
-        SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.fragment_note,
+        final SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.fragment_note,
                new String[] {"auteur", "sujet", "date"}, new int[] {R.id.auteur, R.id.sujet, R.id.date});
         mSchedule.notifyDataSetChanged();
         //On attribut à notre listView l'adapter que l'on vient de créer
