@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/it_debug_mode"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/debug_mode_on"/>
+    <item
+        android:id="@+id/it_logger"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="@string/logging_on"/>
+    <item
+        android:id="@+id/it_disconnect"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/disconnect"/>
+    <item
+        android:id="@+id/it_home"
+        android:icon="@android:drawable/ic_media_previous"
+        android:title="@string/home">
+    </item>
+
+</menu>

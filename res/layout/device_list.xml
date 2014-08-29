@@ -3,42 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    
-    <TextView android:id="@+id/tv_device_list_paired_devices"
+
+    <TextView
+        android:id="@+id/tv_device_list_paired_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#666"
+        android:paddingLeft="5dp"
         android:text="@string/title_paired_devices"
-        android:visibility="gone"
-        android:background="#666"
         android:textColor="#fff"
-        android:paddingLeft="5dp"
-    />
-    <ListView android:id="@+id/lv_device_list_paired_devices"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/lv_device_list_paired_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stackFromBottom="true"
-        android:layout_weight="1"
-    />
-    <TextView android:id="@+id/tv_device_list_new_devices"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title_other_devices"
-        android:visibility="gone"
-        android:background="#666"
-        android:textColor="#fff"
-        android:paddingLeft="5dp"
-    />
-    <ListView android:id="@+id/lv_device_list_new_devices"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stackFromBottom="true"
         android:layout_weight="2"
-    />
-    <Button android:id="@+id/b_device_list_scan"
+        android:stackFromBottom="false" />
+
+    <TextView
+        android:id="@+id/tv_device_list_new_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_scan"
-    />
+        android:background="#666"
+        android:paddingLeft="5dp"
+        android:text="@string/title_other_devices"
+        android:textColor="#fff"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/lv_device_list_new_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll" />
+
+    <Button
+        android:id="@+id/b_device_list_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doDiscovery"
+        android:text="@string/button_scan" />
 
 </LinearLayout>

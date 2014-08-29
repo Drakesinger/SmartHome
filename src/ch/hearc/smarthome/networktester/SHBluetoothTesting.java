@@ -23,7 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.HomeActivity;
+import ch.hearc.smarthome.SHHomeActivity;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHDeviceListActivity;
 
@@ -416,7 +416,7 @@ public class SHBluetoothTesting extends Activity {
 				Toast.makeText(getApplicationContext(), "Login OK !",
 						Toast.LENGTH_LONG).show();
 
-				Intent intent = new Intent(this, HomeActivity.class);
+				Intent intent = new Intent(this, SHHomeActivity.class);
 				intent.putExtra(EXTRA_MESSAGE, username);
 				startActivity(intent);
 

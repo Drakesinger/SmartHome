@@ -23,27 +23,30 @@ public class SHLogin extends SHBluetoothActivity
 {
 
 	// View Components
-	private EditText			et_userName;
-	private EditText			et_password;
-	public final static String	EXTRA_MESSAGE	= "extra";
+	private EditText						et_userName;
+	private EditText						et_password;
+	public final static String				EXTRA_MESSAGE	= "extra";
 
-	public static short			kfirstUse		= 1;
+	public static short						kfirstUse		= 1;
 
 	// Functions of SHLogin
-	private static final String	login			= "login";
+	private static final String				login			= "login";
 
 	// Debugging
-	private static final String	TAG				= "SHLogin";
+	private static final String				TAG				= "SHLogin";
 
-	private static String		response		= null;
+	private static String					response		= null;
+	public static SHCommunicationProtocol	Protocol;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_login);
+		// Construct the Communication Protocol containing all functions used
+		Protocol = new SHCommunicationProtocol( );
 	}
-	
+
 	@Override
 	protected void onResume( )
 	{
@@ -51,13 +54,19 @@ public class SHLogin extends SHBluetoothActivity
 		preventCancel = false;
 		super.onResume( );
 	}
-	
-	/** Call when the back button is click, to shut down the application and the toast */
-	public void onBackPressed()
+
+	/**
+	 * Call when the back button is click, to shut down the application and the
+	 * toasts
+	 */
+	@Override
+	public void onBackPressed( )
 	{
-		System.exit(0);
+		disconnect( );
+		// System.exit(0); //TODO check which is better
+		super.onBackPressed( );
 	}
-	
+
 	/** Called by the login button */
 	public void login(View _view)
 	{
@@ -118,7 +127,6 @@ public class SHLogin extends SHBluetoothActivity
 
 		if(_bResponseRecived == false && _credential != null)
 		{
-			SHCommunicationProtocol Protocol = new SHCommunicationProtocol( );
 
 			String DataToSend = _credential + ","
 								+ Protocol.getFunctionID(login);
@@ -134,7 +142,7 @@ public class SHLogin extends SHBluetoothActivity
 		{
 			// We don't send again, just verify the answer
 
-			// Just in case the reponse is not available, should never happen
+			// Just in case the response is not available, should never happen
 			if(response == null)
 			{
 				notifyUser("No response received. Please try again.");
@@ -146,7 +154,7 @@ public class SHLogin extends SHBluetoothActivity
 			if(response.contains("login ok"))
 			{
 				notifyUser("Login OK !");
-				Intent intent = new Intent(this, HomeActivity.class);
+				Intent intent = new Intent(this, SHHomeActivity.class);
 				preventCancel = true;
 				startActivity(intent);
 			}
@@ -171,7 +179,8 @@ public class SHLogin extends SHBluetoothActivity
 			response = ((String) _msg.obj).toLowerCase( );
 			notifyUser("Received:" + response);
 
-			// quick attempt to receive and switch activity without re-clicking on the login button
+			// quick attempt to receive and switch activity without re-clicking
+			// on the login button
 			sendDataAndCheckResponse(null, false);
 
 		}

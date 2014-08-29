@@ -1,6 +1,5 @@
 package ch.hearc.smarthome.bluetooth;
 
-import ch.hearc.smarthome.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +8,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import ch.hearc.smarthome.R;
 
 /**
  * This class is used to build different Bluetooth activities in order to
@@ -37,7 +36,7 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	/**
 	 * Function used to send string data through bluetooth
 	 * 
-	 * @param _message
+	 * @param _message :
 	 *            the string that we want to send
 	 * @return True if message was sent
 	 *         <dl>
@@ -66,11 +65,12 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	 * <code>
 	 * if (msg.what == SHBluetoothNetworkManager.MSG_READ)
 	 * <br>
-	 * response = ((String) msg.obj).toLowerCase();
+	 * response_expected = ((String) msg.obj).toLowerCase();
+	 * function_to_launch_in_case_of_response( )
 	 * </code>
 	 * </dl>
 	 * 
-	 * @param _msg
+	 * @param _msg :
 	 *            the message received
 	 * @return false
 	 * */
@@ -124,48 +124,43 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater( ).inflate(R.menu.option_menu, menu);
+		getMenuInflater( ).inflate(R.menu.options_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem _item)
 	{
+		//@formatter:off
 		/*
-		 * // When the user clicks the application icon on the top left
-		 * if(_item.getItemId( ) == android.R.id.home)
-		 * {
-		 * // Behave as if the back button was clicked
-		 * onBackPressed( );
-		 * return true;
-		 * }
-		 */
+		  // When the user clicks the application icon on the top left
+		  if(_item.getItemId( ) == android.R.id.home)
+		  {
+		  // Behave as if the back button was clicked
+		  onBackPressed( );
+		  return true;
+		  }
+		*/
+		//@formatter:on
 		Intent serverIntent = null; // used when we start debugging or logger
 		switch(_item.getItemId( ))
 		{
-			case android.R.id.home:
-
+			case R.id.it_home:
+				// case android.R.id.home:
 				// Behave as if the back button was clicked
 				onBackPressed( );
 				return true;
-
-			case R.id.it_discoverable:
+			case R.id.it_logger:
+				// nothing yet
+				return true;
+			case R.id.it_debug_mode:
 				// do nothing yet
 				return true;
 
 			case R.id.it_disconnect:
-				/* TODO make a disconnect method */
 				if(mBtNetworkManager != null)
 				{
 					mBtNetworkManager.disconnect( );
-				}
-				return true;
-
-			case R.id.it_quit:
-				if(mBtNetworkManager != null)
-				{
-					mBtNetworkManager.stop( );
-					Toast.makeText(this, "Bluetooth stooped", Toast.LENGTH_SHORT).show( );
 					finish( );
 				}
 				return true;

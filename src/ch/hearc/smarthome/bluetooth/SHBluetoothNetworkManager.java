@@ -21,7 +21,6 @@ import android.util.Log;
 public class SHBluetoothNetworkManager extends Application
 {
 
-
 	// SDP (Service Discovery Protocol) Name 
 	private static final String 	NAME 	= "SmartHome Bluetooth";
 
@@ -45,14 +44,15 @@ public class SHBluetoothNetworkManager extends Application
 	// UUIDs for this application 
 	// This is the base UUID in order to establish an RFCOMM channel with the PIC module 
 	private static final UUID BASE_UUID		= UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-	//@formatter:off
+
 	// Constants to indicate message contents 
 	public static final int MSG_OK 			= 0;
 	public static final int MSG_READ 		= 1;
 	public static final int MSG_WRITE 		= 2;
 	public static final int MSG_CANCEL 		= 3;
 	public static final int MSG_CONNECTED 	= 4;
-
+	//@formatter:off
+	
 	// Bluetooth States 
 	public static final int STATE_NONE 			= 0; // we're doing nothing
 	public static final int STATE_LISTEN 		= 1; // now listening for incoming connections
