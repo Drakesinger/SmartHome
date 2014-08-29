@@ -23,8 +23,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 
-public class HeatingHistoryListViewActivity extends Activity {
+public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 	// Save Directory
 	static String SAVE_NAME = "history_save.txt";
@@ -35,10 +36,6 @@ public class HeatingHistoryListViewActivity extends Activity {
 	private ListView historyListView;
 	private ArrayList<HeatingHistoryObject> history = new ArrayList<HeatingHistoryObject>();
 	private HeatingHistoryArrayAdapter adapter;
-
-	// Graphical View
-	private GraphicalView chartView;
-
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);

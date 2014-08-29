@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,8 +13,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 
-public class HeatingSchedulingsActivity extends FragmentActivity {
+public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 
 	// Save Directory
 	static String SAVE_NAME = "schedulings_save.txt";
@@ -22,7 +23,7 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 			+ File.separator + SAVE_NAME);
 
 	ListView schedulingListView;
-	
+
 	ArrayList<CheckBox> checkboxes = new ArrayList<CheckBox>();
 	ArrayList<HeatingScheduling> datas = new ArrayList<HeatingScheduling>();
 	HeatingSchedulingsArrayAdapter adapter;
@@ -31,6 +32,7 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
+
 		setContentView(R.layout.heating_scheduling);
 
 		// ListAdapter -> ListView
@@ -82,7 +84,7 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 			save += s.getName() + ";" + s.getDate() + ";" + s.getTemp() + "\n";
 		}
 
-		//Modify the file
+		// Modify the file
 		if (FileUtil.isMediaMounted()) {
 			try {
 				FileUtil.writeTextFile(SAVE_FILEPATH, save, false);
@@ -135,7 +137,7 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 			Toast.makeText(getApplicationContext(), "No save found",
 					Toast.LENGTH_SHORT).show();
 		} else {
-			String lines[] = content.split("\n"); 
+			String lines[] = content.split("\n");
 			// Clear 'datas'
 			datas.clear();
 
@@ -148,5 +150,15 @@ public class HeatingSchedulingsActivity extends FragmentActivity {
 			adapter.notifyDataSetChanged();
 		}
 
+	}
+
+	@Override
+	public boolean handleMessage(Message _msg) {
+		
+		String response;
+		if (_msg.what == SHBluetoothNetworkManager.MSG_READ) {
+			response = ((String) _msg.obj).toLowerCase( );
+		}
+		return false;
 	}
 }

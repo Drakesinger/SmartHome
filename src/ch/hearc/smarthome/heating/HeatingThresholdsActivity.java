@@ -13,8 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 
-public class HeatingThresholdsActivity extends Activity {
+public class HeatingThresholdsActivity extends SHBluetoothActivity {
 
 	// Save Directory
 	static String SAVE_NAME = "thresholds_save.txt";

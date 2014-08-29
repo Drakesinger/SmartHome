@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 
-public class HeatingMainActivity extends Activity {
+public class HeatingMainActivity extends SHBluetoothActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -37,7 +37,7 @@ public class HeatingMainActivity extends Activity {
 		startActivity(i);
 
 	}
-	
+
 	public void intentBack(View v) {
 		finish();
 	}
