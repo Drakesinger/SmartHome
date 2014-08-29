@@ -12,7 +12,7 @@ import android.widget.Toast;
 import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.PopupMessages;
 import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.networktester.SHBluetoothActivity;
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 
 public class DoorActivity extends SHBluetoothActivity {
 

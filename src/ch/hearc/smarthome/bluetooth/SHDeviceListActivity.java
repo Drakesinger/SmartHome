@@ -1,4 +1,4 @@
-package ch.hearc.smarthome.networktester;
+package ch.hearc.smarthome.bluetooth;
 
 import java.util.Set;
 

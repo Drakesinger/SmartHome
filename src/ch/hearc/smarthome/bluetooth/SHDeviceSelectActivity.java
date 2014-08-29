@@ -1,4 +1,4 @@
-package ch.hearc.smarthome.networktester;
+package ch.hearc.smarthome.bluetooth;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -26,6 +26,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.SHLogin;
+import ch.hearc.smarthome.networktester.Device;
+import ch.hearc.smarthome.networktester.DeviceListBaseAdapter;
 
 public class SHDeviceSelectActivity extends Activity implements Handler.Callback {
 

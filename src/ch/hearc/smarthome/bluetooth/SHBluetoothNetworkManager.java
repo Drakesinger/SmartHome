@@ -1,9 +1,11 @@
-package ch.hearc.smarthome.networktester;
+package ch.hearc.smarthome.bluetooth;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+
+import ch.hearc.smarthome.networktester.SHBluetoothTesting;
 
 import android.app.Activity;
 import android.app.Application;

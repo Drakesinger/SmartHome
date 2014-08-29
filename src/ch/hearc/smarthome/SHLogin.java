@@ -1,4 +1,4 @@
-package ch.hearc.smarthome.networktester;
+package ch.hearc.smarthome;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.HomeActivity;
-import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
+import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 /**
  * Activity called directly after connecting with a device.
@@ -82,7 +81,7 @@ public class SHLogin extends SHBluetoothActivity
 
 				CredentialManager.setCredential(username, password);
 				CredentialManager.setActualUser(username);
-				sendDataAndCheckResponse(CredentialManager.getCredential(username, false));
+				sendDataAndCheckResponse(CredentialManager.getCredential(username, false), false);
 			}
 			else
 			{
@@ -93,7 +92,7 @@ public class SHLogin extends SHBluetoothActivity
 					if(CredentialManager.bPasswordCorrect(username, password))
 					{
 						CredentialManager.setActualUser(username);
-						sendDataAndCheckResponse(CredentialManager.getCredential(username, true));
+						sendDataAndCheckResponse(CredentialManager.getCredential(username, true), false);
 					}
 					else
 					{
@@ -114,39 +113,47 @@ public class SHLogin extends SHBluetoothActivity
 
 	}
 
-	private void sendDataAndCheckResponse(String _credential)
+	private void sendDataAndCheckResponse(String _credential, boolean _bResponseRecived)
 	{
 
-		SHCommunicationProtocol Protocol = new SHCommunicationProtocol( );
-
-		String DataToSend = _credential + "," + Protocol.getFunctionID(login);
-		write(DataToSend);
-
-		if(SHBluetoothNetworkManager.DEBUG)
+		if(_bResponseRecived == false && _credential != null)
 		{
-			Log.d(TAG, "Sent data:\n" + DataToSend);
-			Log.d(TAG, "Response variable is in SendData:" + response);
-		}
+			SHCommunicationProtocol Protocol = new SHCommunicationProtocol( );
 
-		if(response == null)
-		{
-			notifyUser("No response received. Please try again.");
-			return;
-		}
+			String DataToSend = _credential + ","
+								+ Protocol.getFunctionID(login);
+			write(DataToSend);
 
-		if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response contains: "
-														+ response);
-		// Response must be [user][login ok]
-		if(response.contains("login ok"))
-		{
-			notifyUser("Login OK !");
-			Intent intent = new Intent(this, HomeActivity.class);
-			preventCancel = true;
-			startActivity(intent);
+			if(SHBluetoothNetworkManager.DEBUG)
+			{
+				Log.d(TAG, "Sent data:\n" + DataToSend);
+				Log.d(TAG, "Response variable is in SendData:" + response);
+			}
 		}
 		else
 		{
-			notifyUser("Login fail");
+			// We don't send again, just verify the answer
+
+			// Just in case the reponse is not available, should never happen
+			if(response == null)
+			{
+				notifyUser("No response received. Please try again.");
+				return;
+			}
+			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response contains: "
+															+ response);
+			// Response must be [user][login ok]
+			if(response.contains("login ok"))
+			{
+				notifyUser("Login OK !");
+				Intent intent = new Intent(this, HomeActivity.class);
+				preventCancel = true;
+				startActivity(intent);
+			}
+			else
+			{
+				notifyUser("Login fail");
+			}
 		}
 	}
 
@@ -163,6 +170,10 @@ public class SHLogin extends SHBluetoothActivity
 			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response found, changing response string");
 			response = ((String) _msg.obj).toLowerCase( );
 			notifyUser("Received:" + response);
+
+			// quick attempt to receive and switch activity without re-clicking on the login button
+			sendDataAndCheckResponse(null, false);
+
 		}
 		return super.handleMessage(_msg);
 	}

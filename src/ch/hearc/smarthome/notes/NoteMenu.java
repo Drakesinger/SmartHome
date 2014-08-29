@@ -1,6 +1,5 @@
 package ch.hearc.smarthome.notes;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,15 +34,13 @@ public class NoteMenu extends SHBluetoothActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-		
-	public void SupprimerNoteActivity(View view)
-	{
+
+	public void SupprimerNoteActivity(View view) {
 		Intent intent = new Intent(NoteMenu.this, NoteActivity.class);
 		startActivity(intent);
 	}
-	
-	public void AjouterNoteActivity(View view)
-	{
+
+	public void AjouterNoteActivity(View view) {
 		Intent intent = new Intent(NoteMenu.this, AjouterNote.class);
 		startActivity(intent);
 	}
