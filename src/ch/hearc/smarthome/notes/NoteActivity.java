@@ -42,43 +42,21 @@ public class NoteActivity extends Activity {
 	public ListView maListViewPerso;
 	public int positionToRemove;
 	String Newligne=System.getProperty("line.separator"); 
+		
+		// Save Directory Path
+		static File MAIN_DIR = new File(Environment.getExternalStorageDirectory()
+				.getAbsolutePath()
+				+ File.separator
+				+ "data"
+				+ File.separator
+				+ "SmartHome" + File.separator);
 	
-	// Save Directory
-				static File MAIN_DIR = new File(Environment.getExternalStorageDirectory()
-						.getAbsolutePath()
-						+ File.separator
-						+ "data"
-						+ File.separator
-						+ "SmartHome" + File.separator);
-
-				static File NOTE_DIR = new File(MAIN_DIR.getAbsolutePath()
-						+ File.separator + "Note" + File.separator);
-				static String SAVE_NAME = "Note.txt";
-				static File SAVE_FILEPATH = new File(NOTE_DIR.getAbsolutePath()
-						+ File.separator + SAVE_NAME);
-				
-				/* Checks if external storage is available to at least read */
-				public boolean isExternalStorageReadable() {
-				    String state = Environment.getExternalStorageState();
-				    if (Environment.MEDIA_MOUNTED.equals(state) ||
-				        Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-				        return true;
-				    }
-				    return false;
-				}
-				
-				public String readTextFile(File file) throws IOException {
-					BufferedReader reader = new BufferedReader(new FileReader(file));
-					StringBuilder text = new StringBuilder();
-					String line;
-					while ((line = reader.readLine()) != null) {
-						text.append(line);
-						text.append("\n");
-					}
-					reader.close();
-					return text.toString();
-				}
-	 
+		static File NOTE_DIR = new File(MAIN_DIR.getAbsolutePath()
+				+ File.separator + "Note" + File.separator);
+		static String SAVE_NAME = "Note.txt";
+		static File SAVE_FILEPATH = new File(NOTE_DIR.getAbsolutePath()
+				+ File.separator + SAVE_NAME);
+			 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -165,13 +143,11 @@ public class NoteActivity extends Activity {
         		//on insère un message à notre boite de dialogue, et ici on affiche le titre de l'item cliqué
         		adb.setMessage("Détails du message : " +Newligne+map.get("detail") +Newligne+Newligne);
         		//on indique que l'on veut le bouton ok à notre boite de dialogue
-        		adb.setPositiveButton("OK", null);
-        		
+        		adb.setPositiveButton("OK", null);       		
         		//on affiche la boite de dialogue
         		adb.show();
         	}
          });
-        
 
         maListViewPerso.setOnItemLongClickListener(new OnItemLongClickListener() {
         	@Override
@@ -189,6 +165,7 @@ public class NoteActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                     	listItem.remove(positionToRemove);
                     	mSchedule.notifyDataSetChanged();
+                    	//On supprime la ligne dans le fichier texte, en le réecrivant sans la ligne en question.
                     	try {
                             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(SAVE_FILEPATH)));
                  
@@ -214,9 +191,7 @@ public class NoteActivity extends Activity {
                     }});
                 adb.show();
     		return true;
-    		
-        }
+        	}
         });
-        
     }
 }

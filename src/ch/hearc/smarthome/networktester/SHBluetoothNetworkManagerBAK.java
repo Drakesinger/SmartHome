@@ -467,7 +467,11 @@ public class SHBluetoothNetworkManagerBAK{
 			}
 		}
 	}
-	/** TODO documentation */
+	/** Write to the connected Thread if connected
+	 * 
+	 *  @param _out
+	 *  			the byte to write
+	 */
 	public void write(byte[] _out) {
 		ConnectedThread conThread;
 
@@ -487,7 +491,10 @@ public class SHBluetoothNetworkManagerBAK{
 		conThread.write(_out);
 	}
 
-	/** TODO documentation */
+	/** Start the connection with the device
+	 * 
+	 *  @param _device 
+	 *  				the device we want to connect*/
 	public synchronized void connect(BluetoothDevice _device) {
 		if (DEBUG) {
 			Log.d(TAG, "Connect to " + _device);
@@ -515,7 +522,14 @@ public class SHBluetoothNetworkManagerBAK{
 
 	}
 	
-	/** TODO documentation */
+	/** Connect with the device, using the socket and the device name
+	 * 
+	 *  @param _socket
+	 *  				the socket that we want to connect
+	 *  
+	 *  @param _device
+	 *  				the device that we want to connect
+	 *  				*/
 	public synchronized void connected(BluetoothSocket _socket, BluetoothDevice _device) {
 		if (DEBUG) {
 			Log.d(TAG, "Connected on " + _socket + " with " + _device);
@@ -592,7 +606,13 @@ public class SHBluetoothNetworkManagerBAK{
 	}
 	
 
-	/** TODO documentation */
+	/**	 The message we want to show when the device is not connect or fail to connect
+	 * 
+	 *   @param _errorDescription 
+	 *   				The description for the error connection
+	 *   @param _restart
+	 *   				A boolean to restart the service in order to try again
+	 *   */
 	private void exceptionManager(String _errorDescription,boolean _restart) {
 		Message message = mHandler.obtainMessage(SHBluetoothTesting.MESSAGE_TOAST);
 		Bundle bundle = new Bundle();

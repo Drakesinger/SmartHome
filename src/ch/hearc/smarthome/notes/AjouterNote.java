@@ -41,15 +41,7 @@ public class AjouterNote extends Activity {
 		static String SAVE_NAME = "Note.txt";
 		static File SAVE_FILEPATH = new File(NOTE_DIR.getAbsolutePath()
 				+ File.separator + SAVE_NAME);
-		
-		/* Checks if external storage is available for read and write */
-		public boolean isExternalStorageWritable() {
-		    String state = Environment.getExternalStorageState();
-		    if (Environment.MEDIA_MOUNTED.equals(state)) {
-		        return true;
-		    }
-		    return false;
-		}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,7 +81,6 @@ public class AjouterNote extends Activity {
 		strDetail = detail.getText().toString();
 		detail.setText("");
 		
-		
 		Calendar rightNow = Calendar.getInstance();
         date = rightNow.get(Calendar.DAY_OF_MONTH)+"/"+rightNow.get(Calendar.MONTH)+"/"+rightNow.get(Calendar.YEAR);
 		
@@ -99,16 +90,16 @@ public class AjouterNote extends Activity {
 		}
 		else
 		{		
-	        if(isExternalStorageWritable() == false)
+	        if(FileUtil.isExternalStorageWritable() == false)
 	        {
 	        	Toast.makeText(AjouterNote.this, "No MEDIA", Toast.LENGTH_SHORT).show();
 	        }
 	        else
 	        {
-	        save += strDestinataire + ";" + strSujet + ";" + date + ";" + strDetail + "\n";
-	        WriteSettings(getBaseContext());
-	        Intent intent = new Intent(AjouterNote.this, NoteActivity.class);
-	    	startActivity(intent);
+		        save += strDestinataire + ";" + strSujet + ";" + date + ";" + strDetail + "\n";
+		        WriteSettings(getBaseContext());
+		        Intent intent = new Intent(AjouterNote.this, NoteActivity.class);
+		    	startActivity(intent);
 	        }
 		}      
 	}

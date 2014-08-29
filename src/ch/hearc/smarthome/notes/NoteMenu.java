@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import ch.hearc.smarthome.R;
 
-public class NoteMenu extends Activity {
+public class NoteMenu extends SHBluetoothActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

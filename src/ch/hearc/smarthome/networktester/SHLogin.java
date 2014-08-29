@@ -44,7 +44,7 @@ public class SHLogin extends SHBluetoothActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_login);
 	}
-
+	
 	@Override
 	protected void onResume( )
 	{
@@ -52,7 +52,13 @@ public class SHLogin extends SHBluetoothActivity
 		preventCancel = false;
 		super.onResume( );
 	}
-
+	
+	/** Call when the back button is click, to shut down the application and the toast */
+	public void onBackPressed()
+	{
+		System.exit(0);
+	}
+	
 	/** Called by the login button */
 	public void login(View _view)
 	{
