@@ -28,12 +28,12 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/btnShowPastWeek"
+            android:id="@+id/btnShowGraphicalView"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="showPastWeek"
-            android:text="@string/show_past_week" />
+            android:onClick="showGraphicalView"
+            android:text="@string/show_graphical_view" />
     </LinearLayout>
 
 </LinearLayout>

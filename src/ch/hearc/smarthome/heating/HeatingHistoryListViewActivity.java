@@ -4,24 +4,40 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 
-public class HeatingHistoryActivity extends Activity {
+public class HeatingHistoryListViewActivity extends Activity {
 
 	// Save Directory
 	static String SAVE_NAME = "history_save.txt";
 	static File SAVE_FILEPATH = new File(FileUtil.HEATING_DIR.getAbsolutePath()
 			+ File.separator + SAVE_NAME);
-	
-	ListView historyListView;
-	ArrayList<HeatingHistoryObject> history = new ArrayList<HeatingHistoryObject>();
-	HeatingHistoryArrayAdapter adapter;
+
+	// List View
+	private ListView historyListView;
+	private ArrayList<HeatingHistoryObject> history = new ArrayList<HeatingHistoryObject>();
+	private HeatingHistoryArrayAdapter adapter;
+
+	// Graphical View
+	private GraphicalView chartView;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -32,10 +48,13 @@ public class HeatingHistoryActivity extends Activity {
 		adapter = new HeatingHistoryArrayAdapter(this,
 				R.layout.heating_history_list_item, history);
 		historyListView.setAdapter(adapter);
-		
+
 		updateList();
+
 	}
+
 	
+
 	public void updateList() {
 
 		String content = null, info = "";
@@ -73,7 +92,7 @@ public class HeatingHistoryActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "No save found",
 					Toast.LENGTH_SHORT).show();
 		} else {
-			String lines[] = content.split("\n"); 
+			String lines[] = content.split("\n");
 			// Clear 'datas'
 			history.clear();
 
@@ -88,9 +107,20 @@ public class HeatingHistoryActivity extends Activity {
 
 	}
 
-	public void showPastWeek(View v) {
-		Toast.makeText(getApplicationContext(), "No save found !",
-				Toast.LENGTH_SHORT).show();
+	public void showGraphicalView(View v) {
+		Intent i = new Intent(this, HeatingHistoryGraphicViewActivity.class);
+		
+		ArrayList<String> dates = new ArrayList<String>();
+		ArrayList<String> temps = new ArrayList<String>();
+		
+		for(HeatingHistoryObject h:history){
+			dates.add(h.getDate());
+			temps.add(h.getTemp());
+		}
+		
+		i.putStringArrayListExtra("dates", dates);
+		i.putStringArrayListExtra("temps", temps);
+		startActivity(i);
 	}
 
 }

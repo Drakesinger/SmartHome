@@ -31,19 +31,7 @@
     <string name="end">End</string>
 
     <!-- Heating History -->
-    <string name="show_past_week">Show Past Week</string>
-    <string name="days_1">Monday 24.03.14</string>
-    <string name="days_2">Tuesday 25.03.14</string>
-    <string name="days_3">Wednesday 26.03.14</string>
-    <string name="days_4">Thursday 27.03.14</string>
-    <string name="days_5">Friday 28.03.14</string>
-    <string name="days_6">Saturday 29.03.14</string>
-    <string name="tmp_1">20.1° C</string>
-    <string name="tmp_2">21.3° C</string>
-    <string name="tmp_3">22.4° C</string>
-    <string name="tmp_4">21.1° C</string>
-    <string name="tmp_5">21.5° C</string>
-    <string name="tmp_6">23.5° C</string>
+    <string name="show_graphical_view">Show graphical view</string>
 
     <!-- Login Main Activity -->
     <!-- FIX this!!!! -->
