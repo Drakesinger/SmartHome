@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.door.DoorActivity;
 import ch.hearc.smarthome.heating.HeatingMainActivity;
-import ch.hearc.smarthome.networktester.SHBluetoothActivity;
 import ch.hearc.smarthome.networktester.SHBluetoothTesting;
 import ch.hearc.smarthome.notes.NoteMenu;
 

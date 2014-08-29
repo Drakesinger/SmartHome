@@ -2,6 +2,9 @@ package ch.hearc.smarthome.networktester;
 
 import java.util.ArrayList;
 
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
+import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+
 import android.os.Bundle;
 import android.os.Message;
 import android.widget.ListView;

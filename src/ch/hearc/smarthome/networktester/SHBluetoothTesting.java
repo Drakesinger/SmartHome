@@ -25,6 +25,7 @@ import android.widget.Toast;
 import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.HomeActivity;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.bluetooth.SHDeviceListActivity;
 
 public class SHBluetoothTesting extends Activity {
 
@@ -63,7 +64,8 @@ public class SHBluetoothTesting extends Activity {
 	public static final String DEVICE_ADDRESS 	= "device_address";
 	public static final String TOAST 			= "toast";
 
-	/*	###############################################################
+	/*	
+	 	###############################################################
 		# Objects used by derived classes for bluetooth communication #
 		###############################################################	
 		
