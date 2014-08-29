@@ -10,14 +10,9 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import ch.hearc.smarthome.R;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class HeatingHistoryGraphicViewActivity extends Activity {
 
@@ -66,9 +61,14 @@ GraphicalView chartView;
 		mDataset.addSeries(temps);
 
 		// We want to avoid black border
+		int[] margins = {100,100,100,100};
+		mRenderer.setMargins(margins);
 		mRenderer.setMarginsColor(Color.argb(0x00, 0xff, 0x00, 0x00));
 		mRenderer.setLegendTextSize(40);
-		mRenderer.setShowLabels(true);
+		mRenderer.setXTitle("Days");
+		mRenderer.setYTitle("Temperature");
+		mRenderer.setDisplayValues(true);
+		mRenderer.setAxisTitleTextSize(50);
 		// Disable Pan on two axis
 		mRenderer.setPanEnabled(false, false);
 		mRenderer.setYAxisMax(35);
