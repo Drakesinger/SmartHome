@@ -15,7 +15,8 @@
         android:layout_alignLeft="@+id/detail"
         android:layout_below="@+id/detail"
         android:ems="10"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:maxLength="8"/>
     
 
     <TextView
@@ -44,7 +45,8 @@
         android:layout_marginLeft="80dp"
         android:layout_marginTop="120dp"
         android:ems="10"
-        android:inputType="text" >
+        android:inputType="text" 
+        android:maxLength="8">
 
         <requestFocus />
     </EditText>
@@ -57,7 +59,8 @@
         android:layout_below="@+id/sujet"
         android:layout_marginLeft="14dp"
         android:ems="10"
-        android:inputType="text" />
+        android:inputType="text"
+        android:maxLength="128" />
 
     <TextView
         android:id="@+id/txtSujet"

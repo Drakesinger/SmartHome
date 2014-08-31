@@ -37,11 +37,13 @@ public class NoteMenu extends SHBluetoothActivity {
 
 	public void SupprimerNoteActivity(View view) {
 		Intent intent = new Intent(NoteMenu.this, NoteActivity.class);
+		preventCancel = true;
 		startActivity(intent);
 	}
 
 	public void AjouterNoteActivity(View view) {
 		Intent intent = new Intent(NoteMenu.this, AjouterNote.class);
+		preventCancel = true;
 		startActivity(intent);
 	}
 }
