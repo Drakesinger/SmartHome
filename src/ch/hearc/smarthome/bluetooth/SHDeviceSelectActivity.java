@@ -27,6 +27,11 @@ import android.widget.Toast;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.SHLogin;
 
+/**
+ * This activity is launched at application start after the Bluetooth Manager.
+ * It will present the user with the already paired Bluetooth devices and allows
+ * the user to search for other devices in the area.
+ */
 public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 {
 
@@ -39,7 +44,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 	private BluetoothAdapter			mBtAdapter;
 	private SHBluetoothNetworkManager	mBtNetworkManager;
 
-	private SHDevice					mConnectedDevice;
+	public SHDevice						mConnectedDevice;
 
 	// View components
 	private ArrayList<SHDevice>			devAvailableList;
@@ -72,10 +77,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		// Start the bluetooth adapter
 		mBtAdapter = BluetoothAdapter.getDefaultAdapter( );
 
-		if(SHBluetoothNetworkManager.DEBUG)
-		{
-			Toast.makeText(getApplicationContext( ), "On Create", Toast.LENGTH_SHORT).show( );
-		}
+		if(SHBluetoothNetworkManager.DEBUG) Toast.makeText(getApplicationContext( ), "On Create", Toast.LENGTH_SHORT).show( );
 
 		// Setup Bluetooth devices lists with custom rows
 		devPairedListView = (ListView) findViewById(R.id.lv_device_list_paired_devices);
@@ -270,12 +272,11 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 				break;
 			case SHBluetoothNetworkManager.MSG_CANCEL:
 				// The child activity did not end gracefully (connection lost,
-				// failed...)
+				// failed,etc.)
 				if(msg.obj != null)
 				{
-					// If a some text came with the message show in a toast
-					if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Message: "
-																	+ msg.obj);
+					// If some text came with the message show in a toast
+					if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Message: " + msg.obj);
 					Toast.makeText(SHDeviceSelectActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show( );
 				}
 				break;
@@ -291,6 +292,9 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		}
 		return false;
 	}
+
+
+
 
 	//@formatter:off
 	/** The on-click listener for all devices in the ListViews */

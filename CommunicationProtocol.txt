@@ -4,7 +4,10 @@ Normal format for every function
 [user][function][param 1][param 2]…[param n]
 ----------------------------------------------------------------------------------------
 Login screen
-[user][password][1st use]
+Ask if there was already someone logged in on PIC:
+[0]
+Login:
+[user][password][1]
 Change password:
 [user][change pass][old pass][new pass]
 Change username:
@@ -20,7 +23,6 @@ Add user:
 Un/Block user:
 [user][un/block user][user to un/block]
 ----------------------------------------------------------------------------------------
-
 Temperature screen
 Get data:
 [user][get temp]
@@ -30,6 +32,7 @@ Add program:
 [user][add temp][program name][desired start time][desired end time][temp value][optional note]
 Delete program:
 [user][del temp][program name][optional reason]
+----------------------------------------------------------------------------------------
 Door screen
 Set code:
 [user][set pass][desired door code]
@@ -43,7 +46,7 @@ Unblock user:
 [user][unblock user][user to unblock]
 Get entry times & attempts:
 [user][get times][start date]
-
+----------------------------------------------------------------------------------------
 Post-it
 Get post-its for me & public:
 [user][get post-its]
@@ -51,7 +54,7 @@ Add post-it for user X or public:
 [user][add post-it][dest user/public][length][data]
 Delete my post-it for user X / public:
 [user][del post-it][dest user/public]
-
+----------------------------------------------------------------------------------------
 Video surveillance
 Set alarm (buzzer sound on) mode:
 [user][set alarm][start date][start hour][start min][end date][end hour][end min]
@@ -65,10 +68,15 @@ Get photo of record (as we click on a record):
 [user][get photo][record ID]
 Purge records & photos:
 [user][purge all]
-
+########################################################################################
+########################################################################################
+########################################################################################
 Data Format: Module -> Android
 ----------------------------------------------------------------------------------------
 Login screen
+Someone has already logged in once:
+[1][\n]
+Login ok:
 [user][login ok]
 1st use:
 [user][user added confirmation]
@@ -90,7 +98,6 @@ Add user:
 Un/Block user:
 [user][un/block user ok ][username un/blocked]
 ----------------------------------------------------------------------------------------
-
 Temperature screen
 Get data will also need to be done in 2 steps:
 1)	[user][get temp][nr of temp record]
@@ -99,12 +106,15 @@ Add program:
 [user][add temp ok][program name]
 Delete program:
 [user][del temp ok][program name]
+----------------------------------------------------------------------------------------
 Door screen
 Set code:
 [user][set pass ok][desired door code ok]
 Change code:
 [user][change pass ok][desired door code ok]
 Open door:
+[open][ok]
+[open][nok]
 [user][open ok/nok][user is blocked or not]
 Block user:
 [user][block user ok][user to block]
@@ -113,7 +123,7 @@ Unblock user:
 Get entry times & attempts again in 2 times:
 1)	[user][get times][start date][nr records]
 2)	[user][door][record ID][date][hour][min][entry or attempt]
-
+----------------------------------------------------------------------------------------
 Post-it
 Get post-its for me & public:
 [user][get post-its][source user][message length][data]
@@ -121,7 +131,7 @@ Add post-it for user X or public:
 [user][add post-it ok]
 Delete my post-it for user X / public:
 [user][del post-it ok]
-
+----------------------------------------------------------------------------------------
 Video surveillance
 Set alarm (buzzer sound on) mode:
 [user][set alarm ok]

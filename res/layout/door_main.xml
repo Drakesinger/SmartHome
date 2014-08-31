@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/cb_door_main_Change_Password"
         android:layout_alignParentBottom="true"
-        android:text="Open" />
+        android:text="Open"
+        android:onClick="requestDoorOpen" />
 
     <CheckBox
         android:id="@+id/cb_door_main_Change_Password"

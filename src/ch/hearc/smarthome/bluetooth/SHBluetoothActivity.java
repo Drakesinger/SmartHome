@@ -8,7 +8,9 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.SHHomeActivity;
 
 /**
  * This class is used to build different Bluetooth activities in order to
@@ -36,7 +38,8 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	/**
 	 * Function used to send string data through bluetooth
 	 * 
-	 * @param _message :
+	 * @param _message
+	 *            :
 	 *            the string that we want to send
 	 * @return True if message was sent
 	 *         <dl>
@@ -70,7 +73,8 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	 * </code>
 	 * </dl>
 	 * 
-	 * @param _msg :
+	 * @param _msg
+	 *            :
 	 *            the message received
 	 * @return false
 	 * */
@@ -79,7 +83,6 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 		switch(_msg.what)
 		{
 			case SHBluetoothNetworkManager.MSG_WRITE:
-
 				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "writing out");
 				break;
 			case SHBluetoothNetworkManager.MSG_OK:
@@ -154,9 +157,13 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 				// nothing yet
 				return true;
 			case R.id.it_debug_mode:
-				// do nothing yet
+				serverIntent = new Intent(this, SHHomeActivity.class);
+				// ///////////////////////////
+				// TODO check if needed here
+				preventCancel = true;
+				// ///////////////////////////
+				startActivity(serverIntent);
 				return true;
-
 			case R.id.it_disconnect:
 				if(mBtNetworkManager != null)
 				{
@@ -198,5 +205,16 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 			Message.obtain(new Handler(this), SHBluetoothNetworkManager.MSG_CANCEL).sendToTarget( );
 		}
 		super.onPause( );
+	}
+
+	/**
+	 * Used to make toasts and inform the user.
+	 * 
+	 * @param _string
+	 *            The message to send to the UI.
+	 */
+	protected void notifyUser(String _string)
+	{
+		Toast.makeText(getApplicationContext( ), _string, Toast.LENGTH_LONG).show( );
 	}
 }

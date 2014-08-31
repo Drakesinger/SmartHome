@@ -13,9 +13,10 @@ import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 /**
  * Activity called directly after connecting with a device.
- * Asks the user to login.
+ * Asks the user to login. <br>
  * Checks if the local Android logs contain the username entered by the user, if
  * so, the data sent to the module counterpart is different.
+ * </br>
  * 
  * @author Horia Mut
  */
@@ -25,17 +26,16 @@ public class SHLogin extends SHBluetoothActivity
 	// View Components
 	private EditText						et_userName;
 	private EditText						et_password;
-	public final static String				EXTRA_MESSAGE	= "extra";
 
-	public static short						kfirstUse		= 1;
+	public static boolean					bAlreadyLoggedIn	= false;
 
 	// Functions of SHLogin
-	private static final String				login			= "login";
+	private static final String				login				= "login";
 
 	// Debugging
-	private static final String				TAG				= "SHLogin";
+	private static final String				TAG					= "SHLogin";
 
-	private static String					response		= null;
+	private static String					response			= null;
 	public static SHCommunicationProtocol	Protocol;
 
 	@Override
@@ -45,6 +45,10 @@ public class SHLogin extends SHBluetoothActivity
 		setContentView(R.layout.fragment_login);
 		// Construct the Communication Protocol containing all functions used
 		Protocol = new SHCommunicationProtocol( );
+		// Update our credentials if there are any written on disk
+		CredentialManager.update( );
+		// First we need to ask the PIC if someone did log in before.
+		sendRequestSomeoneAlreadyLoggedIn( );
 	}
 
 	@Override
@@ -77,40 +81,63 @@ public class SHLogin extends SHBluetoothActivity
 		String password = et_password.getText( ).toString( );
 		String username = et_userName.getText( ).toString( );
 
-		write("\r");
+		write("\r"); 	// PIC requires an empty 1st message in order to function
+						// correctly
+
+		String dataToSend;
 
 		if(CredentialManager.bIsValid(username, password))
 		{
-			if(kfirstUse == 1)
+
+			if(!bAlreadyLoggedIn)
 			{
+				if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Login. First use");
 				// First use of our application. So we login with the details
 				// entered and send them to the other device.
-
-				if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Login. First use");
-
 				CredentialManager.setCredential(username, password);
-				CredentialManager.setActualUser(username);
-				sendDataAndCheckResponse(CredentialManager.getCredential(username, false), false);
-			}
-			else
-			{
-				// Already logged in once, so check if data entered is correct
+				dataToSend = CredentialManager.getCredential(username, false);
 
-				if(CredentialManager.bUserExists(username))
+				if(dataToSend.contains("Davy Jones' Locker!"))
 				{
-					if(CredentialManager.bPasswordCorrect(username, password))
-					{
-						CredentialManager.setActualUser(username);
-						sendDataAndCheckResponse(CredentialManager.getCredential(username, true), false);
-					}
-					else
-					{
-						notifyUser("Wrong password.");
-					}
+					notifyUser(dataToSend);
 				}
 				else
 				{
-					notifyUser("Username does not exist.");
+					sendDataAndCheckResponse(dataToSend, false);
+				}
+			}
+			else
+			{
+				// TODO Take out redundant code
+				// Already logged in once, so check if data entered is correct
+				if(CredentialManager.bUserExists(username)) // WARNING REDUNDANT
+				{
+					if(CredentialManager.bPasswordCorrect(username, password))// WARNING
+																				// REDUNDANT
+					{
+						CredentialManager.setActualUser(username);
+						CredentialManager.setActualPass(password);
+						dataToSend = CredentialManager.getCredential(username, true);
+
+						if(dataToSend.contains("Davy Jones' Locker!"))
+						{
+							notifyUser(dataToSend);
+						}
+						else
+						{
+							sendDataAndCheckResponse(dataToSend, false);
+						}
+					}
+					else
+					// WARNING REDUNDANT
+					{
+						notifyUser("Wrong password.");// WARNING REDUNDANT
+					}
+				}
+				else
+				// WARNING REDUNDANT
+				{
+					notifyUser("Username does not exist.");// WARNING REDUNDANT
 				}
 			}
 		}
@@ -122,10 +149,16 @@ public class SHLogin extends SHBluetoothActivity
 
 	}
 
-	private void sendDataAndCheckResponse(String _credential, boolean _bResponseRecived)
+	/** Asks the PIC if it already has a user that has logged in to the device. */
+	private void sendRequestSomeoneAlreadyLoggedIn( )
+	{
+		write("" + Protocol.getFunctionID("alreadyLoggedIn"));
+	}
+
+	private void sendDataAndCheckResponse(String _credential, boolean _bResponseReceived)
 	{
 
-		if(_bResponseRecived == false && _credential != null)
+		if(_bResponseReceived == false && _credential != null)
 		{
 
 			String DataToSend = _credential + ","
@@ -148,36 +181,53 @@ public class SHLogin extends SHBluetoothActivity
 				notifyUser("No response received. Please try again.");
 				return;
 			}
+
 			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response contains: "
 															+ response);
 			// Response must be [user][login ok]
 			if(response.contains("login ok"))
 			{
 				notifyUser("Login OK !");
+				bAlreadyLoggedIn = true; // We are the first user on the PIC
+											// that has logged in
+
+				// Now we need to save the Credentials
+				CredentialManager.saveCredential(CredentialManager.getActualUser( ));
+
+				// And start up the Home Activity screen
 				Intent intent = new Intent(this, SHHomeActivity.class);
 				preventCancel = true;
 				startActivity(intent);
 			}
 			else
 			{
-				notifyUser("Login fail");
+				notifyUser("Login failed. Wrong usename or password.");
 			}
 		}
 	}
 
-	private void notifyUser(String _string)
+	/* @formatter:off
+	public void notifyUser(String _string)
 	{
 		Toast.makeText(getApplicationContext( ), _string, Toast.LENGTH_LONG).show( );
 	}
+	 */ //@formatter:on
 
 	@Override
 	public boolean handleMessage(Message _msg)
 	{
 		if(_msg.what == SHBluetoothNetworkManager.MSG_READ)
 		{
-			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response found, changing response string");
+			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response received, changing response string");
 			response = ((String) _msg.obj).toLowerCase( );
-			notifyUser("Received:" + response);
+			if(SHBluetoothNetworkManager.DEBUG) notifyUser("Received:" + response);
+
+			// If the PIC already has a user logged in, then switch our global
+			// variable accordingly
+			if(response.contains("1\n"))
+			{
+				bAlreadyLoggedIn = true;
+			}
 
 			// quick attempt to receive and switch activity without re-clicking
 			// on the login button

@@ -11,14 +11,10 @@ import android.os.Environment;
 import android.util.Log;
 
 /**
+ * Utility class used to read/write/check files
  * 
- * TODO Please inform of the permissions required to use this class <br>
- * <b>Horia Mut</b> Utility class used to read/write/check files
- * 
- * <br/>
- * <br/>
- * 
- * You need permissions:
+ * <br>
+ * You need the following permissions:
  * <ul>
  * <li>READ_EXTERNAL_STORAGE</li>
  * <li>WRITE_EXTERNAL_STORAGE</li>
@@ -30,15 +26,20 @@ import android.util.Log;
  * 
  */
 
-public class FileUtil {
+public class FileUtil
+{
 
-	public static File SMARTHOME_DIR = new File(Environment
-			.getExternalStorageDirectory().getAbsolutePath()
-			+ File.separator
-			+ "data" + File.separator + "SmartHome" + File.separator);
+	public static File	SMARTHOME_DIR	= new File(Environment.getExternalStorageDirectory( ).getAbsolutePath( )
+													+ File.separator
+													+ "data"
+													+ File.separator
+													+ "SmartHome"
+													+ File.separator);
 
-	public static File HEATING_DIR = new File(SMARTHOME_DIR.getAbsolutePath()
-			+ File.separator + "Heating" + File.separator);
+	public static File	HEATING_DIR		= new File(SMARTHOME_DIR.getAbsolutePath( )
+													+ File.separator
+													+ "Heating"
+													+ File.separator);
 
 	/**
 	 * Write in a text file
@@ -56,10 +57,11 @@ public class FileUtil {
 	 *             Input/Output exceptions
 	 */
 	public static void writeTextFile(File file, String text, boolean append)
-			throws IOException {
+																			throws IOException
+	{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, append));
 		writer.write(text);
-		writer.close();
+		writer.close( );
 	}
 
 	/**
@@ -71,18 +73,20 @@ public class FileUtil {
 	 * @throws IOException
 	 *             Input/Output exceptions
 	 * 
-	 * @return content of @param file
+	 * @return contents of file
 	 */
-	public static String readTextFile(File file) throws IOException {
+	public static String readTextFile(File file) throws IOException
+	{
 		BufferedReader reader = new BufferedReader(new FileReader(file));
-		StringBuilder text = new StringBuilder();
+		StringBuilder text = new StringBuilder( );
 		String line;
-		while ((line = reader.readLine()) != null) {
+		while((line = reader.readLine( )) != null)
+		{
 			text.append(line);
 			text.append("\n");
 		}
-		reader.close();
-		return text.toString();
+		reader.close( );
+		return text.toString( );
 	}
 
 	/**
@@ -90,9 +94,9 @@ public class FileUtil {
 	 * 
 	 * @return boolean if a SD is mounted on the device
 	 */
-	public static boolean isMediaMounted() {
-		return Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED);
+	public static boolean isMediaMounted( )
+	{
+		return Environment.getExternalStorageState( ).equals(Environment.MEDIA_MOUNTED);
 	}
 
 	/**
@@ -102,8 +106,9 @@ public class FileUtil {
 	 * @param tree
 	 *            The directory name by this file
 	 */
-	public static void createTree(File tree) {
-		tree.mkdirs();
+	public static void createTree(File tree)
+	{
+		tree.mkdirs( );
 	}
 
 	/**
@@ -115,14 +120,19 @@ public class FileUtil {
 	 * @throws IOException
 	 *             Input/Output exceptions
 	 */
-	public static void createFile(File filePath) {
-		if (!filePath.exists()) {
-			try {
-				filePath.createNewFile();
+	public static void createFile(File filePath)
+	{
+		if(!filePath.exists( ))
+		{
+			try
+			{
+				filePath.createNewFile( );
 				Log.d("RDWR", "createFile: " + filePath);
-			} catch (IOException e) {
-				e.printStackTrace();
-				Log.d("RDWR", "CreateFile: " + e.getMessage());
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace( );
+				Log.d("RDWR", "CreateFile: " + e.getMessage( ));
 			}
 		}
 	}
@@ -130,9 +140,11 @@ public class FileUtil {
 	/**
 	 * Checks if external storage is available for read and write
 	 */
-	public static boolean isExternalStorageWritable() {
-		String state = Environment.getExternalStorageState();
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
+	public static boolean isExternalStorageWritable( )
+	{
+		String state = Environment.getExternalStorageState( );
+		if(Environment.MEDIA_MOUNTED.equals(state))
+		{
 			return true;
 		}
 		return false;
