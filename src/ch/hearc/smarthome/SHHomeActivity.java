@@ -28,16 +28,6 @@ public class SHHomeActivity extends SHBluetoothActivity
 		setContentView(R.layout.fragment_home);
 	}
 
-	/*
-	 * Not needed
-	 * @Override
-	 * public boolean onCreateOptionsMenu(Menu menu) {
-	 * // Inflate the menu; this adds items to the action bar if it is present.
-	 * getMenuInflater().inflate(R.menu.login, menu);
-	 * return true;
-	 * }
-	 */
-
 	public void DoorMainActivity(View view)
 	{
 		Intent intent = new Intent(this, DoorActivity.class);
@@ -65,7 +55,7 @@ public class SHHomeActivity extends SHBluetoothActivity
 		// preventCancel = true;
 		// startActivity(intent);
 	}
-
+	// LOL
 	public void OnTesteLeBluetoothMagueule(View v)
 	{
 		Intent intent = new Intent(this, SHBluetoothTesting.class);

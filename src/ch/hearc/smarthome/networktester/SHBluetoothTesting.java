@@ -23,9 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.SHHomeActivity;
 import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.bluetooth.SHDeviceListActivity;
+import ch.hearc.smarthome.SHHomeActivity;
 
 public class SHBluetoothTesting extends Activity {
 
