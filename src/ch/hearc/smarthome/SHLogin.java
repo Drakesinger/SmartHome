@@ -109,36 +109,22 @@ public class SHLogin extends SHBluetoothActivity
 			}
 			else
 			{
-				// TODO Take out redundant code
-				// Already logged in once, so check if data entered is correct
-				if(CredentialManager.bUserExists(username)) // WARNING REDUNDANT
-				{
-					if(CredentialManager.bPasswordCorrect(username, password))// WARNING
-																				// REDUNDANT
-					{
-						CredentialManager.setActualUser(username);
-						CredentialManager.setActualPass(password);
-						dataToSend = CredentialManager.getCredential(username, true);
 
-						if(dataToSend.contains("Davy Jones' Locker!"))
-						{
-							notifyUser(dataToSend);
-						}
-						else
-						{
-							sendDataAndCheckResponse(dataToSend, false);
-						}
-					}
-					else
-					// WARNING REDUNDANT
-					{
-						notifyUser("Wrong password.");// WARNING REDUNDANT
-					}
+				// Already logged in once, so check if data entered is correct
+
+				CredentialManager.setActualUser(username);
+				CredentialManager.setActualPass(password);
+				CredentialManager.setCredential(username, password);
+
+				dataToSend = CredentialManager.getCredential(username, true);
+
+				if(dataToSend.contains("Davy Jones' Locker!"))
+				{
+					notifyUser(dataToSend);
 				}
 				else
-				// WARNING REDUNDANT
 				{
-					notifyUser("Username does not exist.");// WARNING REDUNDANT
+					sendDataAndCheckResponse(dataToSend, false);
 				}
 			}
 		}
@@ -146,16 +132,24 @@ public class SHLogin extends SHBluetoothActivity
 		{
 			notifyUser("Invalid user/password length. Max: " + CredentialManager.kPasswordMaxLength + " chars.");
 		}
-
 	}
 
 	/** Asks the PIC if it already has a user that has logged in to the device. */
 	private void sendRequestSomeoneAlreadyLoggedIn( )
 	{
-		notifyUser("sendRequestSomeoneAlreadyLoggedIn");
+		if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "sendRequestSomeoneAlreadyLoggedIn");
 		write("" + Protocol.getFunctionID("alreadyLoggedIn"));
 	}
 
+	/**
+	 * Send data and check for answer from PIC.
+	 * 
+	 * @param _credential
+	 *            [user],[password],[login function ID]
+	 * @param _bResponseReceived
+	 *            True if a response was received, it this case the function
+	 *            just checks the answer
+	 */
 	private void sendDataAndCheckResponse(String _credential, boolean _bResponseReceived)
 	{
 
@@ -165,8 +159,7 @@ public class SHLogin extends SHBluetoothActivity
 			String DataToSend = _credential + "," + Protocol.getFunctionID(login);
 			write(DataToSend);
 
-			// mConnectionProgressDialog = ProgressDialog.show(SHLogin.this, "",
-			// "Sending login request...", false, false);
+			mConnectionProgressDialog = ProgressDialog.show(SHLogin.this, "", "Sending login request...", false, true);
 
 			if(SHBluetoothNetworkManager.DEBUG)
 			{
@@ -189,6 +182,8 @@ public class SHLogin extends SHBluetoothActivity
 			// Response must be [user][login ok]
 			if(response.contains("login ok"))
 			{
+				mConnectionProgressDialog.dismiss( ); // Stop the progress
+														// dialog
 				notifyUser("Login OK !");
 				bAlreadyLoggedIn = true; // We are the first user on the PIC
 											// that has logged in
@@ -208,18 +203,11 @@ public class SHLogin extends SHBluetoothActivity
 		}
 	}
 
-	/* @formatter:off
-	public void notifyUser(String _string)
-	{
-		Toast.makeText(getApplicationContext( ), _string, Toast.LENGTH_LONG).show( );
-	}
-	 */ //@formatter:on
-
 	@Override
 	public boolean handleMessage(Message _msg)
 	{
 		if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "handling message");
-		// mConnectionProgressDialog.dismiss( );
+
 		if(_msg.what == SHBluetoothNetworkManager.MSG_READ)
 		{
 			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response received, changing response string");

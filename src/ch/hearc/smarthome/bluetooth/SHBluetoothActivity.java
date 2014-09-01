@@ -10,8 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.SHHomeActivity;
-import ch.hearc.smarthome.debuging.SHBluetoothDebugger;
 
 /**
  * This class is used to build different Bluetooth activities in order to
@@ -123,7 +121,7 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 
 	/**
 	 * Used in order to create an options menu containing the debugging dialog
-	 * (direct message sending), the disconnect option, and the logging screen
+	 * (direct message sending), the disconnect option, and to write a log file to disk.
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
