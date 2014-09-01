@@ -79,7 +79,7 @@
     <string name="discoverable">Make discoverable</string>
     <string name="disconnect">Disconnect</string>
     <string name="quit">Quit</string>
-    <string name="home">Quit</string>
+    <string name="home">Home</string>
 
     <!-- DeviceListActivity -->
     <string name="scanning">Scanning for devices...</string>

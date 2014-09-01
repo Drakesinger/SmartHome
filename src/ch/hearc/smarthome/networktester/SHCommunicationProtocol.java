@@ -2,6 +2,8 @@ package ch.hearc.smarthome.networktester;
 
 import java.util.Hashtable;
 
+import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+
 import android.util.Log;
 
 /**
@@ -33,7 +35,7 @@ public class SHCommunicationProtocol
 	public SHCommunicationProtocol( )
 	{
 		// Initialize functions hashtable
-		Log.d("Communication Protocol", "constructing Communication Protocol");
+		if(SHBluetoothNetworkManager.DEBUG)Log.d("Communication Protocol", "constructing Communication Protocol");
 
 		for(int i = 0; i < functionNames.length; i++)
 		{
@@ -44,8 +46,7 @@ public class SHCommunicationProtocol
 
 	public int getFunctionID(String _function)
 	{
-		Log.d("Communication Protocol", "generateMessage called with "
-										+ _function);
+		Log.d("Communication Protocol", "generateMessage called with " + _function);
 		int funcNr = functions.get(_function);
 
 		return funcNr;

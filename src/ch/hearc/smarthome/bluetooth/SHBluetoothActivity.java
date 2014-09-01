@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.SHHomeActivity;
+import ch.hearc.smarthome.debuging.SHBluetoothDebugger;
 
 /**
  * This class is used to build different Bluetooth activities in order to
@@ -148,20 +149,20 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 		Intent serverIntent = null; // used when we start debugging or logger
 		switch(_item.getItemId( ))
 		{
+		// case android.R.id.home:
+			
 			case R.id.it_home:
-				// case android.R.id.home:
 				// Behave as if the back button was clicked
 				onBackPressed( );
 				return true;
 			case R.id.it_logger:
-				// nothing yet
+				// TODO This will create a log file
 				return true;
 			case R.id.it_debug_mode:
-				serverIntent = new Intent(this, SHHomeActivity.class);
-				// ///////////////////////////
-				// TODO check if needed here
+				serverIntent = new Intent(this, SHBluetoothDebugger.class);
+				// This will avoid our other activity from pausing and thus
+				// killing our bluetooth connection
 				preventCancel = true;
-				// ///////////////////////////
 				startActivity(serverIntent);
 				return true;
 			case R.id.it_disconnect:
@@ -171,6 +172,13 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 					finish( );
 				}
 				return true;
+			case R.id.it_quit:
+				if(mBtNetworkManager != null)
+				{
+					mBtNetworkManager.disconnect( );
+				}
+				android.os.Process.killProcess(android.os.Process.myPid( ));
+				return true;
 		}
 
 		return super.onOptionsItemSelected(_item);
@@ -179,12 +187,13 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	@Override
 	public void onBackPressed( )
 	{
-		super.onBackPressed( );
+
 		// Pressing the back button quits the activity and informs the parent
 		// activity
 		if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Back pressed");
 		setResult(SHBluetoothNetworkManager.MSG_OK, new Intent( ));
 		finish( );
+		super.onBackPressed( );
 	}
 
 	@Override

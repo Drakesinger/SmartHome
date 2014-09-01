@@ -20,7 +20,6 @@ import android.util.Log;
 
 public class SHBluetoothNetworkManager extends Application
 {
-
 	// SDP (Service Discovery Protocol) Name 
 	private static final String 	NAME 	= "SmartHome Bluetooth";
 
@@ -62,25 +61,18 @@ public class SHBluetoothNetworkManager extends Application
 	//@formatter:on
 
 	/** Constructor for the network manager */
-	public SHBluetoothNetworkManager(BluetoothAdapter _bluetoothAdapter)
-	{
-		mBtAdapter = _bluetoothAdapter;
-		mState = STATE_NONE;
-		mHandler = null;
-	}
-
-	/** Constructor for the network manager */
 	public SHBluetoothNetworkManager( )
 	{
 		mBtAdapter = BluetoothAdapter.getDefaultAdapter( );
 		mState = STATE_NONE;
 		mHandler = null;
+		if(DEBUG) Log.d(TAG, "SHBluetoothNetworkManager constuctor called.");
 	}
 
 	/**
 	 * Return the current connection state.
 	 * 
-	 * @return {@link int} mState
+	 * @return
 	 *         integer representing the State of the Bluetooth connection.
 	 */
 	public synchronized int getState( )
@@ -97,16 +89,13 @@ public class SHBluetoothNetworkManager extends Application
 	public synchronized void setState(int _mState)
 	{
 		mState = _mState;
-
-		// If we set the State to something, notify the UI by using the Handler
-		// sendMessage(MESSAGE_STATE_CHANGE,_mState);
 	}
 
 	/**
 	 * Start the Bluetooth service. <br>
 	 * Start a new AcceptThread by entering a
-	 * listening state. Start is ran by the {@link Activity}'s {@link OnResume}
-	 * method.
+	 * listening state. <br>
+	 * Start is run by the {@link Activity}'s {@link OnResume} method.
 	 */
 	public synchronized void start( )
 	{
@@ -316,8 +305,7 @@ public class SHBluetoothNetworkManager extends Application
 				// code
 
 				tmp = mBtAdapter.listenUsingRfcommWithServiceRecord(NAME, BASE_UUID);
-				if(INFO) Log.i(TAG, "AcceptThread: bluetooth server socket = "
-									+ tmp);
+				if(INFO) Log.i(TAG, "AcceptThread: bluetooth server socket = " + tmp);
 
 			}
 			catch(IOException e)
@@ -449,7 +437,6 @@ public class SHBluetoothNetworkManager extends Application
 			{
 				// MY_UUID is the app's UUID string, also used by the server
 				// code
-
 				tmp = device.createRfcommSocketToServiceRecord(BASE_UUID);
 			}
 			catch(IOException e)
@@ -582,13 +569,11 @@ public class SHBluetoothNetworkManager extends Application
 
 					if(bytes > 0)
 					{
-						if(DEBUG) Log.d(TAG, "RUN Trying to create input string from "
-												+ bytes + " bytes");
+						if(DEBUG) Log.d(TAG, "RUN Trying to create input string from " + bytes + " bytes");
 
 						input = new String(buffer, "UTF-8").substring(0, bytes);
 						// Send the input to the UI
-						if(DEBUG) Log.d(TAG, "sendMessage(" + MSG_READ + ", "
-												+ input + ")");
+						if(DEBUG) Log.d(TAG, "sendMessage(" + MSG_READ + ", " + input + ")");
 						sendMessage(MSG_READ, input);
 
 					}
@@ -610,17 +595,23 @@ public class SHBluetoothNetworkManager extends Application
 
 		}
 
-		// TODO
-		/** Call this from the main activity to send data to the remote device */
-		public boolean write(/* byte[] */String string)
+		/**
+		 * Call this from the main activity to send data to the remote device.
+		 * 
+		 * @param _data
+		 *            The data to send.
+		 * @return True if the data could be sent. <br>
+		 *         False if the data could not be sent.
+		 */
+		public boolean write(/* byte[] */String _data)
 		{
 			try
 			{
-				if(string != null)
+				if(_data != null)
 				{
-					sendMessage(MSG_WRITE, string);
-					if(DEBUG) Log.d(TAG, "Sending: " + string);
-					mmOutStream.write(string.getBytes( ));
+					sendMessage(MSG_WRITE, _data);
+					if(DEBUG) Log.d(TAG, "Sending: " + _data);
+					mmOutStream.write(_data.getBytes( ));
 				}
 				mmOutStream.write('\r');
 				return true;
@@ -649,7 +640,14 @@ public class SHBluetoothNetworkManager extends Application
 
 	}
 
-	/** TODO documentation */
+	/**
+	 * Synchronized method to send data to the connected device.
+	 * 
+	 * @param _out
+	 *            The data to send out.
+	 * @return True if the data could be sent.<br>
+	 *         False if the data could not be sent.
+	 */
 	public boolean write(String _out)
 	{
 		ConnectedThread conThread;
@@ -659,8 +657,7 @@ public class SHBluetoothNetworkManager extends Application
 			if(mState != STATE_CONNECTED)
 			{
 				// We are not connected so we can't write anything.
-				exceptionManager("Cannot write.\n"
-									+ "Not connected to any device.", false);
+				exceptionManager("Cannot write.\n" + "Not connected to any device.", false);
 
 				if(DEBUG) Log.d(TAG, "write() failed. not connected to anything");
 
@@ -673,7 +670,11 @@ public class SHBluetoothNetworkManager extends Application
 		return conThread.write(_out);
 	}
 
-	/** TODO documentation */
+	/**
+	 * Send information the the UI concerning the possible errors the Bluetooth
+	 * Manager encounters.
+	 * Used to restart the connection threads if necessary.
+	 */
 	private void exceptionManager(String _errorDescription, boolean _restart)
 	{
 		Message message = mHandler.obtainMessage(SHBluetoothTesting.MESSAGE_TOAST);
