@@ -1,6 +1,11 @@
 package ch.hearc.smarthome;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -9,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+import ch.hearc.smarthome.bluetooth.SHDeviceSelectActivity;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 /**
@@ -26,6 +32,7 @@ public class SHLogin extends SHBluetoothActivity
 	// View Components
 	private EditText						et_userName;
 	private EditText						et_password;
+	private ProgressDialog					mConnectionProgressDialog;
 
 	public static boolean					bAlreadyLoggedIn	= false;
 
@@ -162,6 +169,8 @@ public class SHLogin extends SHBluetoothActivity
 			String DataToSend = _credential + "," + Protocol.getFunctionID(login);
 			write(DataToSend);
 
+			mConnectionProgressDialog = ProgressDialog.show(SHLogin.this, "", "Sending login request...", false, false);
+
 			if(SHBluetoothNetworkManager.DEBUG)
 			{
 				Log.d(TAG, "Sent data:\n" + DataToSend);
@@ -171,6 +180,7 @@ public class SHLogin extends SHBluetoothActivity
 		else
 		{
 			// We don't send again, just verify the answer
+			mConnectionProgressDialog.dismiss( );
 
 			// Just in case the response is not available, should never happen
 			if(response == null)
