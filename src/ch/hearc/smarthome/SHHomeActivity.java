@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.door.DoorActivity;
 import ch.hearc.smarthome.heating.HeatingMainActivity;
@@ -26,20 +27,25 @@ public class SHHomeActivity extends SHBluetoothActivity {
 	}
 
 	public void startMenu(View v) {
-		Intent i = null;
+		Intent i = new Intent();
 
 		if (v.getId() == R.id.main_door_button) {
-			i = new Intent(this, DoorActivity.class);
+			i.setClass(this, DoorActivity.class);
 		} else if (v.getId() == R.id.main_heating_button) {
-			i = new Intent(this, HeatingMainActivity.class);
+			i.setClass(this, HeatingMainActivity.class);
 		} else if (v.getId() == R.id.main_note_button) {
-			i = new Intent(this, NoteMenu.class);
+			i.setClass(this, NoteMenu.class);
 		} else if (v.getId() == R.id.main_alarm_button) {
 			// nahp
 		} else if (v.getId() == R.id.main_bluetooth_button) {
-			i = new Intent(this, SHBluetoothTesting.class);
+			i.setClass(this, SHBluetoothTesting.class);
 		}
-		preventCancel = true;
-		startActivity(i);
+		
+		
+		//Delete this condition when alarm activity is created
+		if(v.getId()!=R.id.main_alarm_button){
+			preventCancel = true;
+			startActivity(i);
+		}
 	}
 }
