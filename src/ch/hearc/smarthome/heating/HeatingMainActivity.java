@@ -14,7 +14,7 @@ public class HeatingMainActivity extends SHBluetoothActivity {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.heating_main_activity);
-
+		
 	}
 
 	public void intentMenu(View v) {
@@ -33,6 +33,7 @@ public class HeatingMainActivity extends SHBluetoothActivity {
 			i = new Intent(c, HeatingHistoryListViewActivity.class);
 		}
 
+		preventCancel = true;
 		// Intent to the Activity chosen
 		startActivity(i);
 

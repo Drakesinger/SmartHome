@@ -63,6 +63,7 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 	@Override
 	public void onBackPressed() {
 
+		// If there is a modification ask to save, else quit
 		if (!thresholdsSaved) {
 			DialogFragment dialog = new HeatingThresholdsSaveDialogFragment();
 			dialog.show(getFragmentManager(), "DialogThresholdsNotSaved");

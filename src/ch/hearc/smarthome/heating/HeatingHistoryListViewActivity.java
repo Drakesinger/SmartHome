@@ -105,6 +105,11 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 		
 		i.putStringArrayListExtra("dates", dates);
 		i.putStringArrayListExtra("temps", temps);
+		
+		//Bluetooth stuff
+		preventCancel = true;
+		
+		// And then start
 		startActivity(i);
 	}
 
