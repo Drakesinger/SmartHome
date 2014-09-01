@@ -1,14 +1,16 @@
 package ch.hearc.smarthome.heating;
 
 import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
@@ -22,8 +24,10 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 	// List View
 	private ListView historyListView;
-	private ArrayList<HeatingHistoryObject> history = new ArrayList<HeatingHistoryObject>();
+	private ArrayList<HeatingHistoryObject> historyIndoorTemp = new ArrayList<HeatingHistoryObject>();
+	private ArrayList<HeatingHistoryObject> historyOutdoorTemp = new ArrayList<HeatingHistoryObject>();
 	private HeatingHistoryArrayAdapter adapter;
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -31,84 +35,88 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 		historyListView = (ListView) findViewById(R.id.listViewHistory);
 		adapter = new HeatingHistoryArrayAdapter(this,
-				R.layout.heating_history_list_item, history);
+				R.layout.heating_history_list_item, historyIndoorTemp);
 		historyListView.setAdapter(adapter);
 
 		updateList();
 
 	}
 
-	
-
 	public void updateList() {
 
-		String content = null, info = "";
+		// Update 'datas' array with the new list content
+		historyIndoorTemp.clear();
+		ArrayList<String> datas = populate();
 
-		if (FileUtil.isMediaMounted()) {
-			if (FileUtil.HEATING_DIR.exists()) {
-				if (SAVE_FILEPATH.exists()) {
-					try {
-						content = FileUtil.readTextFile(SAVE_FILEPATH);
-					} catch (IOException e) {
-						info = "File reading error: " + e.getMessage();
-					}
-				} else {
-					// Create File and restart function
-					FileUtil.createFile(SAVE_FILEPATH);
-					updateList();
-					return;
-				}
-			} else {
-				// Create Tree and restart function
-				FileUtil.createTree(FileUtil.HEATING_DIR);
-				updateList();
-				return;
-			}
-		} else {
-			info = "No SD found";
+		Date firstDate = null;
+		GregorianCalendar calendar = new java.util.GregorianCalendar();
+
+		try {
+			firstDate = stringToDate(datas.get(0), "dd.MM.yy - hh:mm");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		if (!info.equals("")) {
-			Toast.makeText(getApplicationContext(), info, Toast.LENGTH_SHORT)
-					.show();
+		calendar.setTime(firstDate);
+
+		for (int i = 1; i <= 28; i += 4) {
+			historyIndoorTemp.add(new HeatingHistoryObject(calendar.getTime()
+					.toString(), datas.get(i)));
+			calendar.add(GregorianCalendar.DATE, +1);
 		}
 
-		if (content.equals("")) {
-			Toast.makeText(getApplicationContext(), "No save found",
-					Toast.LENGTH_SHORT).show();
-		} else {
-			String lines[] = content.split("\n");
-			// Clear 'datas'
-			history.clear();
+		adapter.notifyDataSetChanged();
 
-			// Update 'datas' array with the new list content
-			for (String l : lines) {
-				String s[] = l.split(";");
-				history.add(new HeatingHistoryObject(s[0], s[1]));
-			}
+	}
 
-			adapter.notifyDataSetChanged();
+	public static String dateToString(Date dDate, String sFormat)
+			throws Exception {
+
+		SimpleDateFormat df = new SimpleDateFormat(sFormat);
+		Date date = GregorianCalendar.getInstance().getTime();
+		
+		return df.format(date);
+	}
+
+	public static Date stringToDate(String sDate, String sFormat)
+			throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat(sFormat);
+		return sdf.parse(sDate);
+	}
+
+	public ArrayList<String> populate() {
+		ArrayList<String> datas = new ArrayList<String>();
+
+		datas.add("01.09.14 - 18:00");
+
+		int r;
+
+		for (int i = 0; i < 28; i++) {
+			r = (int) (Math.random() * 25) + 10;
+			datas.add(String.valueOf(r));
 		}
 
+		return datas;
 	}
 
 	public void showGraphicalView(View v) {
 		Intent i = new Intent(this, HeatingHistoryGraphicalViewActivity.class);
-		
+
 		ArrayList<String> dates = new ArrayList<String>();
 		ArrayList<String> temps = new ArrayList<String>();
-		
-		for(HeatingHistoryObject h:history){
+
+		for (HeatingHistoryObject h : historyIndoorTemp) {
 			dates.add(h.getDate());
 			temps.add(h.getTemp());
 		}
-		
+
 		i.putStringArrayListExtra("dates", dates);
 		i.putStringArrayListExtra("temps", temps);
-		
-		//Bluetooth stuff
+
+		// Bluetooth stuff
 		preventCancel = true;
-		
+
 		// And then start
 		startActivity(i);
 	}
