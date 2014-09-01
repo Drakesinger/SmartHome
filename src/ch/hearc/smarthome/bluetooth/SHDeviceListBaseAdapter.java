@@ -67,6 +67,5 @@ public class SHDeviceListBaseAdapter extends BaseAdapter
 	{
 		TextView	tvName;
 		TextView	tvAddress;
-		TextView	tvSignal;
 	}
 }

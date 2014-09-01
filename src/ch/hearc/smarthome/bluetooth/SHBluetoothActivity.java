@@ -32,8 +32,9 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	{
 		// Launched when the activity is created
 		super.onCreate(savedInstanceState);
-		getActionBar( ).setDisplayHomeAsUpEnabled(true);
+		// getActionBar( ).setDisplayHomeAsUpEnabled(true);
 		mBtNetworkManager = (SHBluetoothNetworkManager) getApplicationContext( );
+		setTitle("Debugger");
 	}
 
 	/**
@@ -150,7 +151,7 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 		switch(_item.getItemId( ))
 		{
 		// case android.R.id.home:
-			
+
 			case R.id.it_home:
 				// Behave as if the back button was clicked
 				onBackPressed( );
@@ -159,7 +160,7 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 				// TODO This will create a log file
 				return true;
 			case R.id.it_debug_mode:
-				serverIntent = new Intent(this, SHBluetoothDebugger.class);
+				serverIntent = new Intent(this, ch.hearc.smarthome.debuging.SHBluetoothDebugger.class);
 				// This will avoid our other activity from pausing and thus
 				// killing our bluetooth connection
 				preventCancel = true;

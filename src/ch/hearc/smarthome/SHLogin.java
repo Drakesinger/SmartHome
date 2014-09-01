@@ -1,20 +1,14 @@
 package ch.hearc.smarthome;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
-import ch.hearc.smarthome.bluetooth.SHDeviceSelectActivity;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 /**
@@ -55,6 +49,10 @@ public class SHLogin extends SHBluetoothActivity
 		// Update our credentials if there are any written on disk
 		CredentialManager.update( );
 		// First we need to ask the PIC if someone did log in before.
+
+		write("\r"); 	// PIC requires an empty 1st message in order to function
+						// correctly
+
 		sendRequestSomeoneAlreadyLoggedIn( );
 	}
 
@@ -86,9 +84,6 @@ public class SHLogin extends SHBluetoothActivity
 
 		String password = et_password.getText( ).toString( );
 		String username = et_userName.getText( ).toString( );
-
-		write("\r"); 	// PIC requires an empty 1st message in order to function
-						// correctly
 
 		String dataToSend;
 
@@ -157,6 +152,7 @@ public class SHLogin extends SHBluetoothActivity
 	/** Asks the PIC if it already has a user that has logged in to the device. */
 	private void sendRequestSomeoneAlreadyLoggedIn( )
 	{
+		notifyUser("sendRequestSomeoneAlreadyLoggedIn");
 		write("" + Protocol.getFunctionID("alreadyLoggedIn"));
 	}
 
@@ -169,7 +165,8 @@ public class SHLogin extends SHBluetoothActivity
 			String DataToSend = _credential + "," + Protocol.getFunctionID(login);
 			write(DataToSend);
 
-			mConnectionProgressDialog = ProgressDialog.show(SHLogin.this, "", "Sending login request...", false, false);
+			// mConnectionProgressDialog = ProgressDialog.show(SHLogin.this, "",
+			// "Sending login request...", false, false);
 
 			if(SHBluetoothNetworkManager.DEBUG)
 			{
@@ -180,7 +177,6 @@ public class SHLogin extends SHBluetoothActivity
 		else
 		{
 			// We don't send again, just verify the answer
-			mConnectionProgressDialog.dismiss( );
 
 			// Just in case the response is not available, should never happen
 			if(response == null)
@@ -222,6 +218,8 @@ public class SHLogin extends SHBluetoothActivity
 	@Override
 	public boolean handleMessage(Message _msg)
 	{
+		if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "handling message");
+		// mConnectionProgressDialog.dismiss( );
 		if(_msg.what == SHBluetoothNetworkManager.MSG_READ)
 		{
 			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response received, changing response string");
