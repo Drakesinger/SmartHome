@@ -12,63 +12,63 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Porte"
+        android:layout_above="@+id/main_door_button"
         android:layout_marginBottom="18dp"
         android:hint="@string/title_activity_display_message"
         android:text="@string/Welcome" />
     
     <Button
-        android:id="@+id/Note"
+        android:id="@+id/main_note_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/Chauffage"
+        android:layout_alignLeft="@+id/main_heating_button"
         android:layout_centerVertical="true"
-        android:onClick="NotesMainActivity"
+        android:onClick="startMenu"
         android:text="@string/BouttonNote"
         android:width="164dp" />
 
     <Button
-        android:id="@+id/Porte"
+        android:id="@+id/main_door_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Chauffage"
+        android:layout_above="@+id/main_heating_button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
-        android:onClick="DoorMainActivity"
+        android:onClick="startMenu"
         android:text="@string/BouttonPorte"
         android:width="164dp" />
 
     <Button
-        android:id="@+id/Chauffage"
+        android:id="@+id/main_heating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Note"
-        android:layout_alignLeft="@+id/Porte"
+        android:layout_above="@+id/main_note_button"
+        android:layout_alignLeft="@+id/main_door_button"
         android:layout_marginBottom="21dp"
-        android:onClick="HeatMainActivity"
+        android:onClick="startMenu"
         android:text="@string/BouttonChauffage"
         android:width="164dp" />
 
 
     <Button
-        android:id="@+id/Alarme"
+        android:id="@+id/main_alarm_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/Note"
-        android:layout_below="@+id/Note"
+        android:layout_alignLeft="@+id/main_note_button"
+        android:layout_below="@+id/main_note_button"
         android:layout_marginTop="13dp"
-        android:onClick="AlarmMainActivity"
+        android:onClick="startMenu"
         android:text="@string/BouttonAlarme"
         android:width="164dp" />
     
     <Button
-        android:id="@+id/BluetoothTester"
+        android:id="@+id/main_bluetooth_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/Note"
-        android:layout_below="@+id/Note"
+        android:layout_alignLeft="@+id/main_note_button"
+        android:layout_below="@+id/main_note_button"
         android:layout_marginTop="80dp"
-        android:onClick="OnTesteLeBluetoothMagueule"
+        android:onClick="startMenu"
         android:text="@string/hello_world"
         android:width="164dp" />
 
