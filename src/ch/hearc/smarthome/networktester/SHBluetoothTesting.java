@@ -99,7 +99,7 @@ public class SHBluetoothTesting extends Activity {
 		}
 		
 		/* Set up the window layout */
-		setContentView(R.layout.main);
+		setContentView(R.layout.debugging_screen);
 		setTitle(R.string.app_name);
 		
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();

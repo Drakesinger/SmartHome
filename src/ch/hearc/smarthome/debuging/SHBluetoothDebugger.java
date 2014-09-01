@@ -62,7 +62,7 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 	{
 		super.onCreate(savedInstanceState);
 		// Set up the window layout
-		setContentView(R.layout.main);
+		setContentView(R.layout.debugging_screen);
 		setTitle(R.string.app_name);
 		
 		//@formatter:off

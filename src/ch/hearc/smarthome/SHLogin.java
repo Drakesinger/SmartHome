@@ -42,7 +42,7 @@ public class SHLogin extends SHBluetoothActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_login);
+		setContentView(R.layout.login_screen);
 		// Construct the Communication Protocol containing all functions used
 		Protocol = new SHCommunicationProtocol( );
 		// Update our credentials if there are any written on disk
@@ -67,7 +67,6 @@ public class SHLogin extends SHBluetoothActivity
 	public void onBackPressed( )
 	{
 		disconnect( );
-		// System.exit(0); //TODO check which is better
 		super.onBackPressed( );
 	}
 
@@ -143,8 +142,7 @@ public class SHLogin extends SHBluetoothActivity
 		}
 		else
 		{
-			notifyUser("Invalid user/password length. Max: "
-						+ CredentialManager.kPasswordMaxLength + " chars.");
+			notifyUser("Invalid user/password length. Max: " + CredentialManager.kPasswordMaxLength + " chars.");
 		}
 
 	}
@@ -161,8 +159,7 @@ public class SHLogin extends SHBluetoothActivity
 		if(_bResponseReceived == false && _credential != null)
 		{
 
-			String DataToSend = _credential + ","
-								+ Protocol.getFunctionID(login);
+			String DataToSend = _credential + "," + Protocol.getFunctionID(login);
 			write(DataToSend);
 
 			if(SHBluetoothNetworkManager.DEBUG)
@@ -182,8 +179,7 @@ public class SHLogin extends SHBluetoothActivity
 				return;
 			}
 
-			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response contains: "
-															+ response);
+			if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Response contains: " + response);
 			// Response must be [user][login ok]
 			if(response.contains("login ok"))
 			{

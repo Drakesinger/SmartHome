@@ -209,13 +209,23 @@ public class CredentialManager
 		return false;
 	}
 
-	/** TODO */
+	/**
+	 * Sets the door's password for this session (in case the user wants to
+	 * change it afterwards).
+	 * 
+	 * @param _pass
+	 *            The password to set.
+	 */
 	public static void setDoorPass(String _pass)
 	{
 		door_pass = _pass;
 	}
 
-	/** TODO */
+	/**
+	 * Used only during door password administration.
+	 * 
+	 * @returns The password that has been set for the door.
+	 */
 	public static String getDoorPass( )
 	{
 		return door_pass;
@@ -266,8 +276,7 @@ public class CredentialManager
 					}
 					catch(IOException e)
 					{
-						Log.e("Credential Manager", "File reading error: "
-													+ e.getMessage( ));
+						Log.e("Credential Manager", "File reading error: " + e.getMessage( ));
 					}
 				}
 				else
@@ -310,7 +319,6 @@ public class CredentialManager
 			{
 				String s[] = l.split(";");
 				cptJackSparrow.put(s[0], s[1]);
-
 			}
 
 		}

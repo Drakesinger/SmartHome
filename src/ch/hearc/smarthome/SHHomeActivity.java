@@ -22,7 +22,7 @@ public class SHHomeActivity extends SHBluetoothActivity {
 		textView.setText("Welcome home");
 
 		setContentView(textView);
-		setContentView(R.layout.fragment_home);
+		setContentView(R.layout.home_screen);
 	}
 
 	public void startMenu(View v) {
