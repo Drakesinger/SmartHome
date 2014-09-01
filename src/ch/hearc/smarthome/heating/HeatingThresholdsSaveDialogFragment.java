@@ -19,7 +19,6 @@ public class HeatingThresholdsSaveDialogFragment extends DialogFragment {
 							public void onClick(DialogInterface dialog, int id) {
 								((HeatingThresholdsActivity) getActivity())
 										.saveThresholds(null);
-								getActivity().finish();
 							}
 						})
 				.setNegativeButton(R.string.no_quit,

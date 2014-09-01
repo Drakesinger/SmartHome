@@ -14,7 +14,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 
-public class HeatingHistoryGraphicViewActivity extends Activity {
+public class HeatingHistoryGraphicalViewActivity extends Activity {
 
 GraphicalView chartView;
 	

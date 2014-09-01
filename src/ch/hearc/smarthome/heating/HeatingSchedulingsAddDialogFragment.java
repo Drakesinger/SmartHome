@@ -131,6 +131,7 @@ public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
 						} else {
 							addScheduling(n, date, t);
 							((HeatingSchedulingsActivity) getActivity()).updateList();
+							
 							dialog.dismiss();
 						}
 

@@ -3,9 +3,9 @@ package ch.hearc.smarthome.heating;
 import java.io.File;
 import java.io.IOException;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -56,14 +56,18 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 			}
 		}
 		thresholdsSaved = true;
+		Log.d("SAVED","saveThresholds: "+thresholdsSaved);
 		finish();
 	}
 
 	@Override
 	public void onBackPressed() {
+
 		if (!thresholdsSaved) {
 			DialogFragment dialog = new HeatingThresholdsSaveDialogFragment();
 			dialog.show(getFragmentManager(), "DialogThresholdsNotSaved");
+		}else{
+			finish();
 		}
 	}
 
@@ -83,6 +87,8 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
+				thresholdsSaved = false;
+				Log.d("SAVED","progChange: "+thresholdsSaved);
 
 			}
 
@@ -97,7 +103,6 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 					boolean fromUser) {
 				txtTemp.setText("Default Temperature " + (progress + 10)
 						+ "° C");
-				thresholdsSaved = false;
 
 			}
 		});
@@ -107,6 +112,8 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
+				thresholdsSaved = false;
+				Log.d("SAVED","progChange: "+thresholdsSaved);
 
 			}
 
@@ -123,8 +130,6 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 				if (progress < minLight.getProgress()) {
 					minLight.setProgress(progress);
 				}
-				thresholdsSaved = false;
-
 			}
 		});
 
@@ -133,6 +138,8 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
+				thresholdsSaved = false;
+				Log.d("SAVED","progChange: "+thresholdsSaved);
 
 			}
 
@@ -149,7 +156,6 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 				if (progress > maxLight.getProgress()) {
 					maxLight.setProgress(progress);
 				}
-				thresholdsSaved = false;
 			}
 		});
 	}
