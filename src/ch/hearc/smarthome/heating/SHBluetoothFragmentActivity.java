@@ -1,15 +1,15 @@
 package ch.hearc.smarthome.heating;
 
-import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 
 public class SHBluetoothFragmentActivity extends FragmentActivity implements
 		Handler.Callback {
