@@ -21,41 +21,41 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 {
 
 	// Debugging
-	private static final String		TAG						= "SHBluetoothTesting";
+	private static final String	TAG						= "SHBluetoothTesting";
 
 	// List Layout Views
-	private ListView				mConversationView;
-	private EditText				mOutEditText;
-	private Button					mSendButton;
+	private ListView			mConversationView;
+	private EditText			mOutEditText;
+	private Button				mSendButton;
 
-	public final static String		EXTRA_MESSAGE			= "com.example.myfirstapp.MESSAGE";
+	public final static String	EXTRA_MESSAGE			= "com.example.myfirstapp.MESSAGE";
 
 	// Global variables
-	public static short				kfirstUse				= 1;
+	public static short			kfirstUse				= 1;
 
 	// Constants to indicate message contents
-	public static final int			MSG_OK					= 0;
-	public static final int			MSG_READ				= 1;
-	public static final int			MSG_WRITE				= 2;
-	public static final int			MSG_CANCEL				= 3;
-	public static final int			MSG_CONNECTED			= 4;
+	public static final int		MSG_OK					= 0;
+	public static final int		MSG_READ				= 1;
+	public static final int		MSG_WRITE				= 2;
+	public static final int		MSG_CANCEL				= 3;
+	public static final int		MSG_CONNECTED			= 4;
 
 	// Key names received from the BluetoothCommandService Handler
-	public static final String		DEVICE_NAME				= "device_name";
-	public static final String		DEVICE_ADDRESS			= "device_address";
-	public static final String		TOAST					= "toast";
+	public static final String	DEVICE_NAME				= "device_name";
+	public static final String	DEVICE_ADDRESS			= "device_address";
+	public static final String	TOAST					= "toast";
 
 	// Name of the connected device
-	public String					mConnectedDeviceName	=  "PIC";
+	public String				mConnectedDeviceName	= "PIC";
 
 	// Local Bluetooth adapter
 	// public BluetoothAdapter mBluetoothAdapter;
 
 	// String Buffer for outgoing messages
-	public StringBuffer				mOutStringBuffer;
+	public StringBuffer			mOutStringBuffer;
 
 	// Array adapter for the conversation thread
-	public ArrayAdapter<String>		mConversationArrayAdapter;
+	public ArrayAdapter<String>	mConversationArrayAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -64,20 +64,6 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 		// Set up the window layout
 		setContentView(R.layout.debugging_screen);
 		setTitle(R.string.app_name);
-		
-		//@formatter:off
-		/*
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		
-		if (mBluetoothAdapter == null) {
-			// Device does not support Bluetooth
-			Toast.makeText(getApplicationContext(),"Bluetooth error.\n"+"Device is not Bluetooth compatible.",Toast.LENGTH_LONG).show();
-			//PopupMessages.launchPopup("Bluetooth error.","Device is not Bluetooth compatible.",this.getApplicationContext());
-			finish();
-			return;
-		}		
-		 */
-		//@formatter:on
 	}
 
 	@Override
@@ -147,17 +133,14 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 		switch(_msg.what)
 		{
 			case SHBluetoothNetworkManager.MSG_READ:
-				byte[ ] readBuffer = (byte[ ]) _msg.obj;
-				// Create a string from the readBuffer
-				String readMessage = new String(readBuffer, 0, _msg.arg1);
-				mConversationArrayAdapter.add(mConnectedDeviceName + ": "
-												+ readMessage);
+				String readBuffer = ((String) _msg.obj).toLowerCase( );
+				if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "readBuffer = " + readBuffer);
+				mConversationArrayAdapter.add(mConnectedDeviceName + ": " + readBuffer);
 				break;
 			case SHBluetoothNetworkManager.MSG_WRITE:
-				byte[ ] writeBuffer = (byte[ ]) _msg.obj;
-				// Create a string from the writeBuffer
-				String writeMessage = new String(writeBuffer);
-				mConversationArrayAdapter.add("Me: " + writeMessage);
+				String writeBuffer = ((String) _msg.obj).toLowerCase( );
+				if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "writeBuffer = " + writeBuffer);
+				mConversationArrayAdapter.add("Me: " + writeBuffer);
 				break;
 		}
 		return super.handleMessage(_msg);
@@ -173,8 +156,7 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 			// Get the message bytes and tell the BluetoothManager to write
 			String message_for_PIC = message;
 			write(message_for_PIC);
-			Toast.makeText(getApplicationContext( ), "Message sent: "
-														+ message_for_PIC, Toast.LENGTH_SHORT).show( );
+			Toast.makeText(getApplicationContext( ), "Message sent: " + message_for_PIC, Toast.LENGTH_SHORT).show( );
 
 			// Reset out string buffer to zero and clear the edit text field
 			mOutStringBuffer.setLength(0);
