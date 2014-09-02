@@ -32,6 +32,8 @@
 
     <!-- Heating History -->
     <string name="show_graphical_view">Show graphical view</string>
+    <string name="indoor">Indoor</string>
+    <string name="outdoor">Outdoor</string>
 
     <!-- Login Main Activity -->
     <!-- FIX this!!!! -->

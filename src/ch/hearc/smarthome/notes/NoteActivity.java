@@ -18,6 +18,7 @@ import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 public class NoteActivity extends SHBluetoothActivity {
 	
@@ -28,8 +29,22 @@ public class NoteActivity extends SHBluetoothActivity {
 	public 	String 			currentUser;
 	public 	String 			l1;
 	public 	int 			nbLinesRead;
+	public	String			newDetail;
+	public	String			delSujet;
 	String 	newLine=System.getProperty("line.separator"); 
-			 
+	
+	private String deletepost = "delete post-it";
+	private static SHCommunicationProtocol protocol;
+    @Override
+    public boolean handleMessage(Message _msg)
+    {
+	    if (_msg.what == SHBluetoothNetworkManager.MSG_READ)
+	    {
+	    	MessageRead = ((String) msg.obj).toLowerCase();
+	    }
+	    return super.handleMessage(_msg);
+    }
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,11 +73,7 @@ public class NoteActivity extends SHBluetoothActivity {
         	Reading message receive from Pick and receive user
         */     
         currentUser = CredentialManager.getActualUser();
-        handleMessage(msg);
-        if (msg.what == SHBluetoothNetworkManager.MSG_READ)
-        {
-        	MessageRead = ((String) msg.obj).toLowerCase();
-        }
+       
         String lines[] = MessageRead.split("\r"); 
         listItem.clear();
         Toast.makeText(getApplicationContext(), "Save found",
@@ -70,12 +81,13 @@ public class NoteActivity extends SHBluetoothActivity {
 		// Update 'listItem' array with the new list content
 		for (String l : lines) 
 		{
-			String s[] = l.split(";");
-			if(s[0] == currentUser || s[0] == "public")
+			String s[] = l.split(",");
+			if(s[0] == currentUser || s[0] == "PUBLIC")
 			{
-				map.put("sujet",s[1]);
-				map.put("date",s[2]);
-				map.put("detail",s[3]);
+				map.put("sujet",s[2]);
+				map.put("date",s[3]);
+				newDetail = s[4].replace("_", " ");
+				map.put("detail",newDetail);
 				listItem.add(map);
 				map = new HashMap<String, String>();
 			}
@@ -118,21 +130,25 @@ public class NoteActivity extends SHBluetoothActivity {
                     public void onClick(DialogInterface dialog, int which) {
                     	listItem.remove(positionToRemove);
                     	mSchedule.notifyDataSetChanged();
-                    	//On supprime la ligne dans le fichier texte, en le réecrivant sans la ligne en question.
+                    	
+                    	//On envoie au PIC l'user et le sujet de la note qui doit être supprimer.
                     	try 
-                    	{
+                    	{                    		
                             nbLinesRead = 0;    
                             String lines[] = MessageRead.split("\r"); 
                             listItem.clear();
                             while (lines != null)
                             {
-                            	if (nbLinesRead != positionToRemove)
-                            	{
-                            		l1 += lines[nbLinesRead];
-                            	}
-                            	nbLinesRead++;
+	                        	if (nbLinesRead == positionToRemove)
+	                        	{
+	                        		l1 = lines[nbLinesRead];
+	                        		String s1[] = l1.split(",");
+	                        		delSujet = s1[0];
+	                        	}
+	                        	nbLinesRead++;
                             }
-                            write(l1);
+                        	write(protocol.generateDataToSend(CredentialManager.getActualUser(),deletepost,delSujet));
+                            mSchedule.notifyDataSetChanged();
                         }
                     	catch (Exception e)
                         {

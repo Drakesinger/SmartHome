@@ -1,10 +1,11 @@
 package ch.hearc.smarthome;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.door.DoorActivity;
 import ch.hearc.smarthome.heating.HeatingMainActivity;
@@ -36,14 +37,33 @@ public class SHHomeActivity extends SHBluetoothActivity {
 		} else if (v.getId() == R.id.main_note_button) {
 			i.setClass(this, NoteMenu.class);
 		} else if (v.getId() == R.id.main_alarm_button) {
-			// nahp
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Title");
+			builder.setMessage("Message")
+					.setPositiveButton(R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// TODO if YES
+								}
+							})
+					.setNegativeButton(R.string.no_quit,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// TODO if NO
+								}
+							});
+			AlertDialog dialog = builder.create();
+			dialog.show();
+
 		} else if (v.getId() == R.id.main_bluetooth_button) {
 			i.setClass(this, SHBluetoothTesting.class);
 		}
-		
-		
-		//Delete this condition when alarm activity is created
-		if(v.getId()!=R.id.main_alarm_button){
+
+		// Delete this condition when alarm activity is created
+		if (v.getId() != R.id.main_alarm_button) {
 			preventCancel = true;
 			startActivity(i);
 		}

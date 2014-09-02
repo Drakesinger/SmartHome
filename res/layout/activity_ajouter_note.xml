@@ -17,7 +17,6 @@
         android:ems="10"
         android:inputType="text"
         android:maxLength="8"/>
-    
 
     <TextView
         android:id="@+id/txtDetail"
@@ -27,7 +26,6 @@
         android:layout_alignBottom="@+id/detail"
         android:text="@string/detail"
         android:labelFor="@+id/detail" />
-
 
     <TextView
         android:id="@+id/txtDestinataire"
@@ -42,8 +40,8 @@
         android:id="@+id/sujet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="100dp"
         android:ems="10"
         android:inputType="text" 
         android:maxLength="8">
