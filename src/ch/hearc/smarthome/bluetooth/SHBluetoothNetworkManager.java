@@ -24,6 +24,7 @@ import android.util.Log;
 public class SHBluetoothNetworkManager extends Application
 {
 
+
 	// SDP (Service Discovery Protocol) Name 
 	private static final String 	NAME 	= "SmartHome Bluetooth";
 
@@ -522,7 +523,6 @@ public class SHBluetoothNetworkManager extends Application
 
 		public ConnectedThread(BluetoothSocket socket)
 		{
-			Log.d(TAG, "Connected Thread constuctor called");
 			mmSocket = socket;
 			InputStream tmpIn = null;
 			OutputStream tmpOut = null;
@@ -573,11 +573,9 @@ public class SHBluetoothNetworkManager extends Application
 
 					if(bytes > 0)
 					{
-						if(DEBUG) Log.d(TAG, "RUN Trying to create input string from " + bytes + " bytes");
-
 						input = new String(buffer, "UTF-8").substring(0, bytes);
 						// Send the input to the UI
-						if(DEBUG) Log.d(TAG, "sendMessage(" + MSG_READ + ", " + input + ")");
+						if(DEBUG) Log.d(TAG, "Received: " + input);
 						sendMessage(MSG_READ, input);
 
 					}
@@ -692,7 +690,6 @@ public class SHBluetoothNetworkManager extends Application
 			// Failed to connect, restart the service in order to try again
 			SHBluetoothNetworkManager.this.start( );
 		}
-
 	}
 
 	/**

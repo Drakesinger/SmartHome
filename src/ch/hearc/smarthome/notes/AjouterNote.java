@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
@@ -36,6 +34,7 @@ public class AjouterNote extends SHBluetoothActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ajouter_note);
+		protocol = new SHCommunicationProtocol( );
 	}
 
 	@Override
@@ -83,23 +82,20 @@ public class AjouterNote extends SHBluetoothActivity {
 		}
 		else
 		{		
-	        save += newDestinataire + "," + newSujet + "," + date + "," + newDetail+ "\r";
+	        save = newDestinataire + "," + newSujet + "," + date + "," + newDetail+ "\r";
 	        //CredentialManager.getActualUser()+","+save);
-	        write(protocol.generateDataToSend(CredentialManager.getActualUser(),sendpost,save));
+	        write(protocol.generateDataToSend(sendpost,save));
 	        //Writing to the pick
 	        //write(save);
 		}      
 	}
 	public String completeLength (String _complete)
 	{
+		String toComplete = new String(_complete);
 		for(int i = 0; i < (kMaxLength - _complete.length( )); i++)
 		{
-			_complete += "*";
+			toComplete += "*";
 		}
-		return _complete;
+		return toComplete;
 	}
-	public void onBackPressed()
-    {
-    	preventCancel = true;
-    }
 }

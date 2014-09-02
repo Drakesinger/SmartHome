@@ -29,13 +29,13 @@ public class SHLogin extends SHBluetoothActivity
 	private ProgressDialog					mConnectionProgressDialog;
 
 	// Functions of SHLogin
-	private static final String				login				= "login";
-	private static final String				createUser			= "create user";
+	private static final String				login		= "login";
+	private static final String				createUser	= "create user";
 
 	// Debugging
-	private static final String				TAG					= "SHLogin";
+	private static final String				TAG			= "SHLogin";
 
-	private static String					response			= null;
+	private static String					response	= null;
 	public static SHCommunicationProtocol	Protocol;
 
 	@Override
@@ -52,7 +52,6 @@ public class SHLogin extends SHBluetoothActivity
 		write("\r"); 	// PIC requires an empty 1st message in order to function
 						// correctly
 
-		
 	}
 
 	@Override
@@ -89,24 +88,18 @@ public class SHLogin extends SHBluetoothActivity
 		if(CredentialManager.bIsValid(username, password))
 		{
 
-			
-			
-				if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Login. First use");
+			CredentialManager.setCredential(username, password);
+			dataToSend = Protocol.generateDataToSend(username, login, password);
 
-				CredentialManager.setCredential(username, password);
+			if(dataToSend.contains("Davy Jones' Locker!"))
+			{
+				notifyUser(dataToSend);
+			}
+			else
+			{
+				sendData(dataToSend);
+			}
 
-				dataToSend = Protocol.generateDataToSend(username, login, password);
-
-				if(dataToSend.contains("Davy Jones' Locker!"))
-				{
-					notifyUser(dataToSend);
-				}
-				else
-				{
-					sendData(dataToSend);
-				}
-			
-			
 		}
 		else
 		{
@@ -115,9 +108,9 @@ public class SHLogin extends SHBluetoothActivity
 	}
 
 	/**
-	 * Send data and check for answer from PIC.
+	 * Send data.
 	 * 
-	 * @param _credential
+	 * @param _data
 	 *            [user],[password],[login function ID]
 	 * @param _bResponseReceived
 	 *            True if a response was received, it this case the function
@@ -125,23 +118,12 @@ public class SHLogin extends SHBluetoothActivity
 	 */
 	private void sendData(String _data)
 	{
-
 		if(_data != null)
 		{
 			write(_data);
-
-			//mConnectionProgressDialog = ProgressDialog.show(SHLogin.this, "", "Sending login request...", false, true);
-
-			if(SHBluetoothNetworkManager.DEBUG)
-			{
-				Log.d(TAG, "Sent data:\n" + _data);
-				Log.d(TAG, "Response variable is in SendData:" + response);
-			}
+			// mConnectionProgressDialog = ProgressDialog.show(SHLogin.this, "",
+			// "Sending login request...", false, true);
 		}
-		
-			
-			
-		
 	}
 
 	@Override
@@ -149,12 +131,10 @@ public class SHLogin extends SHBluetoothActivity
 	{
 		if(_msg.what == SHBluetoothNetworkManager.MSG_READ)
 		{
-			
-			response = ((String) _msg.obj).toLowerCase( );
-			if(SHBluetoothNetworkManager.DEBUG) notifyUser("Received:" + response);
 
-			notifyUser("Received:\n" +response);
-			
+			response = ((String) _msg.obj).toLowerCase( );
+			notifyUser("Received:\n" + response);
+
 			if(response.contains("login ok"))
 			{
 				notifyUser("Login OK !");
@@ -169,12 +149,10 @@ public class SHLogin extends SHBluetoothActivity
 			if(response.contains("user not found"))
 			{
 				notifyUser("User not found.\nCreating user.");
-				String dataToSend = Protocol.generateDataToSend(createUser, CredentialManager.getActualPass( ));
+				String parameters = Protocol.generate(CredentialManager.getActualUser( )) + "," + Protocol.generate(CredentialManager.getActualPass( ));
+				String dataToSend = Protocol.generateDataToSend(createUser, parameters);
 				write(dataToSend);
 			}
-			
-			
-
 		}
 		return super.handleMessage(_msg);
 	}
