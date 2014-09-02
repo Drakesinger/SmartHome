@@ -17,7 +17,7 @@ public class SHActivityList extends SHBluetoothActivity
 {
 
 	private ArrayList<SHActivityC>	mActivityList	= new ArrayList<SHActivityC>( );
-	private ListView			lv_ActivityList;
+	private ListView				lv_ActivityList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -28,12 +28,13 @@ public class SHActivityList extends SHBluetoothActivity
 		lv_ActivityList = (ListView) findViewById(R.id.al_lv_action_list);
 
 		// Remote control activities
-		mActivityList.add(new SHActivityC("Door Control", "Open the door and change the door's password", "ch.hearc.smarthome.door.", "DoorActivity"));
-		mActivityList.add(new SHActivityC("Heating Management", "Manage all aspects of your home's heating.", "ch.hearc.smarthome.heating.", "HeatingMainActivity"));
-		mActivityList.add(new SHActivityC("Post-it", "View the post-its saved for you or for the public, create new post-its.", "ch.hearc.smarthome.notes.", "NoteMenu"));
+		mActivityList.add(new SHActivityC("Door Control", "Open doors and change the code required for entry.", "ch.hearc.smarthome.door.", "DoorActivity"));
+		mActivityList.add(new SHActivityC("Heating Management", "Check temperature history and manage all aspects of your home's heating.", "ch.hearc.smarthome.heating.", "HeatingMainActivity"));
+		mActivityList.add(new SHActivityC("Post-it Management", "View the post-its saved for you or for the public, create new post-its and delete the ones you don't want.", "ch.hearc.smarthome.notes.", "NoteMenu"));
+		mActivityList.add(new SHActivityC("Administration", "Manage users and their passwords, remove or add new users.", "ch.hearc.smarthome.admin.", "SHAdministration"));
 
-		// SHBluetoothTesting
-		mActivityList.add(new SHActivityC("TEST DA TOOTH THAT'S BLUE", "NIGGA NIGGA NIGGA NIGGA NIGGA", "ch.hearc.smarthome.networktester.", "SHBluetoothTesting"));
+		// SHBluetoothTesting video surveillance
+		mActivityList.add(new SHActivityC("Video Surveillance", "Has not been implemented.", "ch.hearc.smarthome.networktester.", "SHBluetoothTesting"));
 
 		lv_ActivityList.setAdapter(new SHActivityListBaseAdapter(this, mActivityList));
 		lv_ActivityList.setOnItemClickListener(new OnItemClickListener( )

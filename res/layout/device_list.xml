@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tv_device_list_paired_devices"
+        android:id="@+id/device_list_tv_paired_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#666"
@@ -15,14 +15,14 @@
         android:visibility="visible" />
 
     <ListView
-        android:id="@+id/lv_device_list_paired_devices"
+        android:id="@+id/device_list_lv_paired_devices"
         android:layout_width="match_parent"
         android:layout_height="135dp"
         android:stackFromBottom="false"
         android:transcriptMode="alwaysScroll" />
 
     <TextView
-        android:id="@+id/tv_device_list_new_devices"
+        android:id="@+id/device_list_tv_new_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         
@@ -33,7 +33,7 @@
         android:visibility="visible" />
 
     <ListView
-        android:id="@+id/lv_device_list_new_devices"
+        android:id="@+id/device_list_lv_new_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -41,7 +41,7 @@
         android:transcriptMode="alwaysScroll" />
 
     <Button
-        android:id="@+id/b_device_list_scan"
+        android:id="@+id/device_list_b_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="doDiscovery"

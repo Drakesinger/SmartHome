@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
+import ch.hearc.smarthome.debuging.SHBluetoothDebugger;
 import ch.hearc.smarthome.door.DoorActivity;
 import ch.hearc.smarthome.heating.HeatingMainActivity;
-import ch.hearc.smarthome.networktester.SHBluetoothTesting;
 import ch.hearc.smarthome.notes.NoteMenu;
 
 /** Activity containing the links to our 4 other activities */
@@ -59,7 +59,7 @@ public class SHHomeActivity extends SHBluetoothActivity {
 			dialog.show();
 
 		} else if (v.getId() == R.id.main_bluetooth_button) {
-			i.setClass(this, SHBluetoothTesting.class);
+			i.setClass(this, SHBluetoothDebugger.class);
 		}
 
 		// Delete this condition when alarm activity is created

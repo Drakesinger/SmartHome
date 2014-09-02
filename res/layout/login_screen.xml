@@ -5,59 +5,71 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/activity_list_tv_welcome"
+        style="@style/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editText1"
+        android:layout_above="@+id/login_screen_tv_login_instruction"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="82dp"
+        android:gravity="center_horizontal"
+        android:text="@string/ls_welcome" />
+
+    <TextView
+        android:id="@+id/login_screen_tv_login_instruction"
+        style="@style/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/TextMdp" />
+        android:gravity="center_horizontal"
+        android:text="@string/ls_pleaseLogin" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/login_screen_et_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/login_screen_tv_login_instruction"
         android:layout_centerHorizontal="true"
         android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="text"
+        android:text="ADMIN" />
+
+    <TextView
+        android:id="@+id/login_screen_tv_password_instruction"
+        style="@style/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_screen_et_username"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="@string/ls_enterPassword" />
+
+    <EditText
+        android:id="@+id/login_screen_et_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_screen_tv_password_instruction"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:gravity="center_horizontal"
         android:inputType="textPassword"
         android:text="TEST" />
 
     <Button
-        android:id="@+id/Connexion"
+        android:id="@+id/login_screen_b_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/login_screen_et_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableLeft="@drawable/ic_action_login"
         android:onClick="login"
-        android:selectAllOnFocus="false"
-        android:text="@string/TextBouton1"
+        android:text="@string/ls_b_login"
         android:textSize="14sp" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="text"
-        android:text="ADMIN" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editText1"
-        android:layout_centerHorizontal="true"
-        android:text="@string/hello_world" />
 
 </RelativeLayout>

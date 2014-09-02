@@ -46,10 +46,10 @@ public class SHDeviceListBaseAdapter extends BaseAdapter
 
 		if(convertView == null)
 		{
-			convertView = mInflater.inflate(R.layout.device_row_view, null);
+			convertView = mInflater.inflate(R.layout.device_list_row_view, null);
 			holder = new ViewHolder( );
-			holder.tvName = (TextView) convertView.findViewById(R.id.tvName);
-			holder.tvAddress = (TextView) convertView.findViewById(R.id.tvAddress);
+			holder.tvName = (TextView) convertView.findViewById(R.id.device_list_row_view_tv_name);
+			holder.tvAddress = (TextView) convertView.findViewById(R.id.device_list_row_view_tv_address);
 
 			convertView.setTag(holder);
 		}

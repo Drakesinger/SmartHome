@@ -80,13 +80,13 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		if(SHBluetoothNetworkManager.DEBUG) Toast.makeText(getApplicationContext( ), "On Create", Toast.LENGTH_SHORT).show( );
 
 		// Setup Bluetooth devices lists with custom rows
-		devPairedListView = (ListView) findViewById(R.id.lv_device_list_paired_devices);
+		devPairedListView = (ListView) findViewById(R.id.device_list_lv_paired_devices);
 		devPairedList = new ArrayList<SHDevice>( );
 		devPairedListAdapter = new SHDeviceListBaseAdapter(this, devPairedList);
 		devPairedListView.setAdapter(devPairedListAdapter);
 		devPairedListView.setOnItemClickListener(mDeviceClickListener);
 
-		devAvailableListView = (ListView) findViewById(R.id.lv_device_list_new_devices);
+		devAvailableListView = (ListView) findViewById(R.id.device_list_lv_new_devices);
 		devAvailableList = new ArrayList<SHDevice>( );
 		devAvailableListAdapter = new SHDeviceListBaseAdapter(this, devAvailableList);
 		devAvailableListView.setAdapter(devAvailableListAdapter);
@@ -97,7 +97,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
 
 		// Initialize the button to perform device discovery
-		b_device_list_scan = (Button) findViewById(R.id.b_device_list_scan);
+		b_device_list_scan = (Button) findViewById(R.id.device_list_b_scan);
 	}
 
 	/**
@@ -131,8 +131,8 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		}
 		else
 		{
-			// Turn off sub-title for new devices
-			findViewById(R.id.tv_device_list_new_devices).setVisibility(View.VISIBLE);
+			// Turn on sub-title for new devices
+			findViewById(R.id.device_list_tv_new_devices).setVisibility(View.VISIBLE);
 
 			devPairedList.clear( );
 			devPairedListAdapter.notifyDataSetChanged( );
@@ -141,7 +141,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 			Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices( );
 			if(pairedDevices.size( ) > 0)
 			{
-				findViewById(R.id.tv_device_list_paired_devices).setVisibility(View.VISIBLE);
+				findViewById(R.id.device_list_tv_paired_devices).setVisibility(View.VISIBLE);
 				for(BluetoothDevice device : pairedDevices)
 				{
 					devPairedList.add(new SHDevice(device.getName( ), device.getAddress( )));
@@ -230,7 +230,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 				}
 				else
 				{
-					doDiscovery(findViewById(R.id.b_device_list_scan));
+					doDiscovery(findViewById(R.id.device_list_b_scan));
 				}
 				break;
 		}
@@ -347,7 +347,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
                 {
                 	devAvailableList.add(foundDevice);
                     devAvailableListAdapter.notifyDataSetChanged();
-                    findViewById(R.id.tv_device_list_paired_devices).setVisibility(View.VISIBLE); 	
+                    findViewById(R.id.device_list_tv_paired_devices).setVisibility(View.VISIBLE); 	
                 }
             
             } 

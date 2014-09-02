@@ -39,10 +39,11 @@ public class SHAdministration extends SHBluetoothActivity
 	private SHCommunicationProtocol		protocol;
 
 	// View components
-	private ArrayList<SHUser>			mUserList	= new ArrayList<SHUser>( );
-	private ListView					lv_UserList;
-	private SHUserListBaseAdapter		mUserListBaseAdapter;
 	private Button						b_getUsers;
+	private ListView					lv_UserList;
+	// List components
+	private ArrayList<SHUser>			mUserList	= new ArrayList<SHUser>( );
+	private SHUserListBaseAdapter		mUserListBaseAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)

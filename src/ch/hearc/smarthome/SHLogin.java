@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import ch.hearc.smarthome.activitylist.SHActivityList;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
@@ -77,8 +77,8 @@ public class SHLogin extends SHBluetoothActivity
 	public void login(View _view)
 	{
 
-		et_userName = (EditText) findViewById(R.id.editText1);
-		et_password = (EditText) findViewById(R.id.editText2);
+		et_userName = (EditText) findViewById(R.id.login_screen_et_username);
+		et_password = (EditText) findViewById(R.id.login_screen_et_password);
 
 		String password = et_password.getText( ).toString( );
 		String username = et_userName.getText( ).toString( );
@@ -137,16 +137,16 @@ public class SHLogin extends SHBluetoothActivity
 
 			if(response.contains("login ok"))
 			{
-				notifyUser("Login OK !");
+				notifyUser("Login OK");
 				// Now we need to save the Credentials
 				CredentialManager.saveCredential(CredentialManager.getActualUser( ));
 
 				// And start up the Home Activity screen
-				Intent intent = new Intent(this, SHHomeActivity.class);
+				Intent intent = new Intent(this, SHActivityList.class);
 				preventCancel = true;
 				startActivity(intent);
 			}
-			if(response.contains("user not found"))
+			else if(response.contains("user not found"))
 			{
 				notifyUser("User not found.\nCreating user.");
 				String parameters = Protocol.generate(CredentialManager.getActualUser( )) + "," + Protocol.generate(CredentialManager.getActualPass( ));

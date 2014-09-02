@@ -15,7 +15,7 @@ public class SHActivityListBaseAdapter extends BaseAdapter
 
 	private static ArrayList<SHActivityC>	actionArrayList;
 
-	private LayoutInflater				mInflater;
+	private LayoutInflater					mInflater;
 
 	public SHActivityListBaseAdapter(Context context, ArrayList<SHActivityC> results)
 	{

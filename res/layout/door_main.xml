@@ -28,14 +28,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/activity_list_tv_welcome"
         android:layout_marginTop="19dp"
         android:ems="10"
         android:hint="Your Password"
         android:inputType="numberPassword" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/activity_list_tv_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/et_door_main_Password"

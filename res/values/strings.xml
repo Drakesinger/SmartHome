@@ -4,6 +4,18 @@
     <string name="app_name">SmartHome</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    
+    <!-- Login Screen -->
+    
+    <string name="ls_welcome">Welcome home.</string>
+    <string name="ls_pleaseLogin">Please login.</string>
+    <string name="ls_enterPassword">Please enter your password.</string>
+    <string name="ls_b_login">Log in</string>
+    
+    <!-- Activity List -->
+    <string name="al_welcome">Welcome home.</string>
+    <string name="al_choose">Choose an activity to start&#8230; </string>
 
     <!-- Heating Main Activity -->
     <string name="scheduling">Heating Scheduling</string>
@@ -35,9 +47,10 @@
     <string name="indoor">Indoor</string>
     <string name="outdoor">Outdoor</string>
 
-    <!-- Login Main Activity -->
+    
+    
     <!-- FIX this!!!! -->
-    <string name="TextBouton1">Connexion</string>
+    
     <string name="title_activity_display_message">Bienvenue</string>
     <string name="TextMdp">Veuillez entrer votre mot de passe </string>
     <string name="title_activity_login">LoginActivity</string>
@@ -52,6 +65,9 @@
     <string name="title_activity_note">NoteActivity</string>
     <string name="Exit">Exit</string>
     <string name="Welcome">Bienvenue à la maison</string>
+    
+    
+    
 
     <!-- Add and deleting notes -->
     <string name="title_activity_note_menu">Menu des notes</string>
