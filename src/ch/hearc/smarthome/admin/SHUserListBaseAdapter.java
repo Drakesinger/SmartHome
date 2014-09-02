@@ -1,4 +1,4 @@
-package ch.hearc.smarthome.networktester;
+package ch.hearc.smarthome.admin;
 
 import java.util.ArrayList;
 
@@ -10,14 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import ch.hearc.smarthome.R;
 
-public class SHActionListBaseAdapter extends BaseAdapter
+public class SHUserListBaseAdapter extends BaseAdapter
 {
 
-	private static ArrayList<SHAction>	actionArrayList;
+	private static ArrayList<SHUser>	actionArrayList;
 
 	private LayoutInflater				mInflater;
 
-	public SHActionListBaseAdapter(Context context, ArrayList<SHAction> results)
+	public SHUserListBaseAdapter(Context context, ArrayList<SHUser> results)
 	{
 		actionArrayList = results;
 		mInflater = LayoutInflater.from(context);
@@ -56,8 +56,8 @@ public class SHActionListBaseAdapter extends BaseAdapter
 			holder = (ViewHolder) convertView.getTag( );
 		}
 
-		holder.tvAction.setText(actionArrayList.get(position).getAction( ));
-		holder.tvDescription.setText(actionArrayList.get(position).getDescription( ));
+		holder.tvAction.setText(actionArrayList.get(position).getUserName( ));
+		holder.tvDescription.setText(actionArrayList.get(position).getPassword( ));
 
 		return convertView;
 	}
