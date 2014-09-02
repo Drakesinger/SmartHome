@@ -1,12 +1,5 @@
 package ch.hearc.smarthome.door;
 
-import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.PopupMessages;
-import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
-import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
-import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.InputType;
@@ -18,6 +11,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import ch.hearc.smarthome.CredentialManager;
+import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
+import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 public class DoorAdminActivity extends SHBluetoothActivity implements OnClickListener
 {
@@ -50,7 +48,7 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.door_admin);
-
+		Protocol = new SHCommunicationProtocol( );
 		initializeReferences( );
 
 		cb_show.setOnClickListener(this);
@@ -69,7 +67,8 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 			{
 				newPassword = _stringTable[2];
 				// New password is confirmed, change it
-				String dataToSend = CredentialManager.getActualUser( ) + "," + Protocol.getFunctionID(changeDoorPassword) + "," + newPassword;
+				String dataToSend = Protocol.generateDataToSend(changeDoorPassword, newPassword); 
+						//CredentialManager.getActualUser( ) + "," + Protocol.getFunctionID(changeDoorPassword) + "," + newPassword;
 				write(dataToSend);
 
 			}
@@ -88,7 +87,8 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 			 * TODO either show a pop-up or display a warning with a text view
 			 * item
 			 */
-			PopupMessages.launchPopup("Change password.", "The old password you have entered is not valid.", DoorAdminActivity.this);
+			notifyUser("The old password you have entered is not valid.");
+			//PopupMessages.launchPopup("Change password.", "The old password you have entered is not valid.", DoorAdminActivity.this);
 		}
 	}
 
@@ -113,10 +113,6 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 		return et.getText( ).toString( );
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.app.Activity#onActionModeFinished(android.view.ActionMode)
-	 */
 	@Override
 	public void onActionModeFinished(ActionMode mode)
 	{
@@ -150,7 +146,7 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 					// Show all passwords entered
 					for(int i = 0; i < ets.length; i++)
 					{
-						ets[i].setInputType(InputType.TYPE_CLASS_TEXT);
+						ets[i].setInputType(InputType.TYPE_CLASS_NUMBER);
 					}
 				}
 				else
@@ -158,7 +154,7 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 					Log.i("Checked", "false");
 					for(int i = 0; i < ets.length; i++)
 					{
-						ets[i].setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+						ets[i].setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
 					}
 				}
 				break;

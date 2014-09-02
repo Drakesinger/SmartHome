@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.PopupMessages;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
@@ -49,7 +46,7 @@ public class DoorActivity extends SHBluetoothActivity
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.door_main);
-
+		Protocol = new SHCommunicationProtocol( );
 		initializeReferences( );
 	}
 
@@ -62,7 +59,8 @@ public class DoorActivity extends SHBluetoothActivity
 		doorPassword = convertEditTextContentToStrings(et_door_main_Password);
 		checker = cb_door_main_Change_Password.isChecked( );
 
-		String dataToSend = CredentialManager.getActualUser( ) + "," + Protocol.getFunctionID(openRequest) + "," + doorPassword;
+		//String dataToSend = Protocol.generateDataToSend(CredentialManager.getActualUser( ),openRequest, doorPassword);
+		String dataToSend = Protocol.generateDataToSend(openRequest, doorPassword);
 		write(dataToSend);
 	}
 

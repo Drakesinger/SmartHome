@@ -36,11 +36,11 @@ public class SHCommunicationProtocol
 	//@formatter:off
 		
 	private static String[ ]					functionNames		= { 
-	                        					             		    "alreadyLoggedIn" , 	// 0
+	                        					             		    "create user" ,			// 0
 	                        					             		    "login" , 				// 1
 	                        					             		    "a change pass" , 		// 2
 	                        					             		    "a change username" , 	// 3
-	                        					             		    "a get users" , 		// 4
+	                        					             		    "a get user" , 			// 4
 	                        					             		    "d open" , 				// 5
 	                        					             		    "d change pass"  		// 6
 	                        					             		   };
@@ -162,13 +162,15 @@ public class SHCommunicationProtocol
 		switch(functionID)
 		{
 			case 0:
+				Log.d("SHCommunicationProtocol", "generateDataToSend function: " +_function);
 				// ask if there are user records on PIC, just send the function
 				// ID
 				dataToSend = new String("" + getFunctionID(_function));
 				break;
 			case 1:
+				Log.d("SHCommunicationProtocol", "generateDataToSend function: " +_function);
+				
 				// Login
-
 				actualUser = CredentialManager.getActualUser( );
 				generatedUser = generate(actualUser);
 

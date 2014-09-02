@@ -7,7 +7,7 @@ Login screen
 Ask if there was already someone logged in on PIC:
 [0]
 Login:
-[user][password][1]
+[user][1][password]
 Change password:
 [user][change pass][old pass][new pass]
 Change username:
@@ -15,7 +15,9 @@ Change username:
 ----------------------------------------------------------------------------------------
 Admin screen:
 Get users:
-[user][get users]
+[user][get user][all]
+Get user:
+[user][get user][username]
 Delete user:
 [user][delete user][user to del]
 Add user:
