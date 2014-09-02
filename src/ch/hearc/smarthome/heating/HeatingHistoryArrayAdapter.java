@@ -51,7 +51,7 @@ public class HeatingHistoryArrayAdapter extends
 
 		final HeatingHistoryObject historyObject = history.get(position);
 		holder.date.setText(historyObject.getDate());
-		holder.temp.setText(historyObject.getTemp()+"° C");
+		holder.temp.setText("Midi: " + historyObject.getTemp() + "° C");
 
 		return row;
 	}

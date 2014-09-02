@@ -16,52 +16,80 @@ import android.os.Bundle;
 
 public class HeatingHistoryGraphicalViewActivity extends Activity {
 
-GraphicalView chartView;
-	
+	GraphicalView chartView;
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 
-		ArrayList<String> dates = getIntent().getExtras().getStringArrayList("dates");
-		ArrayList<String> temps = getIntent().getExtras().getStringArrayList("temps");
-		
-		ArrayList<HeatingHistoryObject> history = new ArrayList<HeatingHistoryObject>();
-		
-		for(int i = 0; i < dates.size(); i++){
-			history.add(new HeatingHistoryObject(dates.get(i), temps.get(i)));
+		ArrayList<String> dates = getIntent().getExtras().getStringArrayList(
+				"dates");
+		ArrayList<String> tempsIn = getIntent().getExtras().getStringArrayList(
+				"tempsIn");
+		ArrayList<String> tempsOut = getIntent().getExtras()
+				.getStringArrayList("tempsOut");
+
+		ArrayList<HeatingHistoryObject> historyIn = new ArrayList<HeatingHistoryObject>();
+		ArrayList<HeatingHistoryObject> historyOut = new ArrayList<HeatingHistoryObject>();
+
+		for (int i = 0; i < dates.size(); i++) {
+			historyIn
+					.add(new HeatingHistoryObject(dates.get(i), tempsIn.get(i)));
+			historyOut.add(new HeatingHistoryObject(dates.get(i), tempsOut
+					.get(i)));
 		}
 
-		chartView = createGraphicalView(history);
+		chartView = createGraphicalView(historyIn, historyOut);
 
 		setContentView(chartView);
 	}
-	
+
 	public GraphicalView createGraphicalView(
-			ArrayList<HeatingHistoryObject> datas) {
+			ArrayList<HeatingHistoryObject> indoor,
+			ArrayList<HeatingHistoryObject> outdoor) {
 
-		XYSeries temps = new XYSeries("Week's temps");
+		XYSeries tempsIn = new XYSeries("Indoor temps");
+		XYSeries tempsOut = new XYSeries("Outdoor temps");
 
-		for (int i = 0; i < datas.size(); i++) {
-			temps.add(i, Integer.parseInt(datas.get(i).getTemp()));
+		for (int i = 0; i < indoor.size(); i++) {
+			tempsIn.add(i, Integer.parseInt(indoor.get(i).getTemp()));
+			tempsOut.add(i, Integer.parseInt(outdoor.get(i).getTemp()));
 		}
+
+		ArrayList<XYSeries> series = new ArrayList<XYSeries>();
+		series.add(tempsIn);
+		series.add(tempsOut);
+
 		// Now we create the renderer
-		XYSeriesRenderer renderer = new XYSeriesRenderer();
-		renderer.setLineWidth(4);
-		renderer.setColor(Color.RED);
+		XYSeriesRenderer rendererIn = new XYSeriesRenderer();
+		rendererIn.setLineWidth(4);
+		rendererIn.setColor(Color.RED);
 		// Include low and max value
-		renderer.setDisplayBoundingPoints(true);
+		rendererIn.setDisplayBoundingPoints(true);
 		// we add point markers
-		renderer.setPointStyle(PointStyle.CIRCLE);
-		renderer.setPointStrokeWidth(20);
+		rendererIn.setPointStyle(PointStyle.CIRCLE);
+		rendererIn.setPointStrokeWidth(20);
+		
+		
+		XYSeriesRenderer rendererOut = new XYSeriesRenderer();
+		rendererOut.setLineWidth(4);
+		rendererOut.setColor(Color.BLUE);
+		// Include low and max value
+		rendererOut.setDisplayBoundingPoints(true);
+		// we add point markers
+		rendererOut.setPointStyle(PointStyle.CIRCLE);
+		rendererOut.setPointStrokeWidth(20);
+		
 
 		XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-		mRenderer.addSeriesRenderer(renderer);
+		mRenderer.addSeriesRenderer(0, rendererIn);
+		mRenderer.addSeriesRenderer(1, rendererOut);
 		XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
-		mDataset.addSeries(temps);
+		mDataset.addAllSeries(series);
 
 		// We want to avoid black border
-		int[] margins = {100,100,100,100};
+		int[] margins = { 100, 100, 100, 100 };
 		mRenderer.setMargins(margins);
 		mRenderer.setMarginsColor(Color.argb(0x00, 0xff, 0x00, 0x00));
 		mRenderer.setLegendTextSize(40);
@@ -79,5 +107,5 @@ GraphicalView chartView;
 				mRenderer);
 
 	}
-	
+
 }
