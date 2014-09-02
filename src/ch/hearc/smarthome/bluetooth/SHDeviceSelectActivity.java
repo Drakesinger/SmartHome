@@ -289,7 +289,6 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 				// When connected to a device start the activity select
 				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection successful to " + msg.obj);
 				// User now needs to login
-				setTitle(getResources( ).getString(R.string.title_connected_to) + " " + mConnectedDevice.getName( ));
 				startActivityForResult(new Intent(getApplicationContext( ), SHLogin.class), REQUEST_LOGIN);
 				break;
 		}

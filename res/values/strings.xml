@@ -4,23 +4,34 @@
     <string name="app_name">SmartHome</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    
-    
+
     <!-- Login Screen -->
-    
     <string name="ls_welcome">Welcome home.</string>
     <string name="ls_pleaseLogin">Please login.</string>
     <string name="ls_enterPassword">Please enter your password.</string>
     <string name="ls_b_login">Log in</string>
-    
+
     <!-- Activity List -->
     <string name="al_welcome">Welcome home.</string>
     <string name="al_choose">Choose an activity to start&#8230; </string>
+
+    <!-- Home Screen (will be deleted) -->
+    <string name="title_activity_display_message">Bienvenue</string>
+    <string name="Welcome">Bienvenue à la maison</string>
+    <string name="BouttonPorte">Porte</string>
+    <string name="BouttonChauffage">Chauffage</string>
+    <string name="BouttonNote">Notes</string>
+    <string name="BouttonAlarme">Alarme</string>
+
+    <!-- Debugging Screen -->
+    <string name="ds_b_send">send</string>
+    <string name="ds_text">Message to send&#8230;</string>
 
     <!-- Heating Main Activity -->
     <string name="scheduling">Heating Scheduling</string>
     <string name="thresholds">Thresholds Heat and Light</string>
     <string name="history">History</string>
+    <string name="Exit">Exit</string>
 
     <!-- Heating Thresholds -->
     <string name="heating">HEATING</string>
@@ -47,28 +58,6 @@
     <string name="indoor">Indoor</string>
     <string name="outdoor">Outdoor</string>
 
-    
-    
-    <!-- FIX this!!!! -->
-    
-    <string name="title_activity_display_message">Bienvenue</string>
-    <string name="TextMdp">Veuillez entrer votre mot de passe </string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="TabPorte">Porte</string>
-    <string name="BouttonPorte">Porte</string>
-    <string name="BouttonChauffage">Chauffage</string>
-    <string name="BouttonNote">Notes</string>
-    <string name="BouttonAlarme">Alarme</string>
-    <string name="title_activity_notes_main">Notes</string>
-    <string name="NoteMain">"Notes : "</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="title_activity_note">NoteActivity</string>
-    <string name="Exit">Exit</string>
-    <string name="Welcome">Bienvenue à la maison</string>
-    
-    
-    
-
     <!-- Add and deleting notes -->
     <string name="title_activity_note_menu">Menu des notes</string>
     <string name="NoteMenu">Bienvenue dans le menu des notes, que voulez-vous faire ?</string>
@@ -79,18 +68,11 @@
     <string name="detail">Détails :</string>
     <string name="destinataire">Destinataire :</string>
     <string name="NoteAdd">Ajouter</string>
+	<string name="title_activity_note">NoteActivity</string>
     
-    <!-- Bluetooth Testing -->
-    <string name="send">Send</string>
-    <string name="not_connected">You are not connected to a device</string>
-    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
-    <string name="title_connecting">Connecting...</string>
-    <string name="title_connected_to">Connected: </string>
-    <string name="title_not_connected">Not connected</string>
-
     <!-- Options Menu -->
     <string name="base_connect">Connect a device - Base</string>
-	<string name="debug_mode">Debugger</string>
+    <string name="debug_mode">Debugger</string>
     <string name="debug_mode_on">Debug mode on</string>
     <string name="debug_mode_off">Debug mode off</string>
     <string name="logging_on">Logs on</string>
@@ -100,8 +82,8 @@
     <string name="quit">Quit</string>
     <string name="home">Home</string>
 
-    <!-- DeviceListActivity -->
-    <string name="scanning">Scanning for devices...</string>
+    <!-- Device List Screen -->
+    <string name="scanning">Scanning for devices&#8230;</string>
     <string name="select_device">Select a device to connect</string>
     <string name="none_paired">No devices have been paired</string>
     <string name="none_found">No devices found</string>
