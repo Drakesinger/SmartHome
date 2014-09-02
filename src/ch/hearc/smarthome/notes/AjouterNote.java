@@ -9,9 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
+import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 
 public class AjouterNote extends SHBluetoothActivity {
@@ -22,7 +24,15 @@ public class AjouterNote extends SHBluetoothActivity {
 	public 	String 		date;
 	public 	String 		save;
 	public 	String 		currentUser;
-
+	public	String		newDetail;
+	public	String		newSujet;
+	public	String		newDestinataire;
+	public 	static int	kMaxLength = 8; 
+	// Functions of this activity
+	private String sendpost = "send post-it";
+	
+	private static SHCommunicationProtocol protocol;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,18 +63,21 @@ public class AjouterNote extends SHBluetoothActivity {
 		EditText destinataire =(EditText) findViewById(R.id.destinataire);
 		strDestinataire = destinataire.getText().toString();
 		destinataire.setText("");
+		newDestinataire = completeLength(strDestinataire);
 		
 		EditText sujet = (EditText) findViewById(R.id.sujet);
 		strSujet = sujet.getText().toString();
 		sujet.setText("");
+		newSujet = completeLength(strSujet);
 		
 		EditText detail = (EditText) findViewById(R.id.detail);
 		strDetail = detail.getText().toString();
+		newDetail = strDetail.replace(" ", "_");
 		detail.setText("");
 		
 		Calendar rightNow = Calendar.getInstance();
-        date = rightNow.get(Calendar.DAY_OF_MONTH)+"/"+rightNow.get(Calendar.MONTH)+"/"+rightNow.get(Calendar.YEAR);
-        
+        date = rightNow.get(Calendar.DAY_OF_MONTH)+"."+rightNow.get(Calendar.MONTH)+"."+rightNow.get(Calendar.YEAR);
+                
         if(strDestinataire.matches("") || strSujet.matches("") || strDetail.matches(""))
 		{
         	Toast.makeText(AjouterNote.this, "Veuillez remplir tous les champs !", Toast.LENGTH_SHORT).show();
@@ -77,15 +90,24 @@ public class AjouterNote extends SHBluetoothActivity {
 	        }
 	        else
 	        {
-		        save += strDestinataire + ";" + strSujet + ";" + date + ";" + strDetail;
-		        
+		        save += newDestinataire + "," + newSujet + "," + date + "," + newDetail+ "\r";
+		        //CredentialManager.getActualUser()+","+save);
+		        write(protocol.generateDataToSend(CredentialManager.getActualUser(),sendpost,save));
 		        //Writing to the pick
-		        write(save);
+		        //write(save);
 		        
 		        Intent intent = new Intent(AjouterNote.this, NoteActivity.class);
 		        preventCancel = true;
 		    	startActivity(intent);
 	        }
 		}      
+	}
+	public String completeLength (String _complete)
+	{
+		for(int i = 0; i < (kMaxLength - _complete.length( )); i++)
+		{
+			_complete += "*";
+		}
+		return _complete;
 	}
 }

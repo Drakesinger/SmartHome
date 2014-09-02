@@ -42,7 +42,9 @@ public class SHCommunicationProtocol
 	                        					             		    "a change username" , 	// 3
 	                        					             		    "a get users" , 		// 4
 	                        					             		    "d open" , 				// 5
-	                        					             		    "d change pass"  		// 6
+	                        					             		    "d change pass" , 		// 6
+	                        					             		    "send post-it" , 
+	                        					             		    "delete post-it"
 	                        					             		   };
 
 	//@formatter:on
