@@ -34,7 +34,6 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 		super.onCreate(savedInstanceState);
 		// getActionBar( ).setDisplayHomeAsUpEnabled(true);
 		mBtNetworkManager = (SHBluetoothNetworkManager) getApplicationContext( );
-		setTitle("Debugger");
 	}
 
 	/**
