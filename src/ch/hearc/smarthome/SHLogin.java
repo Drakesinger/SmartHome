@@ -32,6 +32,7 @@ public class SHLogin extends SHBluetoothActivity
 
 	// Functions of SHLogin
 	private static final String				login				= "login";
+	private static final String				getLoggins			= "alreadyLoggedIn";
 
 	// Debugging
 	private static final String				TAG					= "SHLogin";
@@ -96,7 +97,8 @@ public class SHLogin extends SHBluetoothActivity
 				// First use of our application. So we login with the details
 				// entered and send them to the other device.
 				CredentialManager.setCredential(username, password);
-				dataToSend = CredentialManager.getCredential(username, false);
+
+				dataToSend = Protocol.generateDataToSend(username, login, password);
 
 				if(dataToSend.contains("Davy Jones' Locker!"))
 				{
@@ -114,9 +116,10 @@ public class SHLogin extends SHBluetoothActivity
 
 				CredentialManager.setActualUser(username);
 				CredentialManager.setActualPass(password);
+
 				CredentialManager.setCredential(username, password);
 
-				dataToSend = CredentialManager.getCredential(username, true);
+				dataToSend = Protocol.generateDataToSend(username, login, password);
 
 				if(dataToSend.contains("Davy Jones' Locker!"))
 				{
@@ -138,7 +141,7 @@ public class SHLogin extends SHBluetoothActivity
 	private void sendRequestSomeoneAlreadyLoggedIn( )
 	{
 		if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "sendRequestSomeoneAlreadyLoggedIn");
-		write("" + Protocol.getFunctionID("alreadyLoggedIn"));
+		write(Protocol.generateDataToSend(null, getLoggins, null));
 	}
 
 	/**
@@ -150,20 +153,18 @@ public class SHLogin extends SHBluetoothActivity
 	 *            True if a response was received, it this case the function
 	 *            just checks the answer
 	 */
-	private void sendDataAndCheckResponse(String _credential, boolean _bResponseReceived)
+	private void sendDataAndCheckResponse(String _data, boolean _bResponseReceived)
 	{
 
-		if(_bResponseReceived == false && _credential != null)
+		if(_bResponseReceived == false && _data != null)
 		{
-
-			String DataToSend = _credential + "," + Protocol.getFunctionID(login);
-			write(DataToSend);
+			write(_data);
 
 			mConnectionProgressDialog = ProgressDialog.show(SHLogin.this, "", "Sending login request...", false, true);
 
 			if(SHBluetoothNetworkManager.DEBUG)
 			{
-				Log.d(TAG, "Sent data:\n" + DataToSend);
+				Log.d(TAG, "Sent data:\n" + _data);
 				Log.d(TAG, "Response variable is in SendData:" + response);
 			}
 		}

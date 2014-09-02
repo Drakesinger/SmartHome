@@ -18,8 +18,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+/**
+ * @author Horia Mut
+ */
 public class SHBluetoothNetworkManager extends Application
 {
+
 	// SDP (Service Discovery Protocol) Name 
 	private static final String 	NAME 	= "SmartHome Bluetooth";
 

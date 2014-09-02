@@ -15,6 +15,7 @@ import android.util.Log;
  */
 public class CredentialManager
 {
+
 	// Debugging
 	private static final String			TAG					= "CredentialManager";
 
@@ -80,8 +81,8 @@ public class CredentialManager
 	}
 
 	/**
-	 * Stores the Credential in our hashtable. <br>
-	 * The parameters are saved in the hashtable at their initial length.
+	 * Stores the Credential in our hashtable and sets the actual user.<br>
+	 * Note: The parameters are saved in the hashtable at their initial length.
 	 * 
 	 * @param _username
 	 *            The username to save.

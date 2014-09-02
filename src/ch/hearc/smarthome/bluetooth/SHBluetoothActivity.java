@@ -16,6 +16,8 @@ import ch.hearc.smarthome.R;
  * interact with the PIC module. It contains all the necessary to deal with
  * communication. The front end and activity itself is left for the class
  * extending it.
+ * 
+ * @author Horia Mut
  */
 public class SHBluetoothActivity extends Activity implements Handler.Callback
 {

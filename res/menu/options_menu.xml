@@ -4,7 +4,7 @@
     <item
         android:id="@+id/it_debug_mode"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/debug_mode_on"/>
+        android:title="@string/debug_mode"/>
     <item
         android:id="@+id/it_logger"
         android:icon="@android:drawable/ic_menu_mylocation"
