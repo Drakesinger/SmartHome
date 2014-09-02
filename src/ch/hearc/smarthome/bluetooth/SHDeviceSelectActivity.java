@@ -270,31 +270,37 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 			case SHBluetoothNetworkManager.MSG_OK:
 				// The child activity ended gracefully
 				break;
+			case SHBluetoothNetworkManager.MSG_CONNECT_FAIL:
+				// Could not connect, inform user.
+				notifyUser("Could not connect. Retrying.");
 			case SHBluetoothNetworkManager.MSG_CANCEL:
 				// The child activity did not end gracefully (connection lost,
 				// failed,etc.)
 				if(msg.obj != null)
 				{
 					// If some text came with the message show in a toast
-					if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Message: " + msg.obj);
-					Toast.makeText(SHDeviceSelectActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show( );
+					if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Message: " + msg.obj);
+					notifyUser((String) msg.obj);
+					// Toast.makeText(SHDeviceSelectActivity.this, (String)
+					// msg.obj, Toast.LENGTH_SHORT).show( );
 				}
 				break;
 			case SHBluetoothNetworkManager.MSG_CONNECTED:
 				// When connected to a device start the activity select
-				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection successful to "
-																+ msg.obj);
+				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection successful to " + msg.obj);
 				// User now needs to login
-				setTitle(getResources( ).getString(R.string.title_connected_to)
-							+ " " + mConnectedDevice.getName( ));
+				setTitle(getResources( ).getString(R.string.title_connected_to) + " " + mConnectedDevice.getName( ));
 				startActivityForResult(new Intent(getApplicationContext( ), SHLogin.class), REQUEST_LOGIN);
 				break;
 		}
 		return false;
 	}
 
-
-
+	private void notifyUser(String _string)
+	{
+		// TODO Auto-generated method stub
+		Toast.makeText(SHDeviceSelectActivity.this, _string, Toast.LENGTH_SHORT).show( );
+	}
 
 	//@formatter:off
 	/** The on-click listener for all devices in the ListViews */

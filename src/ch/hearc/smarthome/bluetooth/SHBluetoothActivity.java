@@ -84,16 +84,23 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 		switch(_msg.what)
 		{
 			case SHBluetoothNetworkManager.MSG_WRITE:
-				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "writing out");
+				if(SHBluetoothNetworkManager.INFO) Log.i(TAG, "writing out");
 				break;
 			case SHBluetoothNetworkManager.MSG_OK:
 				// When a child activity returns safely
-				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Result of child activity OK");
+				if(SHBluetoothNetworkManager.INFO) Log.i(TAG, "Result of child activity OK");
 				break;
+			case SHBluetoothNetworkManager.MSG_NOT_CONNECTED:
+				// Can be received when writing and we are not connected, inform the user
+				notifyUser("Not connected to any device. Cannot send data.");
+				break;
+			case SHBluetoothNetworkManager.MSG_CONNECTION_LOST:
+				Log.e(TAG, "Connection was lost");
+				notifyUser("Connection to the device was lost");
 			case SHBluetoothNetworkManager.MSG_CANCEL:
 				// When a child activity returns after being canceled
 				// (ex: if the connection is lost) cancel this activity
-				if(SHBluetoothNetworkManager.DEBUG) Log.e(TAG, "Got canceled");
+				Log.e(TAG, "Got canceled");
 				setResult(SHBluetoothNetworkManager.MSG_CANCEL, new Intent( ));
 				finish( );
 				break;
