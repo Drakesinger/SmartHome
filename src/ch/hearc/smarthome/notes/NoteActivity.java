@@ -73,27 +73,34 @@ public class NoteActivity extends SHBluetoothActivity {
         	Reading message receive from Pick and receive user
         */     
         currentUser = CredentialManager.getActualUser();
-       
-        String lines[] = MessageRead.split("\r"); 
-        listItem.clear();
-        Toast.makeText(getApplicationContext(), "Save found",
-				Toast.LENGTH_SHORT).show();
-		// Update 'listItem' array with the new list content
-		for (String l : lines) 
-		{
-			String s[] = l.split(",");
-			if(s[0] == currentUser || s[0] == "PUBLIC")
+        if(MessageRead != null)
+        {
+	        String lines[] = MessageRead.split("\r"); 
+	        listItem.clear();
+	        Toast.makeText(getApplicationContext(), "Save found",
+					Toast.LENGTH_SHORT).show();
+			// Update 'listItem' array with the new list content
+			for (String l : lines) 
 			{
-				map.put("sujet",s[2]);
-				map.put("date",s[3]);
-				newDetail = s[4].replace("_", " ");
-				map.put("detail",newDetail);
-				listItem.add(map);
-				map = new HashMap<String, String>();
+				String s[] = l.split(",");
+				if(s[0] == currentUser || s[0] == "PUBLIC")
+				{
+					map.put("sujet",s[2]);
+					map.put("date",s[3]);
+					newDetail = s[4].replace("_", " ");
+					map.put("detail",newDetail);
+					listItem.add(map);
+					map = new HashMap<String, String>();
+				}
 			}
-		}
-		mSchedule.notifyDataSetChanged();
-        
+			mSchedule.notifyDataSetChanged();
+        }
+        else
+        {
+        	Toast.makeText(getApplicationContext(),
+					"Watching error",
+					Toast.LENGTH_SHORT).show();
+        }
         //Enfin on met un écouteur d'évènement sur notre listView
         myListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override

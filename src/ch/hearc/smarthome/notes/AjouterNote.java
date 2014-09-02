@@ -2,7 +2,6 @@ package ch.hearc.smarthome.notes;
 
 import java.util.Calendar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -84,22 +83,11 @@ public class AjouterNote extends SHBluetoothActivity {
 		}
 		else
 		{		
-	        if(FileUtil.isExternalStorageWritable() == false)
-	        {
-	        	Toast.makeText(AjouterNote.this, "No MEDIA", Toast.LENGTH_SHORT).show();
-	        }
-	        else
-	        {
-		        save += newDestinataire + "," + newSujet + "," + date + "," + newDetail+ "\r";
-		        //CredentialManager.getActualUser()+","+save);
-		        write(protocol.generateDataToSend(CredentialManager.getActualUser(),sendpost,save));
-		        //Writing to the pick
-		        //write(save);
-		        
-		        Intent intent = new Intent(AjouterNote.this, NoteActivity.class);
-		        preventCancel = true;
-		    	startActivity(intent);
-	        }
+	        save += newDestinataire + "," + newSujet + "," + date + "," + newDetail+ "\r";
+	        //CredentialManager.getActualUser()+","+save);
+	        write(protocol.generateDataToSend(CredentialManager.getActualUser(),sendpost,save));
+	        //Writing to the pick
+	        //write(save);
 		}      
 	}
 	public String completeLength (String _complete)
@@ -110,4 +98,8 @@ public class AjouterNote extends SHBluetoothActivity {
 		}
 		return _complete;
 	}
+	public void onBackPressed()
+    {
+    	preventCancel = true;
+    }
 }
