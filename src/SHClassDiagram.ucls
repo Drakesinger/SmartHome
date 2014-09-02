@@ -35,7 +35,7 @@
     <position height="55" width="239" x="622" y="-106"/>    
     <display autosize="true" stereotype="true" accessors="true"/>  
   </package>  
-  <class id="5" language="java" name="ch.hearc.smarthome.networktester.SHActivityList" project="SmartHome" 
+  <class id="5" language="java" name="ch.hearc.smarthome.activitylist.SHActivityList" project="SmartHome" 
     file="/SmartHome/src/ch/hearc/smarthome/networktester/SHActivityList.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="160" width="227" x="2680" y="724"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
