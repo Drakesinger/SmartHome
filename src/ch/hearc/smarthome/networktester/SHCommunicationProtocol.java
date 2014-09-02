@@ -139,15 +139,13 @@ public class SHCommunicationProtocol
 	/**
 	 * Generates the data to send to the PIC.
 	 * 
-	 * @param _username
-	 *            Username.
 	 * @param _function
 	 *            Name of the function to be sent.
 	 * @param _params
 	 *            The parameters to be sent for the function. Parameters need to
 	 *            be formated.
 	 * @return Formatted String. Format: username,functionID,parameters <br>
-	 *         Username will have it's maximum length, filled
+	 *         Username is the actual user and has it's maximum length, filled
 	 *         with '*'. If a password is sent, it is also filled up with '*'.
 	 * 
 	 */
@@ -188,24 +186,6 @@ public class SHCommunicationProtocol
 				dataToSend = new String(generatedUser + "," + getFunctionID(_function) + "," + _params);
 
 				break;
-		}
-
-		if(_function.contentEquals("login"))
-		{
-			// Only the login function sends the password
-
-			// _params will point to null if we already have a logon
-			if(_params != null)
-			{
-
-				// Password was generated, best is to add it to _params
-
-			}
-
-		}
-		else
-		{
-			generatedPass = null;
 		}
 
 		Log.d("SHCommunicationProtocol", "Parameters generated:" + _params);
