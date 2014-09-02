@@ -136,4 +136,94 @@ public class SHCommunicationProtocol
 		return dataToSend;
 	}
 
+	/**
+	 * Generates the data to send to the PIC.
+	 * 
+	 * @param _username
+	 *            Username.
+	 * @param _function
+	 *            Name of the function to be sent.
+	 * @param _params
+	 *            The parameters to be sent for the function. Parameters need to
+	 *            be formated.
+	 * @return Formatted String. Format: username,functionID,parameters <br>
+	 *         Username will have it's maximum length, filled
+	 *         with '*'. If a password is sent, it is also filled up with '*'.
+	 * 
+	 */
+	public String generateDataToSend(String _function, String _params)
+	{
+		String dataToSend;
+		String generatedUser;
+		String generatedPass;
+
+		String actualUser;
+
+		int functionID = getFunctionID(_function);
+
+		switch(functionID)
+		{
+			case 0:
+				// ask if there are user records on PIC, just send the function
+				// ID
+				dataToSend = new String("" + getFunctionID(_function));
+				break;
+			case 1:
+				// Login
+
+				actualUser = CredentialManager.getActualUser( );
+				generatedUser = generate(actualUser);
+
+				String pass = _params;
+				generatedPass = generate(pass);
+
+				_params = generatedPass;
+				Log.d("SHCommunicationProtocol", "Parameters redefined to generatedPass:" + _params + " =? genPass " + generatedPass);
+				dataToSend = new String(generatedUser + "," + getFunctionID(_function) + "," + _params);
+
+				break;
+			default:
+				actualUser = CredentialManager.getActualUser( );
+				generatedUser = generate(actualUser);
+				dataToSend = new String(generatedUser + "," + getFunctionID(_function) + "," + _params);
+
+				break;
+		}
+
+		if(_function.contentEquals("login"))
+		{
+			// Only the login function sends the password
+
+			// _params will point to null if we already have a logon
+			if(_params != null)
+			{
+
+				// Password was generated, best is to add it to _params
+
+			}
+
+		}
+		else
+		{
+			generatedPass = null;
+		}
+
+		Log.d("SHCommunicationProtocol", "Parameters generated:" + _params);
+
+		return dataToSend;
+	}
+
+	private String generate(String _toGen)
+	{
+
+		String generatedString = new String(_toGen);
+		for(int i = 0; i < (kUsernameMaxLength - _toGen.length( )); i++)
+		{
+			generatedString += "*";
+		}
+		Log.d("String creation", "generatedString :" + generatedString);
+
+		return generatedString;
+	}
+
 }
