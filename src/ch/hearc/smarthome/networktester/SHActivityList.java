@@ -16,7 +16,7 @@ import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 public class SHActivityList extends SHBluetoothActivity
 {
 
-	private ArrayList<SHAction>	mActivityList	= new ArrayList<SHAction>( );
+	private ArrayList<SHActivityC>	mActivityList	= new ArrayList<SHActivityC>( );
 	private ListView			lv_ActivityList;
 
 	@Override
@@ -28,14 +28,14 @@ public class SHActivityList extends SHBluetoothActivity
 		lv_ActivityList = (ListView) findViewById(R.id.al_lv_action_list);
 
 		// Remote control activities
-		mActivityList.add(new SHAction("Door Control", "Open the door and change the door's password", "ch.hearc.smarthome.door.", "DoorActivity"));
-		mActivityList.add(new SHAction("Heating Management", "Manage all aspects of your home's heating.", "ch.hearc.smarthome.heating.", "HeatingMainActivity"));
-		mActivityList.add(new SHAction("Post-it", "View the post-its saved for you or for the public, create new post-its.", "ch.hearc.smarthome.notes.", "NoteMenu"));
+		mActivityList.add(new SHActivityC("Door Control", "Open the door and change the door's password", "ch.hearc.smarthome.door.", "DoorActivity"));
+		mActivityList.add(new SHActivityC("Heating Management", "Manage all aspects of your home's heating.", "ch.hearc.smarthome.heating.", "HeatingMainActivity"));
+		mActivityList.add(new SHActivityC("Post-it", "View the post-its saved for you or for the public, create new post-its.", "ch.hearc.smarthome.notes.", "NoteMenu"));
 
 		// SHBluetoothTesting
-		mActivityList.add(new SHAction("TEST DA TOOTH THAT'S BLUE", "NIGGA NIGGA NIGGA NIGGA NIGGA", "ch.hearc.smarthome.networktester.", "SHBluetoothTesting"));
+		mActivityList.add(new SHActivityC("TEST DA TOOTH THAT'S BLUE", "NIGGA NIGGA NIGGA NIGGA NIGGA", "ch.hearc.smarthome.networktester.", "SHBluetoothTesting"));
 
-		lv_ActivityList.setAdapter(new SHActionListBaseAdapter(this, mActivityList));
+		lv_ActivityList.setAdapter(new SHActivityListBaseAdapter(this, mActivityList));
 		lv_ActivityList.setOnItemClickListener(new OnItemClickListener( )
 			{
 				public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
