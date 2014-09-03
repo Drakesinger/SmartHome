@@ -322,6 +322,7 @@ public class SHBluetoothNetworkManager extends Application
 			// Send the following data to the device so that it knows we
 			// disconnected
 			write(".,230,.");
+			
 
 			// Cancel any running connected threads
 			if(mConnectedThread != null)
