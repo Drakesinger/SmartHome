@@ -86,17 +86,23 @@
     <string name="indoor">Indoor</string>
     <string name="outdoor">Outdoor</string>
 
-    <!-- Add and deleting notes -->
-    <string name="title_activity_note_menu">Post-it menu</string>
-    <string name="NoteMenu">What do you want to do ? Add or delete a post-it ?</string>
-    <string name="SupprimerNote">See and/or delete a post-it</string>
-    <string name="AjouterNote">Add post-it</string>
+    <!-- Add note screen -->
+    <string name="an_name">New Post-it</string>
+    <string name="nm_name">Note Menu</string>
     <string name="title_activity_ajouter_note">Add post-it</string>
-    <string name="sujet">Sujet :</string>
+    <string name="sujet">Subject :</string>
     <string name="detail">Details :</string>
-    <string name="destinataire">Destinataire :</string>
+    <string name="destinataire">To :</string>
     <string name="NoteAdd">Add</string>
     <string name="title_activity_note">Post-it</string>
+    <string name="title_activity_note_menu">Post-it menu</string>
+    <string name="NoteMenu">What do you want to do ? Add or delete a post-it ?</string>
+    
+    <!-- View and delete note screen -->
+    <string name="dn_name">Note viewer</string>
+    <string name="SupprimerNote">See and/or delete a post-it</string>
+    <string name="AjouterNote">Add post-it</string>
+
 
     <!-- Options Menu -->
     <string name="base_connect">Connect a device - Base</string>

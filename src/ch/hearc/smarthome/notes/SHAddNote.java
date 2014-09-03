@@ -33,7 +33,7 @@ public class SHAddNote extends SHBluetoothActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_ajouter_note);
+		setContentView(R.layout.notes_add_postit);
 		protocol = new SHCommunicationProtocol( );
 	}
 
@@ -82,7 +82,7 @@ public class SHAddNote extends SHBluetoothActivity {
 		}
 		else
 		{		
-	        save = newSujet + "," + newDetail + "," + date + "," + newDestinataire + "\r";
+	        save = newSujet + "," + newDetail + "," + newDestinataire + "," + date + "\r";
 	        //CredentialManager.getActualUser()+","+save);
 	        write(protocol.generateDataToSend(sendpost,save));
 	        //Writing to the pick

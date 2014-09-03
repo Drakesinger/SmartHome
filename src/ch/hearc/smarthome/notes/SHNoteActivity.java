@@ -59,7 +59,7 @@ public class SHNoteActivity extends SHBluetoothActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_note);
+		setContentView(R.layout.notes_list);
 
 		protocol = new SHCommunicationProtocol( );
 		newUser = completeLength(CredentialManager.getActualUser());
@@ -82,10 +82,29 @@ public class SHNoteActivity extends SHBluetoothActivity
 
 		// Création d'un SimpleAdapter qui se chargera de mettre les items
 		// présent dans notre list (listItem) dans la vue affichageitem
-		mSchedule = new SimpleAdapter(this.getBaseContext( ), listItem, R.layout.fragment_note, new String[ ] { "sujet" , "date" }, new int[ ] { R.id.sujet , R.id.date });
+		mSchedule = new SimpleAdapter(this.getBaseContext( ), listItem, R.layout.notes_list, new String[ ] { "sujet" , "date" }, new int[ ] { R.id.sujet , R.id.date });
 		mSchedule.notifyDataSetChanged( );
 		// On attribut à notre listView l'adapter que l'on vient de créer
 		myListView.setAdapter(mSchedule);
+		
+		/*For debug
+		map.put("sujet", "Souper");
+		map.put("detail", "Detail ici");
+		map.put("date", "01.02.2011");
+		listItem.add(map);
+		
+		map.put("sujet", "Souper");
+		map.put("detail", "Detail ici");
+		map.put("date", "01.02.2011");
+		listItem.add(map);
+		
+		map.put("sujet", "Souper");
+		map.put("detail", "Detail ici");
+		map.put("date", "01.02.2011");
+		listItem.add(map);
+		map = new HashMap<String , String>( );
+		*/
+		
 		/*
 		 * Reading message receive from Pick and receive user
 		 */
@@ -124,7 +143,7 @@ public class SHNoteActivity extends SHBluetoothActivity
 					// on créer une boite de dialogue
 					AlertDialog.Builder adb = new AlertDialog.Builder(SHNoteActivity.this);
 					// on attribut un titre à notre boite de dialogue
-					adb.setTitle("Sélection Item");
+					adb.setTitle("Note selection");
 					// on insère un message à notre boite de dialogue, et ici on
 					// affiche le titre de l'item cliqué
 					adb.setMessage("Post-it details : " + newLine + map.get("detail") + newLine + newLine);
