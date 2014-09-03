@@ -14,6 +14,8 @@ import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
+import ch.hearc.smarthome.heating.SHBluetoothFragmentActivity;
 
 public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 
@@ -28,11 +30,18 @@ public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 	ArrayList<HeatingScheduling> datas = new ArrayList<HeatingScheduling>();
 	HeatingSchedulingsArrayAdapter adapter;
 	FragmentManager fm = getSupportFragmentManager();
-
+	
+	//Bluetooth
+	private static SHCommunicationProtocol protocol;
+	public String sBluetoothMessage;
+	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 
+		//Bluetooth
+		protocol = new SHCommunicationProtocol();
+		
 		setContentView(R.layout.heating_scheduling);
 
 		// ListAdapter -> ListView
@@ -83,6 +92,9 @@ public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 		for (HeatingScheduling s : datas) {
 			save += s.getName() + ";" + s.getDate() + ";" + s.getTemp() + "\n";
 		}
+		
+		// Sending to bluetooth
+		write(protocol.generateDataToSend("h del scheduling", save));
 
 		// Modify the file
 		if (FileUtil.isMediaMounted()) {
@@ -155,10 +167,10 @@ public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 	@Override
 	public boolean handleMessage(Message _msg) {
 		
-		String response;
 		if (_msg.what == SHBluetoothNetworkManager.MSG_READ) {
-			response = ((String) _msg.obj).toLowerCase( );
+			sBluetoothMessage = ((String) _msg.obj).toLowerCase( );
 		}
 		return false;
 	}
+	
 }

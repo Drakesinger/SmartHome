@@ -14,6 +14,7 @@ import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
+import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 public class HeatingThresholdsActivity extends SHBluetoothActivity {
 
@@ -27,12 +28,17 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 	TextView txtTemp, txtMax, txtMin;
 
 	boolean thresholdsSaved = true;
+	private static SHCommunicationProtocol protocol;
+	
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.heating_thresholds);
 
+		//Bluetooth
+		protocol = new SHCommunicationProtocol();
+		
 		// Initialize every views of the layout
 		initViews();
 
@@ -43,6 +49,9 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 	public void saveThresholds(View v) {
 		String save = defaultTemp.getProgress() + "\n" + maxLight.getProgress()
 				+ "\n" + minLight.getProgress();
+		
+		// Bluetooth save
+		write(protocol.generateDataToSend("h sav thresholds", save));
 
 		if (FileUtil.isMediaMounted()) {
 			try {

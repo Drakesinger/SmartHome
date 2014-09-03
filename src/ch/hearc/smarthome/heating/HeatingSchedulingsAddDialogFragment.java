@@ -21,6 +21,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
+import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
 
@@ -44,6 +45,9 @@ public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
 	DatePicker datePickerStart, datePickerEnd;
 	SeekBar seekbarTemp;
 	TextView tvTemp;
+	
+	// Bluetooth
+	private static SHCommunicationProtocol protocol;
 
 	@Override
 	public void setTargetFragment(Fragment fragment, int requestCode) {
@@ -53,6 +57,8 @@ public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
 	}
 
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		
+		protocol = new SHCommunicationProtocol();
 
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View v = inflater.inflate(
@@ -154,6 +160,8 @@ public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
 
 		// Concat save
 		String save = name + ";" + date + ";" + temp + "\n";
+		
+		((HeatingSchedulingsActivity) getActivity()).write(protocol.generateDataToSend("h add scheduling", save));
 
 		// Check if Media is mounted ( File exists because
 		// HeatingSchedulingsActivity.onCreate() create the file if it doesn't

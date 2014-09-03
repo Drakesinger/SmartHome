@@ -12,12 +12,16 @@ import org.achartengine.model.XYSeries;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
+import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 
@@ -39,10 +43,17 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 	private ArrayList<HeatingHistoryObject> displayIn = new ArrayList<HeatingHistoryObject>();
 	private ArrayList<HeatingHistoryObject> displayOut = new ArrayList<HeatingHistoryObject>();
 
+	// Bluetooth
+	private static SHCommunicationProtocol protocol;
+	private String sBtContent = null;
+	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.heating_history);
+		
+		// Bluetooth
+		protocol = new SHCommunicationProtocol();
 
 		lvHistoryIn = (ListView) findViewById(R.id.listview_history_indoor);
 		lvHistoryOut = (ListView) findViewById(R.id.listview_history_outdoor);
@@ -130,9 +141,6 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 			c.add(Calendar.DATE, +1);
 		}
 
-		Log.d("TEMPS", "DATA(0): New hho( Date ,  n° of temps = "
-				+ datas.get(0).getTemps().getItemCount());
-
 		return datas;
 	}
 
@@ -170,6 +178,24 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 		// And then start
 		startActivity(intent);
+	}
+	
+	@Override
+	public boolean handleMessage(Message _msg)
+	{
+		if(_msg.what == SHBluetoothNetworkManager.MSG_READ)
+		{
+			String t = ((String) _msg.obj).toLowerCase( );
+			btMsgReceived(t);
+		}
+		return super.handleMessage(_msg);
+	}
+	
+	public void btMsgReceived(String _sMsg){
+		
+		sBtContent = _sMsg;
+		Toast.makeText(getApplicationContext(), sBtContent, Toast.LENGTH_SHORT).show();
+		
 	}
 
 }

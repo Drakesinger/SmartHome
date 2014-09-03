@@ -54,7 +54,11 @@ public class SHCommunicationProtocol
 	                        					             		    "delete post-it",		// 10
 	                        					             		    "get post-its all",		// 11
 	                        					             		    "get post-its user",	// 12
-	                        					             		    "get post-its public"	// 13
+	                        					             		    "get post-its public",	// 13
+	                        					             		    // HEATING
+	                        					             		    "h add scheduling",		// 14
+	                        					             		    "h del scheduling",		// 15
+	                        					             		    "h sav thresholds"		// 16
 	                        					             		   };
 
 	//@formatter:on
