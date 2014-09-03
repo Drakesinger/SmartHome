@@ -5,23 +5,37 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/activity_list_tv_welcome"
+        style="@style/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="Activities"
+        android:text="@string/al_welcome"
         android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/activity_list_tv_choose"
+        style="@style/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_list_tv_welcome"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="@string/al_choose"
+        android:textSize="16sp" />
 
     <ListView
         android:id="@+id/al_lv_action_list"
         android:layout_width="300dp"
         android:layout_height="350dp"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/activity_list_tv_choose"
         android:layout_centerHorizontal="true"
-        android:padding="10dp" >
+        android:padding="10dp"
+        android:animationCache="true" >
     </ListView>
 
 </RelativeLayout>

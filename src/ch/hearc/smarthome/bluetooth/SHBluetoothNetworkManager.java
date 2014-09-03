@@ -5,31 +5,84 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-import ch.hearc.smarthome.networktester.SHBluetoothTesting;
-
 import android.app.Activity;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 /**
+ * The main class of our application. Gets start up as soon as the application
+ * starts.
+ * 
+ * Does all the work for setting up and managing a Bluetooth
+ * connection with another devices.
+ * 
+ * <p>
+ * The class has three threads:
+ * 
+ * <li> {@link AcceptThread}
+ * <dl>
+ * <dl>
+ * A listener thread that opens a {@link BluetoothServerSocket} and listens for
+ * incoming connection requests. When one is accepted, it provides a connected
+ * {@link BluetoothSocket}. When the {@link BluetoothSocket} is acquired from
+ * the {@link BluetoothServerSocket}, the {@link BluetoothServerSocket} is
+ * discarded as we only want one connection. This thread allows a secure
+ * bluetooth connection between two devices to be established.
+ * </dl>
+ * </dl></li>
+ * 
+ * <li> {@link ConnectThread}
+ * <dl>
+ * <dl>
+ * A connecting thread from the client side, this thread requires the
+ * information of a {@link BluetoothDevice}. This is obtained during
+ * {@link SHDeviceSelectActivity}. Once the {@link BluetoothDevice} information
+ * is received, we get a {@link BluetoothSocket} by calling
+ * {@link #createRfcommSocketToServiceRecord} with the same {@link UUID} used in
+ * the {@link AcceptThread} when calling
+ * {@link #listenUsingRfcommWithServiceRecord}. The thread attempts to connect
+ * on the {@link BluetoothSocket}, if able it resets and starts the
+ * {@link ConnectedThread}.
+ * </dl>
+ * </dl></li>
+ * 
+ * <li> {@link ConnectedThread}
+ * <dl>
+ * <dl>
+ * This thread handles all incoming and outgoing transmissions. It creates input
+ * and output streams on the {@link BluetoothSocket} and then listens on the
+ * {@link InputStream} of the {@link BluetoothSocket}. It also provides a
+ * {@link #write(String)} method for sending data through the
+ * {@link BluetoothSocket}. It has a thread for connecting with a device, a
+ * thread for performing data transmissions when connected and a timeout thread
+ * that cancels the connection when too much time has passed since last
+ * communication.
+ * </dl>
+ * </dl></li>
+ * 
+ * <p>
+ * If the connection is lost/broken/has failed/disconnected, the current
+ * activity that is using it (that has set activityHander) should finish (a
+ * message is dispatched to the current activityHander Handler). Then the
+ * application will start with the Bluetooth device activity over again.
+ * 
  * @author Horia Mut
  */
 public class SHBluetoothNetworkManager extends Application
 {
+
 
 	// SDP (Service Discovery Protocol) Name 
 	private static final String 	NAME 	= "SmartHome Bluetooth";
 
 	// Debugging 
 	public static final boolean 	DEBUG 	= true;
-	private static final boolean 	INFO	= true;
+	public static final boolean 	INFO	= true;
 	private static final String 	TAG 	= "SHBluetoothNetworkManager";
 	
 	// Member fields 
@@ -41,20 +94,25 @@ public class SHBluetoothNetworkManager extends Application
 	private 		ConnectedThread 	mConnectedThread;
 	
 	private int 	mState;
-	private boolean bBusy;
+	private boolean bBusy; // can be used to avoid sending over and over if blocked
 	private boolean bStoppingConnection;
 
 	// UUIDs for this application 
 	// This is the base UUID in order to establish an RFCOMM channel with the PIC module 
 	private static final UUID BASE_UUID		= UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-	// Constants to indicate message contents 
-	public static final int MSG_OK 			= 0;
-	public static final int MSG_READ 		= 1;
-	public static final int MSG_WRITE 		= 2;
-	public static final int MSG_CANCEL 		= 3;
-	public static final int MSG_CONNECTED 	= 4;
 	//@formatter:off
+
+	// Constants to indicate message contents 
+	public static final int			MSG_OK				= 0;
+	public static final int			MSG_READ			= 1;
+	public static final int			MSG_WRITE			= 2;
+	public static final int			MSG_CANCEL			= 3;
+	public static final int			MSG_NOT_CONNECTED	= 4;
+	public static final int			MSG_CONNECTED		= 5;
+	public static final int			MSG_CONNECT_FAIL	= 6;
+	public static final int			MSG_CONNECTION_LOST	= 7;
+
 	
 	// Bluetooth States 
 	public static final int STATE_NONE 			= 0; // we're doing nothing
@@ -70,7 +128,6 @@ public class SHBluetoothNetworkManager extends Application
 		mBtAdapter = BluetoothAdapter.getDefaultAdapter( );
 		mState = STATE_NONE;
 		mHandler = null;
-		if(DEBUG) Log.d(TAG, "SHBluetoothNetworkManager constuctor called.");
 	}
 
 	/**
@@ -286,9 +343,15 @@ public class SHBluetoothNetworkManager extends Application
 	}
 
 	/**
-	 * This thread runs while listening for incoming connections. It behaves
-	 * like a server-side client. It runs until a connection is accepted (or
-	 * until cancelled).
+	 * A listener thread that opens a {@link BluetoothServerSocket} and listens
+	 * for incoming connection requests. When one is accepted, it provides a
+	 * connected {@link BluetoothSocket}. When the {@link BluetoothSocket} is
+	 * acquired from the {@link BluetoothServerSocket}, the
+	 * {@link BluetoothServerSocket} is discarded as we only want one
+	 * connection.
+	 * This thread allows a secure bluetooth connection between two devices to
+	 * be established.It runs until
+	 * a connection is accepted (or until cancelled).
 	 */
 	private class AcceptThread extends Thread
 	{
@@ -316,17 +379,13 @@ public class SHBluetoothNetworkManager extends Application
 			{
 				Log.e(TAG, "Listen Socket creation failed. listen()", e);
 
-				exceptionManager("Socket creation failed, listen() failure.", false);
-
 			}
 			mmServerSocket = tmp;
 		}
 
 		public void run( )
 		{
-			if(DEBUG)
-
-			Log.d(TAG, "BEGIN mAcceptThread" + this);
+			if(DEBUG) Log.d(TAG, "BEGIN mAcceptThread" + this);
 
 			setName("AcceptThread");
 
@@ -345,20 +404,16 @@ public class SHBluetoothNetworkManager extends Application
 				catch(IOException e)
 				{
 					Log.e(TAG, "accept() failed", e);
-
-					exceptionManager("accept() failed.", false);
 					break;
 				}
 
-				/*
+				/*//@formatter:off
 				 * If a connection was accepted, check in which state we are.
 				 * STATE_LISTEN : do nothing
-				 * STATE_CONNECTING : trying to connect, start the connection
-				 * manager thread
+				 * STATE_CONNECTING : a client is trying to connect, start the connection manager thread
 				 * STATE_NONE : do nothing
-				 * STATE_CONNECTED : already connected or error, terminate the
-				 * new socket
-				 */
+				 * STATE_CONNECTED : already connected, terminate the bluetooth server socket
+				 *///@formatter:on
 				if(socket != null)
 				{
 					if(DEBUG) Log.d(TAG, "socket != null | state: " + mState);
@@ -372,7 +427,8 @@ public class SHBluetoothNetworkManager extends Application
 							case STATE_CONNECTING:
 								if(INFO) Log.i(TAG, "Accept thread - STATE_CONNECTING");
 
-								/* Start the connected thread */
+								// Start the connected thread
+								// A client is trying to establish connection
 								connected(socket, socket.getRemoteDevice( ));
 								break;
 							case STATE_NONE:
@@ -382,7 +438,8 @@ public class SHBluetoothNetworkManager extends Application
 								if(INFO) Log.i(TAG, "Accept thread - STATE_CONNECTED");
 
 								// We may already be connected. So we terminate
-								// the newly created socket
+								// the server socket, no point in it still
+								// listening as we only want one connection
 
 								try
 								{
@@ -391,7 +448,6 @@ public class SHBluetoothNetworkManager extends Application
 								catch(Exception e)
 								{
 									Log.e(TAG, "Could not close socket", e);
-									exceptionManager("Already connected. Could not close socket.", false);
 								}
 								break;
 						}
@@ -419,9 +475,18 @@ public class SHBluetoothNetworkManager extends Application
 	}
 
 	/**
-	 * This thread runs while attempting to make an outgoing connection with a
-	 * device. It runs straight through; the connection either succeeds or
-	 * fails.
+	 * A connecting thread from the client side, this thread requires the
+	 * information of a {@link BluetoothDevice}. This is obtained during
+	 * {@link SHDeviceSelectActivity}. Once the {@link BluetoothDevice}
+	 * information
+	 * is received, we get a {@link BluetoothSocket} by calling
+	 * {@link #createRfcommSocketToServiceRecord} with the same {@link UUID}
+	 * used in
+	 * the {@link AcceptThread} when calling
+	 * {@link #listenUsingRfcommWithServiceRecord}. The thread attempts to
+	 * connect
+	 * on the {@link BluetoothSocket}, if able it resets and starts the
+	 * {@link ConnectedThread}.
 	 */
 	private class ConnectThread extends Thread
 	{
@@ -446,7 +511,6 @@ public class SHBluetoothNetworkManager extends Application
 			catch(IOException e)
 			{
 				Log.e(TAG, "create() failed", e);
-				exceptionManager("Socket creation failure. create() failed.", false);
 			}
 			mmSocket = tmp;
 		}
@@ -477,7 +541,8 @@ public class SHBluetoothNetworkManager extends Application
 					Log.e(TAG, "unable to close() socket during connection failure", closeException);
 				}
 				if(DEBUG) Log.d(TAG, "Unable to connect device.");
-				exceptionManager("Unable to connect device.", true);
+				// Try again
+				exceptionManager(MSG_CONNECT_FAIL);
 				return;
 			}
 
@@ -504,13 +569,12 @@ public class SHBluetoothNetworkManager extends Application
 			catch(IOException e)
 			{
 				Log.e(TAG, "close() of connect socket failed", e);
-				exceptionManager("close() of connect socket failed", false);
 			}
 		}
 	}
 
 	/**
-	 * This thread runs during a connection with a remote device.
+	 * This thread runs during an established connection with a remote device.
 	 * It handles all incoming and outgoing transmissions.
 	 */
 	private class ConnectedThread extends Thread
@@ -522,7 +586,6 @@ public class SHBluetoothNetworkManager extends Application
 
 		public ConnectedThread(BluetoothSocket socket)
 		{
-			Log.d(TAG, "Connected Thread constuctor called");
 			mmSocket = socket;
 			InputStream tmpIn = null;
 			OutputStream tmpOut = null;
@@ -573,11 +636,9 @@ public class SHBluetoothNetworkManager extends Application
 
 					if(bytes > 0)
 					{
-						if(DEBUG) Log.d(TAG, "RUN Trying to create input string from " + bytes + " bytes");
-
 						input = new String(buffer, "UTF-8").substring(0, bytes);
 						// Send the input to the UI
-						if(DEBUG) Log.d(TAG, "sendMessage(" + MSG_READ + ", " + input + ")");
+						if(DEBUG) Log.d(TAG, "Received: " + input);
 						sendMessage(MSG_READ, input);
 
 					}
@@ -586,8 +647,7 @@ public class SHBluetoothNetworkManager extends Application
 				catch(IOException e)
 				{
 					Log.e(TAG, "Disconnected from device.", e);
-					// exceptionManager("Device connection was lost. Restarting.",
-					// true);
+					exceptionManager(MSG_CONNECTION_LOST); // TODO check which is better
 					// sendMessage(MSG_CANCEL, "Disconnected from device");
 					break;
 				}
@@ -661,8 +721,7 @@ public class SHBluetoothNetworkManager extends Application
 			if(mState != STATE_CONNECTED)
 			{
 				// We are not connected so we can't write anything.
-				exceptionManager("Cannot write.\n" + "Not connected to any device.", false);
-
+				sendMessage(MSG_NOT_CONNECTED, "Not connected to any device.");
 				if(DEBUG) Log.d(TAG, "write() failed. not connected to anything");
 
 				return false;
@@ -679,19 +738,22 @@ public class SHBluetoothNetworkManager extends Application
 	 * Manager encounters.
 	 * Used to restart the connection threads if necessary.
 	 */
-	private void exceptionManager(String _errorDescription, boolean _restart)
+	private void exceptionManager(int _errorDescription)
 	{
-		Message message = mHandler.obtainMessage(SHBluetoothTesting.MESSAGE_TOAST);
-		Bundle bundle = new Bundle( );
-		bundle.putString(SHBluetoothTesting.TOAST, _errorDescription);
-		message.setData(bundle);
-		mHandler.sendMessage(message);
 
-		if(_restart)
+		switch(_errorDescription)
 		{
-			// Failed to connect, restart the service in order to try again
-			SHBluetoothNetworkManager.this.start( );
+			case MSG_CONNECT_FAIL:
+				sendMessage(_errorDescription, "Connection failed. Restarting.");
+				if(DEBUG) Log.d(TAG, "Connection failed. Restarting.");
+				break;
+			case MSG_CONNECTION_LOST:
+				sendMessage(_errorDescription, "Connection lost. Restaring.");
+				if(DEBUG) Log.d(TAG, "Connection lost. Restaring.");
+				break;
 		}
+		// Failed to connect, restart the service in order to try again
+		SHBluetoothNetworkManager.this.start( );
 
 	}
 

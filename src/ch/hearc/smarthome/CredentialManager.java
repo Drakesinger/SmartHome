@@ -16,6 +16,7 @@ import android.util.Log;
 public class CredentialManager
 {
 
+
 	// Debugging
 	private static final String			TAG					= "CredentialManager";
 
@@ -311,17 +312,24 @@ public class CredentialManager
 		}
 		else
 		{
-			// get all lines in file
-			String lines[] = content.split("\n"); // lines[x] =
-													// [user];[password]
-
-			// Update the hashtable
-			for(String l : lines)
+			// Be sure that the hashtable exists
+			if(cptJackSparrow != null)
 			{
-				String s[] = l.split(";");
-				cptJackSparrow.put(s[0], s[1]);
-			}
+				// get all lines in file
+				String lines[] = content.split("\n"); // lines[x] =
+														// [user];[password]
 
+				// Update the hashtable
+				for(String l : lines)
+				{
+					String s[] = l.split(";");
+					cptJackSparrow.put(s[0], s[1]);
+				}
+			}
+			else
+			{
+				cptJackSparrow = new Hashtable<String , String>( );
+			}
 		}
 	}
 

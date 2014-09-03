@@ -27,6 +27,8 @@ import android.util.Log;
 public class SHCommunicationProtocol
 {
 
+	private static final String					TAG					= "SHCommunicationProtocol";
+
 	private static Hashtable<String , Integer>	functions			= new Hashtable<String , Integer>( );
 
 	// Maximum lengths
@@ -35,16 +37,24 @@ public class SHCommunicationProtocol
 
 	//@formatter:off
 		
-	private static String[ ]					functionNames		= { 
+	private static String[ ]					functionNames		= { // LOGIN
 	                        					             		    "create user" ,			// 0
 	                        					             		    "login" , 				// 1
-	                        					             		    "a change pass" , 		// 2
-	                        					             		    "a change username" , 	// 3
-	                        					             		    "a get user" , 			// 4
-	                        					             		    "d open" , 				// 5
-	                        					             		    "d change pass" , 		// 6
-	                        					             		    "send post-it" , 
-	                        					             		    "delete post-it"
+	                        					             		    // ADMIN
+	                        					             		    "a get user" , 			// 2
+	                        					             		    "a del user",			// 3
+	                        					             		    "a add user",			// 4
+	                        					             		    "a change pass" , 		// 5
+	                        					             		    "a change username" , 	// 6
+	                        					             		    // DOOR
+	                        					             		    "d open" , 				// 7
+	                        					             		    "d change pass" , 		// 8
+	                        					             		    // POST-IT
+	                        					             		    "send post-it" , 		// 9
+	                        					             		    "delete post-it",		// 10
+	                        					             		    "get post-its all",		// 11
+	                        					             		    "get post-its user",	// 12
+	                        					             		    "get post-its public"	// 13
 	                        					             		   };
 
 	//@formatter:on
@@ -164,23 +174,19 @@ public class SHCommunicationProtocol
 		switch(functionID)
 		{
 			case 0:
-				Log.d("SHCommunicationProtocol", "generateDataToSend function: " +_function);
 				// ask if there are user records on PIC, just send the function
 				// ID
 				dataToSend = new String("" + getFunctionID(_function));
 				break;
 			case 1:
-				Log.d("SHCommunicationProtocol", "generateDataToSend function: " +_function);
-				
 				// Login
 				actualUser = CredentialManager.getActualUser( );
 				generatedUser = generate(actualUser);
 
 				String pass = _params;
 				generatedPass = generate(pass);
-
 				_params = generatedPass;
-				Log.d("SHCommunicationProtocol", "Parameters redefined to generatedPass:" + _params + " =? genPass " + generatedPass);
+
 				dataToSend = new String(generatedUser + "," + getFunctionID(_function) + "," + _params);
 
 				break;
@@ -192,12 +198,12 @@ public class SHCommunicationProtocol
 				break;
 		}
 
-		Log.d("SHCommunicationProtocol", "Parameters generated:" + _params);
+		if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "dataToSend :" + dataToSend);
 
 		return dataToSend;
 	}
 
-	private String generate(String _toGen)
+	public String generate(String _toGen)
 	{
 
 		String generatedString = new String(_toGen);
@@ -205,8 +211,6 @@ public class SHCommunicationProtocol
 		{
 			generatedString += "*";
 		}
-		Log.d("String creation", "generatedString :" + generatedString);
-
 		return generatedString;
 	}
 

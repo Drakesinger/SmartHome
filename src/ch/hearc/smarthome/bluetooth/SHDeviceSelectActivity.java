@@ -80,13 +80,13 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		if(SHBluetoothNetworkManager.DEBUG) Toast.makeText(getApplicationContext( ), "On Create", Toast.LENGTH_SHORT).show( );
 
 		// Setup Bluetooth devices lists with custom rows
-		devPairedListView = (ListView) findViewById(R.id.lv_device_list_paired_devices);
+		devPairedListView = (ListView) findViewById(R.id.device_list_lv_paired_devices);
 		devPairedList = new ArrayList<SHDevice>( );
 		devPairedListAdapter = new SHDeviceListBaseAdapter(this, devPairedList);
 		devPairedListView.setAdapter(devPairedListAdapter);
 		devPairedListView.setOnItemClickListener(mDeviceClickListener);
 
-		devAvailableListView = (ListView) findViewById(R.id.lv_device_list_new_devices);
+		devAvailableListView = (ListView) findViewById(R.id.device_list_lv_new_devices);
 		devAvailableList = new ArrayList<SHDevice>( );
 		devAvailableListAdapter = new SHDeviceListBaseAdapter(this, devAvailableList);
 		devAvailableListView.setAdapter(devAvailableListAdapter);
@@ -97,7 +97,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
 
 		// Initialize the button to perform device discovery
-		b_device_list_scan = (Button) findViewById(R.id.b_device_list_scan);
+		b_device_list_scan = (Button) findViewById(R.id.device_list_b_scan);
 	}
 
 	/**
@@ -131,8 +131,8 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		}
 		else
 		{
-			// Turn off sub-title for new devices
-			findViewById(R.id.tv_device_list_new_devices).setVisibility(View.VISIBLE);
+			// Turn on sub-title for new devices
+			findViewById(R.id.device_list_tv_new_devices).setVisibility(View.VISIBLE);
 
 			devPairedList.clear( );
 			devPairedListAdapter.notifyDataSetChanged( );
@@ -141,7 +141,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 			Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices( );
 			if(pairedDevices.size( ) > 0)
 			{
-				findViewById(R.id.tv_device_list_paired_devices).setVisibility(View.VISIBLE);
+				findViewById(R.id.device_list_tv_paired_devices).setVisibility(View.VISIBLE);
 				for(BluetoothDevice device : pairedDevices)
 				{
 					devPairedList.add(new SHDevice(device.getName( ), device.getAddress( )));
@@ -230,7 +230,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 				}
 				else
 				{
-					doDiscovery(findViewById(R.id.b_device_list_scan));
+					doDiscovery(findViewById(R.id.device_list_b_scan));
 				}
 				break;
 		}
@@ -270,31 +270,36 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 			case SHBluetoothNetworkManager.MSG_OK:
 				// The child activity ended gracefully
 				break;
+			case SHBluetoothNetworkManager.MSG_CONNECT_FAIL:
+				// Could not connect, inform user.
+				notifyUser("Could not connect. Retrying.");
 			case SHBluetoothNetworkManager.MSG_CANCEL:
 				// The child activity did not end gracefully (connection lost,
 				// failed,etc.)
 				if(msg.obj != null)
 				{
 					// If some text came with the message show in a toast
-					if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Message: " + msg.obj);
-					Toast.makeText(SHDeviceSelectActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show( );
+					if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Message: " + msg.obj);
+					notifyUser((String) msg.obj);
+					// Toast.makeText(SHDeviceSelectActivity.this, (String)
+					// msg.obj, Toast.LENGTH_SHORT).show( );
 				}
 				break;
 			case SHBluetoothNetworkManager.MSG_CONNECTED:
 				// When connected to a device start the activity select
-				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection successful to "
-																+ msg.obj);
+				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection successful to " + msg.obj);
 				// User now needs to login
-				setTitle(getResources( ).getString(R.string.title_connected_to)
-							+ " " + mConnectedDevice.getName( ));
 				startActivityForResult(new Intent(getApplicationContext( ), SHLogin.class), REQUEST_LOGIN);
 				break;
 		}
 		return false;
 	}
 
-
-
+	private void notifyUser(String _string)
+	{
+		// TODO Auto-generated method stub
+		Toast.makeText(SHDeviceSelectActivity.this, _string, Toast.LENGTH_SHORT).show( );
+	}
 
 	//@formatter:off
 	/** The on-click listener for all devices in the ListViews */
@@ -341,7 +346,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
                 {
                 	devAvailableList.add(foundDevice);
                     devAvailableListAdapter.notifyDataSetChanged();
-                    findViewById(R.id.tv_device_list_paired_devices).setVisibility(View.VISIBLE); 	
+                    findViewById(R.id.device_list_tv_paired_devices).setVisibility(View.VISIBLE); 	
                 }
             
             } 
