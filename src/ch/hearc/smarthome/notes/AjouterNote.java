@@ -82,7 +82,7 @@ public class AjouterNote extends SHBluetoothActivity {
 		}
 		else
 		{		
-	        save = newDestinataire + "," + newSujet + "," + date + "," + newDetail+ "\r";
+	        save = newSujet + "," + newDetail + "," + date + "," + newDestinataire + "\r";
 	        //CredentialManager.getActualUser()+","+save);
 	        write(protocol.generateDataToSend(sendpost,save));
 	        //Writing to the pick

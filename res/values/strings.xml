@@ -77,16 +77,16 @@
     <string name="outdoor">Outdoor</string>
 
     <!-- Add and deleting notes -->
-    <string name="title_activity_note_menu">Menu des notes</string>
-    <string name="NoteMenu">Bienvenue dans le menu des notes, que voulez-vous faire ?</string>
-    <string name="SupprimerNote">Visualiser et/ou supprimer des notes</string>
-    <string name="AjouterNote">Ajouter des notes</string>
-    <string name="title_activity_ajouter_note">Ajouter des notes</string>
+    <string name="title_activity_note_menu">Post-it menu</string>
+    <string name="NoteMenu">What do you want to do ? Add or delete a post-it ?</string>
+    <string name="SupprimerNote">See and/or delete a post-it</string>
+    <string name="AjouterNote">Add post-it</string>
+    <string name="title_activity_ajouter_note">Add post-it</string>
     <string name="sujet">Sujet :</string>
-    <string name="detail">Détails :</string>
+    <string name="detail">Details :</string>
     <string name="destinataire">Destinataire :</string>
-    <string name="NoteAdd">Ajouter</string>
-    <string name="title_activity_note">NoteActivity</string>
+    <string name="NoteAdd">Add</string>
+    <string name="title_activity_note">Post-it</string>
 
     <!-- Options Menu -->
     <string name="base_connect">Connect a device - Base</string>

@@ -25,9 +25,7 @@ public class NoteActivity extends SHBluetoothActivity
 
 	public ListView							myListView;
 	public SimpleAdapter					mSchedule;
-
 	public int								positionToRemove;
-	public Message							msg;
 	public String							MessageRead;
 	public String							currentUser;
 	public String							l1;
@@ -48,7 +46,7 @@ public class NoteActivity extends SHBluetoothActivity
 	{
 		if(_msg.what == SHBluetoothNetworkManager.MSG_READ)
 		{
-			MessageRead = ((String) msg.obj).toLowerCase( );
+			MessageRead = ((String) _msg.obj).toLowerCase( );
 			mSchedule.notifyDataSetChanged( );
 		}
 		return super.handleMessage(_msg);
@@ -99,12 +97,12 @@ public class NoteActivity extends SHBluetoothActivity
 			for(String l : lines)
 			{
 				String s[] = l.split(",");
-				if(s[0] == currentUser || s[0] == "PUBLIC")
+				if(s[5] == currentUser || s[5] == "PUBLIC")
 				{
 					map.put("sujet", s[2]);
-					map.put("date", s[3]);
-					newDetail = s[4].replace("_", " ");
+					newDetail = s[3].replace("_", " ");
 					map.put("detail", newDetail);
+					map.put("date", s[4]);
 					listItem.add(map);
 					map = new HashMap<String , String>( );
 				}
@@ -113,7 +111,7 @@ public class NoteActivity extends SHBluetoothActivity
 		}
 		else
 		{
-			Toast.makeText(getApplicationContext( ), "Watching error", Toast.LENGTH_SHORT).show( );
+			Toast.makeText(getApplicationContext( ), "No notes found", Toast.LENGTH_SHORT).show( );
 		}
 		// Enfin on met un écouteur d'évènement sur notre listView
 		myListView.setOnItemClickListener(new OnItemClickListener( )
@@ -131,7 +129,7 @@ public class NoteActivity extends SHBluetoothActivity
 					adb.setTitle("Sélection Item");
 					// on insère un message à notre boite de dialogue, et ici on
 					// affiche le titre de l'item cliqué
-					adb.setMessage("Détails du message : " + newLine + map.get("detail") + newLine + newLine);
+					adb.setMessage("Post-it details : " + newLine + map.get("detail") + newLine + newLine);
 					// on indique que l'on veut le bouton ok à notre boite de
 					// dialogue
 					adb.setPositiveButton("OK", null);
@@ -150,14 +148,14 @@ public class NoteActivity extends SHBluetoothActivity
 					// on créer une boite de dialogue
 					AlertDialog.Builder adb = new AlertDialog.Builder(NoteActivity.this);
 					// on attribut un titre à notre boite de dialogue
-					adb.setTitle("Suppression");
+					adb.setTitle("Deleting");
 					// on insère un message à notre boite de dialogue, et ici on
 					// affiche le titre de l'item cliqué
-					adb.setMessage("Voulez-vous le supprimer ?");
+					adb.setMessage("Do you want to delete this ?");
 					final int positionToRemove = position;
 					// on indique que l'on veut le bouton ok à notre boite de
 					// dialogue
-					adb.setPositiveButton("Supprimer", new AlertDialog.OnClickListener( )
+					adb.setPositiveButton("Delete", new AlertDialog.OnClickListener( )
 						{
 							public void onClick(DialogInterface dialog, int which)
 							{
@@ -177,7 +175,7 @@ public class NoteActivity extends SHBluetoothActivity
 										{
 											l1 = lines[nbLinesRead];
 											String s1[] = l1.split(",");
-											delSujet = s1[0];
+											delSujet = s1[2];
 										}
 										nbLinesRead++;
 									}
@@ -194,10 +192,5 @@ public class NoteActivity extends SHBluetoothActivity
 					return true;
 				}
 			});
-	}
-
-	public void onBackPressed( )
-	{
-		preventCancel = true;
 	}
 }

@@ -40,11 +40,11 @@
         android:id="@+id/sujet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
+        android:layout_alignLeft="@+id/AddNote"
         android:layout_marginTop="100dp"
         android:ems="10"
-        android:inputType="text" 
-        android:maxLength="8">
+        android:inputType="text"
+        android:maxLength="8" >
 
         <requestFocus />
     </EditText>
@@ -55,7 +55,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/sujet"
         android:layout_below="@+id/sujet"
-        android:layout_marginLeft="14dp"
         android:ems="10"
         android:inputType="text"
         android:maxLength="128" />
@@ -74,10 +73,11 @@
         android:id="@+id/AddNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/destinataire"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="78dp"
-        android:text="@string/NoteAdd" 
-        android:onClick="AddNote"/>
+        android:layout_marginLeft="112dp"
+        android:layout_marginTop="79dp"
+        android:onClick="AddNote"
+        android:text="@string/NoteAdd" />
     
 </RelativeLayout>
