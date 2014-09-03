@@ -6,41 +6,44 @@
     android:orientation="vertical"
     android:padding="10dp" >
 
-    <Button
-        android:id="@+id/b_door_main_Open"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cb_door_main_Change_Password"
-        android:layout_alignParentBottom="true"
-        android:text="Open"
-        android:onClick="requestDoorOpen" />
-
-    <CheckBox
-        android:id="@+id/cb_door_main_Change_Password"
+    <TextView
+        android:id="@+id/door_main_tv_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/b_door_main_Open"
-        android:layout_alignLeft="@+id/et_door_main_Password"
-        android:text="Change password after login" />
+        android:layout_alignLeft="@+id/door_main_et_password"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="151dp"
+        android:text="@string/ds_main_tv_welcome" />
 
     <EditText
-        android:id="@+id/et_door_main_Password"
+        android:id="@+id/door_main_et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/activity_list_tv_welcome"
+        android:layout_below="@+id/door_main_tv_welcome"
         android:layout_marginTop="19dp"
         android:ems="10"
         android:hint="Your Password"
         android:inputType="numberPassword" />
 
-    <TextView
-        android:id="@+id/activity_list_tv_welcome"
+    <CheckBox
+        android:id="@+id/door_main_cb_change_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_door_main_Password"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="101dp"
-        android:text="Enter code to open door:" />
+        android:layout_above="@+id/door_main_b_open"
+        android:layout_alignLeft="@+id/door_main_et_password"
+        android:text="@string/ds_main_cb_change"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/door_main_b_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/door_main_cb_change_password"
+        android:layout_alignParentBottom="true"
+        android:onClick="requestDoorOpen"
+        android:text="@string/ds_main_b_open"
+        android:background="?android:attr/selectableItemBackground"
+         />
 
 </RelativeLayout>

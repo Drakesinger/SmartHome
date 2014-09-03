@@ -18,9 +18,9 @@ public class DoorActivity extends SHBluetoothActivity
 {
 
 	// Our view references
-	Button									b_door_main_Open;
-	CheckBox								cb_door_main_Change_Password;
-	EditText								et_door_main_Password;
+	Button									door_main_b_open;
+	CheckBox								door_main_cb_change_password;
+	EditText								door_main_et_Password;
 
 	// Our password string
 	String									doorPassword;
@@ -56,8 +56,8 @@ public class DoorActivity extends SHBluetoothActivity
 
 		context = DoorActivity.this; // TODO check if we do not need
 										// getApplicationContext
-		doorPassword = convertEditTextContentToStrings(et_door_main_Password);
-		checker = cb_door_main_Change_Password.isChecked( );
+		doorPassword = convertEditTextContentToStrings(door_main_et_Password);
+		checker = door_main_cb_change_password.isChecked( );
 
 		//String dataToSend = Protocol.generateDataToSend(CredentialManager.getActualUser( ),openRequest, doorPassword);
 		String dataToSend = Protocol.generateDataToSend(openRequest, doorPassword);
@@ -76,9 +76,9 @@ public class DoorActivity extends SHBluetoothActivity
 	/** Initialize all our used references for this activity */
 	private void initializeReferences( )
 	{
-		b_door_main_Open = (Button) findViewById(R.id.b_door_main_Open);
-		cb_door_main_Change_Password = (CheckBox) findViewById(R.id.cb_door_main_Change_Password);
-		et_door_main_Password = (EditText) findViewById(R.id.et_door_main_Password);
+		door_main_b_open = (Button) findViewById(R.id.door_main_b_open);
+		door_main_cb_change_password = (CheckBox) findViewById(R.id.door_main_cb_change_password);
+		door_main_et_Password = (EditText) findViewById(R.id.door_main_et_password);
 	}
 
 	@Override

@@ -40,6 +40,11 @@
     <string name="ds_name">Debugging</string>
     <string name="ds_b_send">send</string>
     <string name="ds_text">Message to send&#8230;</string>
+    
+    <!-- Door screen -->
+    <string name="ds_main_b_open">Open</string>
+    <string name="ds_main_cb_change">Change password after login.</string>
+    <string name="ds_main_tv_welcome">Please enter code to open door:</string>
 
     <!-- Heating Main Activity -->
     <string name="hm_name">Heating Management</string>
