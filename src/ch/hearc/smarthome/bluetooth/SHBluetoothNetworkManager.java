@@ -77,6 +77,7 @@ public class SHBluetoothNetworkManager extends Application
 {
 
 
+
 	// SDP (Service Discovery Protocol) Name 
 	private static final String 	NAME 	= "SmartHome Bluetooth";
 
@@ -317,6 +318,10 @@ public class SHBluetoothNetworkManager extends Application
 			bStoppingConnection = true;
 
 			if(DEBUG) Log.d(TAG, "Disconnecting.");
+
+			// Send the following data to the device so that it knows we
+			// disconnected
+			write(".,230,.");
 
 			// Cancel any running connected threads
 			if(mConnectedThread != null)
@@ -647,7 +652,8 @@ public class SHBluetoothNetworkManager extends Application
 				catch(IOException e)
 				{
 					Log.e(TAG, "Disconnected from device.", e);
-					exceptionManager(MSG_CONNECTION_LOST); // TODO check which is better
+					exceptionManager(MSG_CONNECTION_LOST); // TODO check which
+															// is better
 					// sendMessage(MSG_CANCEL, "Disconnected from device");
 					break;
 				}
