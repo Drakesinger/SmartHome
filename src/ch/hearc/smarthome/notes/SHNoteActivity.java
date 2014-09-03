@@ -20,7 +20,7 @@ import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
-public class NoteActivity extends SHBluetoothActivity
+public class SHNoteActivity extends SHBluetoothActivity
 {
 
 	public ListView							myListView;
@@ -32,6 +32,8 @@ public class NoteActivity extends SHBluetoothActivity
 	public int								nbLinesRead;
 	public String							newDetail;
 	public String							delSujet;
+	public String							newUser;
+	public 	static int	kMaxLength = 8; 
 
 	// Functions of this activity
 	private String							getNotesUser	= "get post-its user";
@@ -60,7 +62,7 @@ public class NoteActivity extends SHBluetoothActivity
 		setContentView(R.layout.fragment_note);
 
 		protocol = new SHCommunicationProtocol( );
-
+		newUser = completeLength(CredentialManager.getActualUser());
 		// ask only for user's notes
 		String dataToSend = protocol.generateDataToSend(getNotesUser, CredentialManager.getActualUser( ));
 		write(dataToSend);
@@ -87,7 +89,6 @@ public class NoteActivity extends SHBluetoothActivity
 		/*
 		 * Reading message receive from Pick and receive user
 		 */
-		currentUser = CredentialManager.getActualUser( );
 		if(MessageRead != null)
 		{
 			String lines[] = MessageRead.split("\r");
@@ -97,15 +98,12 @@ public class NoteActivity extends SHBluetoothActivity
 			for(String l : lines)
 			{
 				String s[] = l.split(",");
-				if(s[5] == currentUser || s[5] == "PUBLIC")
-				{
-					map.put("sujet", s[2]);
-					newDetail = s[3].replace("_", " ");
-					map.put("detail", newDetail);
-					map.put("date", s[4]);
-					listItem.add(map);
-					map = new HashMap<String , String>( );
-				}
+				map.put("sujet", s[2]);
+				newDetail = s[3].replace("_", " ");
+				map.put("detail", newDetail);
+				map.put("date", s[4]);
+				listItem.add(map);
+				map = new HashMap<String , String>( );
 			}
 			mSchedule.notifyDataSetChanged( );
 		}
@@ -124,7 +122,7 @@ public class NoteActivity extends SHBluetoothActivity
 					// (titre, description)
 					HashMap<String , String> map = (HashMap<String , String>) myListView.getItemAtPosition(position);
 					// on créer une boite de dialogue
-					AlertDialog.Builder adb = new AlertDialog.Builder(NoteActivity.this);
+					AlertDialog.Builder adb = new AlertDialog.Builder(SHNoteActivity.this);
 					// on attribut un titre à notre boite de dialogue
 					adb.setTitle("Sélection Item");
 					// on insère un message à notre boite de dialogue, et ici on
@@ -146,7 +144,7 @@ public class NoteActivity extends SHBluetoothActivity
 					// HashMap<String, String> map = (HashMap<String, String>)
 					// myListView.getItemAtPosition(position);
 					// on créer une boite de dialogue
-					AlertDialog.Builder adb = new AlertDialog.Builder(NoteActivity.this);
+					AlertDialog.Builder adb = new AlertDialog.Builder(SHNoteActivity.this);
 					// on attribut un titre à notre boite de dialogue
 					adb.setTitle("Deleting");
 					// on insère un message à notre boite de dialogue, et ici on
@@ -192,5 +190,14 @@ public class NoteActivity extends SHBluetoothActivity
 					return true;
 				}
 			});
+	}
+	public String completeLength (String _complete)
+	{
+		String toComplete = new String(_complete);
+		for(int i = 0; i < (kMaxLength - _complete.length( )); i++)
+		{
+			toComplete += "*";
+		}
+		return toComplete;
 	}
 }

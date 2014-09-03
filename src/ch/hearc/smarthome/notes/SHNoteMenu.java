@@ -8,7 +8,7 @@ import android.view.View;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 
-public class NoteMenu extends SHBluetoothActivity {
+public class SHNoteMenu extends SHBluetoothActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +36,13 @@ public class NoteMenu extends SHBluetoothActivity {
 	}
 
 	public void SupprimerNoteActivity(View view) {
-		Intent intent = new Intent(NoteMenu.this, NoteActivity.class);
+		Intent intent = new Intent(SHNoteMenu.this, SHNoteActivity.class);
 		preventCancel = true;
 		startActivity(intent);
 	}
 
 	public void AjouterNoteActivity(View view) {
-		Intent intent = new Intent(NoteMenu.this, AjouterNote.class);
+		Intent intent = new Intent(SHNoteMenu.this, SHAddNote.class);
 		preventCancel = true;
 		startActivity(intent);
 	}

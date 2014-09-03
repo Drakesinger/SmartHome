@@ -13,7 +13,7 @@ import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
 
-public class AjouterNote extends SHBluetoothActivity {
+public class SHAddNote extends SHBluetoothActivity {
 	
 	public 	String 		strDestinataire;
 	public 	String 		strSujet;
@@ -78,7 +78,7 @@ public class AjouterNote extends SHBluetoothActivity {
                 
         if(strDestinataire.matches("") || strSujet.matches("") || strDetail.matches(""))
 		{
-        	Toast.makeText(AjouterNote.this, "Veuillez remplir tous les champs !", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(SHAddNote.this, "Veuillez remplir tous les champs !", Toast.LENGTH_SHORT).show();
 		}
 		else
 		{		

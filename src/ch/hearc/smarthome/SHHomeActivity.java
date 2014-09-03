@@ -10,7 +10,7 @@ import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.debuging.SHBluetoothDebugger;
 import ch.hearc.smarthome.door.DoorActivity;
 import ch.hearc.smarthome.heating.SHHeatingMainActivity;
-import ch.hearc.smarthome.notes.NoteMenu;
+import ch.hearc.smarthome.notes.SHNoteMenu;
 
 /** Activity containing the links to our 4 other activities */
 public class SHHomeActivity extends SHBluetoothActivity {
@@ -35,7 +35,7 @@ public class SHHomeActivity extends SHBluetoothActivity {
 		} else if (v.getId() == R.id.main_heating_button) {
 			i.setClass(this, SHHeatingMainActivity.class);
 		} else if (v.getId() == R.id.main_note_button) {
-			i.setClass(this, NoteMenu.class);
+			i.setClass(this, SHNoteMenu.class);
 		} else if (v.getId() == R.id.main_alarm_button) {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
