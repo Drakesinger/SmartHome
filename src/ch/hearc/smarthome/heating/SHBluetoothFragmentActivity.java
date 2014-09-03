@@ -11,21 +11,23 @@ import android.view.MenuItem;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 
-public class SHBluetoothFragmentActivity extends FragmentActivity implements
-		Handler.Callback {
+public class SHBluetoothFragmentActivity extends FragmentActivity implements Handler.Callback
+{
 
-	private static SHBluetoothNetworkManager mBtNetworkManager;
+	private static SHBluetoothNetworkManager	mBtNetworkManager;
 	// When launching a new activity and this one stops it doesn't mean
 	// something bad (no connection loss)
-	protected boolean preventCancel;
-	private static String TAG;
+	protected boolean							preventCancel;
+	public boolean								DEBUG_ONLY	= false;
+	private static String						TAG;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		// Launched when the activity is created
 		super.onCreate(savedInstanceState);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		mBtNetworkManager = (SHBluetoothNetworkManager) getApplicationContext();
+		getActionBar( ).setDisplayHomeAsUpEnabled(true);
+		mBtNetworkManager = (SHBluetoothNetworkManager) getApplicationContext( );
 	}
 
 	/**
@@ -37,16 +39,17 @@ public class SHBluetoothFragmentActivity extends FragmentActivity implements
 	 *         <dl>
 	 *         False if we got an error
 	 * */
-	protected boolean write(String _message) {
+	protected boolean write(String _message)
+	{
 		// Send command to the Bluetooth device
 		return mBtNetworkManager.write(_message);
 	}
 
 	/** Disconnect from the Bluetooth device */
-	protected void disconnect() {
-		if (SHBluetoothNetworkManager.DEBUG)
-			Log.i(TAG, "Connection end request");
-		mBtNetworkManager.disconnect();
+	protected void disconnect( )
+	{
+		if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Connection end request");
+		mBtNetworkManager.disconnect( );
 	}
 
 	/**
@@ -68,47 +71,46 @@ public class SHBluetoothFragmentActivity extends FragmentActivity implements
 	 *            : the message received
 	 * @return false
 	 * */
-	public boolean handleMessage(Message _msg) {
-		switch (_msg.what) {
-		case SHBluetoothNetworkManager.MSG_WRITE:
+	public boolean handleMessage(Message _msg)
+	{
+		switch(_msg.what)
+		{
+			case SHBluetoothNetworkManager.MSG_WRITE:
 
-			if (SHBluetoothNetworkManager.DEBUG)
-				Log.i(TAG, "writing out");
-			break;
-		case SHBluetoothNetworkManager.MSG_OK:
-			// When a child activity returns safely
-			if (SHBluetoothNetworkManager.DEBUG)
-				Log.i(TAG, "Result of child activity OK");
-			break;
-		case SHBluetoothNetworkManager.MSG_CANCEL:
-			// When a child activity returns after being canceled
-			// (ex: if the connection is lost) cancel this activity
-			if (SHBluetoothNetworkManager.DEBUG)
-				Log.e(TAG, "Got canceled");
-			setResult(SHBluetoothNetworkManager.MSG_CANCEL, new Intent());
-			finish();
-			break;
+				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "writing out");
+				break;
+			case SHBluetoothNetworkManager.MSG_OK:
+				// When a child activity returns safely
+				if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Result of child activity OK");
+				break;
+			case SHBluetoothNetworkManager.MSG_CANCEL:
+				// When a child activity returns after being canceled
+				// (ex: if the connection is lost) cancel this activity
+				if(SHBluetoothNetworkManager.DEBUG) Log.e(TAG, "Got canceled");
+				setResult(SHBluetoothNetworkManager.MSG_CANCEL, new Intent( ));
+				finish( );
+				break;
 		}
 		return false;
 	}
 
 	@Override
-	protected void onActivityResult(int _requestCode, int _resultCode,
-			Intent _data) {
+	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data)
+	{
 		// Send activity result messages to the handler
-		Message.obtain(new Handler(this), _resultCode).sendToTarget();
+		Message.obtain(new Handler(this), _resultCode).sendToTarget( );
 	}
 
 	@Override
-	protected void onResume() {
+	protected void onResume( )
+	{
 		// This is called when the activity resumes
-		TAG = getLocalClassName();
-		if (SHBluetoothNetworkManager.DEBUG)
-			Log.i(TAG, "Set handler");
+		TAG = getLocalClassName( );
+		if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Set handler");
 		// Set the handler to receive messages from the main application class
 		mBtNetworkManager.setActivityHandler(new Handler(this));
 		preventCancel = false;
-		super.onResume();
+		super.onResume( );
 	}
 
 	/**
@@ -116,14 +118,16 @@ public class SHBluetoothFragmentActivity extends FragmentActivity implements
 	 * (direct message sending), the disconnect option, and the logging screen
 	 */
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.options_menu, menu);
+		getMenuInflater( ).inflate(R.menu.options_menu, menu);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem _item) {
+	public boolean onOptionsItemSelected(MenuItem _item)
+	{
 		// @formatter:off
 		/*
 		 * // When the user clicks the application icon on the top left
@@ -132,56 +136,73 @@ public class SHBluetoothFragmentActivity extends FragmentActivity implements
 		 */
 		// @formatter:on
 		Intent serverIntent = null; // used when we start debugging or logger
-		switch (_item.getItemId()) {
-		case R.id.it_home:
-			// case android.R.id.home:
-			// Behave as if the back button was clicked
-			onBackPressed();
-			return true;
-		case R.id.it_logger:
-			// nothing yet
-			return true;
-		case R.id.it_debug_mode:
-			// do nothing yet
-			return true;
-
-		case R.id.it_disconnect:
-			if (mBtNetworkManager != null) {
-				mBtNetworkManager.disconnect();
-				finish();
-			}
-			return true;
+		switch(_item.getItemId( ))
+		{
+			case R.id.it_home:
+				// case android.R.id.home:
+				// Behave as if the back button was clicked
+				onBackPressed( );
+				return true;
+			case R.id.it_debug_only:
+				// this will set DEBUG_ONLY to true or false
+				if(DEBUG_ONLY == true)
+				{
+					_item.setTitle(R.string.debug_mode_off);
+					DEBUG_ONLY = false;
+				}
+				else
+				{
+					_item.setTitle(R.string.debug_mode_on);
+					DEBUG_ONLY = true;
+				}
+				return true;
+			case R.id.it_debugger:
+				serverIntent = new Intent(this, ch.hearc.smarthome.debuging.SHBluetoothDebugger.class);
+				// This will avoid our other activity from pausing and thus
+				// killing our bluetooth connection
+				preventCancel = true;
+				startActivity(serverIntent);
+				return true;
+			case R.id.it_disconnect:
+				if(mBtNetworkManager != null)
+				{
+					mBtNetworkManager.disconnect( );
+					finish( );
+				}
+				return true;
 		}
 
 		return super.onOptionsItemSelected(_item);
 	}
 
 	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
+	public void onBackPressed( )
+	{
+		super.onBackPressed( );
 		// Pressing the back button quits the activity and informs the parent
 		// activity
-		if (SHBluetoothNetworkManager.DEBUG)
-			Log.i(TAG, "Back pressed");
-		setResult(SHBluetoothNetworkManager.MSG_OK, new Intent());
-		finish();
+		if(SHBluetoothNetworkManager.DEBUG) Log.i(TAG, "Back pressed");
+		setResult(SHBluetoothNetworkManager.MSG_OK, new Intent( ));
+		finish( );
 	}
 
 	@Override
-	public void finish() {
+	public void finish( )
+	{
 		// Remove the handler from the main application class
 		mBtNetworkManager.setActivityHandler(null);
-		super.finish();
+		super.finish( );
 	}
 
 	@Override
-	protected void onPause() {
+	protected void onPause( )
+	{
 		// Pausing an activity isn't allowed, unless it has been prevented
-		if (!preventCancel) {
+		if(!preventCancel)
+		{
 			// Tell itself to cancel
-			Message.obtain(new Handler(this),
-					SHBluetoothNetworkManager.MSG_CANCEL).sendToTarget();
+			Message.obtain(new Handler(this), SHBluetoothNetworkManager.MSG_CANCEL).sendToTarget( );
 		}
-		super.onPause();
+		super.onPause( );
 	}
 }

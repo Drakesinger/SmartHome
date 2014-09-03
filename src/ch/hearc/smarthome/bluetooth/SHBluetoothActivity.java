@@ -1,6 +1,7 @@
 package ch.hearc.smarthome.bluetooth;
 
 import android.app.Activity;
+import android.content.ClipData.Item;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import ch.hearc.smarthome.R;
 
@@ -25,6 +27,7 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	// When launching a new activity and this one stops it doesn't mean
 	// something bad (no connection loss)
 	protected boolean							preventCancel;
+	public static boolean						DEBUG_ONLY	= false;
 	private static String						TAG;
 
 	@Override
@@ -91,7 +94,8 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 				if(SHBluetoothNetworkManager.INFO) Log.i(TAG, "Result of child activity OK");
 				break;
 			case SHBluetoothNetworkManager.MSG_NOT_CONNECTED:
-				// Can be received when writing and we are not connected, inform the user
+				// Can be received when writing and we are not connected, inform
+				// the user
 				notifyUser("Not connected to any device. Cannot send data.");
 				break;
 			case SHBluetoothNetworkManager.MSG_CONNECTION_LOST:
@@ -129,7 +133,8 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 
 	/**
 	 * Used in order to create an options menu containing the debugging dialog
-	 * (direct message sending), the disconnect option, and to write a log file to disk.
+	 * (direct message sending), the disconnect option, and to write a log file
+	 * to disk.
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -142,17 +147,6 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 	@Override
 	public boolean onOptionsItemSelected(MenuItem _item)
 	{
-		//@formatter:off
-		/*
-		  // When the user clicks the application icon on the top left
-		  if(_item.getItemId( ) == android.R.id.home)
-		  {
-		  // Behave as if the back button was clicked
-		  onBackPressed( );
-		  return true;
-		  }
-		*/
-		//@formatter:on
 		Intent serverIntent = null; // used when we start debugging or logger
 		switch(_item.getItemId( ))
 		{
@@ -162,10 +156,20 @@ public class SHBluetoothActivity extends Activity implements Handler.Callback
 				// Behave as if the back button was clicked
 				onBackPressed( );
 				return true;
-			case R.id.it_logger:
-				// TODO This will create a log file
+			case R.id.it_debug_only:
+				// this will set DEBUG_ONLY to true or false
+				if(DEBUG_ONLY == true)
+				{
+					_item.setTitle(R.string.debug_mode_off);
+					DEBUG_ONLY = false;
+				}
+				else
+				{
+					_item.setTitle(R.string.debug_mode_on);
+					DEBUG_ONLY = true;
+				}
 				return true;
-			case R.id.it_debug_mode:
+			case R.id.it_debugger:
 				serverIntent = new Intent(this, ch.hearc.smarthome.debuging.SHBluetoothDebugger.class);
 				// This will avoid our other activity from pausing and thus
 				// killing our bluetooth connection

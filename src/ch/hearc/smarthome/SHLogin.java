@@ -57,7 +57,6 @@ public class SHLogin extends SHBluetoothActivity
 	@Override
 	protected void onResume( )
 	{
-		notifyUser("onResume " + TAG);
 		preventCancel = false;
 		super.onResume( );
 	}
@@ -88,6 +87,19 @@ public class SHLogin extends SHBluetoothActivity
 		if(CredentialManager.bIsValid(username, password))
 		{
 
+			if(DEBUG_ONLY) 
+			{
+				notifyUser("Login OK");
+				// Now we need to save the Credentials
+				CredentialManager.saveCredential(CredentialManager.getActualUser( ));
+
+				// And start up the Home Activity screen
+				Intent intent = new Intent(this, SHActivityList.class);
+				preventCancel = true;
+				startActivity(intent);
+				return;
+			}
+			
 			CredentialManager.setCredential(username, password);
 			dataToSend = Protocol.generateDataToSend(username, login, password);
 

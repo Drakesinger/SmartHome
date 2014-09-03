@@ -67,28 +67,18 @@ public class SHDoorAdminActivity extends SHBluetoothActivity implements OnClickL
 			{
 				newPassword = _stringTable[2];
 				// New password is confirmed, change it
-				String dataToSend = Protocol.generateDataToSend(changeDoorPassword, newPassword); 
-						//CredentialManager.getActualUser( ) + "," + Protocol.getFunctionID(changeDoorPassword) + "," + newPassword;
+				String dataToSend = Protocol.generateDataToSend(changeDoorPassword, newPassword);
 				write(dataToSend);
 
 			}
 			else
 			{
-				/*
-				 * TODO either show a pop-up or display a warning with a text
-				 * view item
-				 */
 				tv_door_admin_Message.setText("The new password fields do not coencide. Please try again.");
 			}
 		}
 		else
 		{
-			/*
-			 * TODO either show a pop-up or display a warning with a text view
-			 * item
-			 */
 			notifyUser("The old password you have entered is not valid.");
-			//PopupMessages.launchPopup("Change password.", "The old password you have entered is not valid.", SHDoorAdminActivity.this);
 		}
 	}
 
@@ -181,6 +171,7 @@ public class SHDoorAdminActivity extends SHBluetoothActivity implements OnClickL
 			{
 				CredentialManager.setDoorPass(newPassword);
 				notifyUser("New door password has been set.");
+				finish();
 			}
 		}
 

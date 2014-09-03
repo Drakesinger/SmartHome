@@ -54,16 +54,15 @@ public class SHDoorActivity extends SHBluetoothActivity
 	{
 		// When we click on our open button we send the password
 
-		context = SHDoorActivity.this; // TODO check if we do not need
-										// getApplicationContext
+		context = SHDoorActivity.this;
 		doorPassword = convertEditTextContentToStrings(door_main_et_Password);
 		checker = door_main_cb_change_password.isChecked( );
 
-		// String dataToSend =
-		// Protocol.generateDataToSend(CredentialManager.getActualUser(
-		// ),openRequest, doorPassword);
+		
 		String dataToSend = Protocol.generateDataToSend(openRequest, doorPassword);
 		write(dataToSend);
+		
+		if(DEBUG_ONLY) treatResponse("door,open");
 
 	}
 

@@ -21,7 +21,7 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 
 	// Debugging
 	private static final String			TAG				= "SHAdministration";
-	private static final boolean		DebugOnly		= false;
+	
 
 	private Hashtable<String , String>	users;
 
@@ -78,12 +78,18 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 	public void getUsers(View _view)
 	{
 		String dataToSend = protocol.generateDataToSend(getUser, "all");
-		// write(dataToSend);
-		notifyUser("Retrieving user list.");
-		b_getUsers.setVisibility(View.GONE);
-		b_getUsers.setClickable(false);
-		// for debugging purposes
-		getStuff( );
+		if(write(dataToSend))
+		{
+			notifyUser("Retrieving user list.");
+			b_getUsers.setVisibility(View.GONE);
+			b_getUsers.setClickable(false);
+		}
+		else
+		{
+			notifyUser("Could not retrieve user list.\nConnection may be down.");
+		}
+
+		if(DEBUG_ONLY) getStuff( ); 		// for debugging purposes
 	}
 
 	public void addUser(View _view)
@@ -97,14 +103,34 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 	private void getStuff( )
 	{
 		lv_UserList.setVisibility(View.VISIBLE);
-		// mUserList.clear( );
-		mUserList.add(new SHUser("Horia", "abcd"));
-		mUserList.add(new SHUser("Thomas", "from"));
-		mUserList.add(new SHUser("Sal", "1234"));
-		mUserListBaseAdapter.notifyDataSetChanged( );
+		mUserList.clear( );
 
-		b_addUser.setVisibility(View.VISIBLE);
-		b_addUser.setClickable(true);
+		if(DEBUG_ONLY)
+		{
+
+			String data = "users:\nHoriaMut,mdk11\nThomas R,leRoux\nTom ik,123 Jack\n";
+			// Check if code for user sending has been sent
+			if(data.contains("users:"))
+			{
+				mUserList.clear( );
+				lv_UserList.setVisibility(View.VISIBLE);
+
+				// data contains the whole list of users and their passwords
+				String[ ] lines = data.split("\n");
+				for(int i = 1; i < lines.length; i++)
+				{
+					String[ ] comp = lines[i].split(",");
+					users.put(comp[0], comp[1]);
+					mUserList.add(new SHUser(comp[0], comp[1]));
+				}
+				notifyUser("Data received.");
+				mUserListBaseAdapter.notifyDataSetChanged( );
+
+				b_addUser.setVisibility(View.VISIBLE);
+				b_addUser.setClickable(true);
+			}
+
+		}
 
 	}
 
@@ -122,9 +148,10 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 
 				// data contains the whole list of users and their passwords
 				String[ ] lines = data.split("\n");
-				for(String l : lines)
+				for(int i = 1; i < lines.length; i++)
 				{
-					String[ ] comp = l.split(",");
+
+					String[ ] comp = lines[i].split(",");
 					users.put(comp[0], comp[1]);
 					mUserList.add(new SHUser(comp[0], comp[1]));
 				}
@@ -143,7 +170,7 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 			{
 				notifyUser("Password was changed sucessfully.");
 
-				if(!DebugOnly)
+				if(!DEBUG_ONLY)
 				{
 					// update
 					users.remove(newUsername);
@@ -156,7 +183,7 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 			{
 				notifyUser("User was created sucessfuly.");
 
-				if(!DebugOnly)
+				if(!DEBUG_ONLY)
 				{
 					// update
 					users.put(newUsername, newPassword);
@@ -195,7 +222,7 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 		newUsername = ((SHManageUserFragment) _dialogFragment).getUserName( );
 		newPassword = ((SHManageUserFragment) _dialogFragment).getUserPass( );
 
-		if(DebugOnly)
+		if(DEBUG_ONLY)
 		{
 			users.remove(newUsername);
 			mUserList.set(mUserChosen, (SHUser) new SHUser(newUsername, newPassword));
@@ -220,7 +247,7 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 		notifyUser("Ok clicked.");
 		SHUser userToRemove = mUserList.get(mUserChosen);
 
-		if(DebugOnly)
+		if(DEBUG_ONLY)
 		{
 			mUserList.remove(mUserChosen);
 			mUserListBaseAdapter.notifyDataSetChanged( );
@@ -237,7 +264,7 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 		newUsername = ((SHAddUserFragment) _dialogFragment).getUserName( );
 		newPassword = ((SHAddUserFragment) _dialogFragment).getUserPass( );
 
-		if(DebugOnly)
+		if(DEBUG_ONLY)
 		{
 			users.put(newUsername, newPassword);
 			mUserList.add(new SHUser(newUsername, newPassword));

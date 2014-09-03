@@ -36,25 +36,6 @@ public class SHAddNote extends SHBluetoothActivity {
 		setContentView(R.layout.notes_add_postit);
 		protocol = new SHCommunicationProtocol( );
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.ajouter_note, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 		
 	public void AddNote(View view)
 	{
@@ -78,7 +59,8 @@ public class SHAddNote extends SHBluetoothActivity {
                 
         if(strDestinataire.matches("") || strSujet.matches("") || strDetail.matches(""))
 		{
-        	Toast.makeText(SHAddNote.this, "Veuillez remplir tous les champs !", Toast.LENGTH_SHORT).show();
+        	notifyUser("Please fill all fields before adding.");
+        	
 		}
 		else
 		{		

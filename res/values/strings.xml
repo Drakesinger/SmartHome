@@ -106,7 +106,7 @@
 
     <!-- Options Menu -->
     <string name="base_connect">Connect a device - Base</string>
-    <string name="debug_mode">Debugger</string>
+    <string name="debugger">Debugger</string>
     <string name="debug_mode_on">Debug mode on</string>
     <string name="debug_mode_off">Debug mode off</string>
     <string name="logging_on">Logs on</string>

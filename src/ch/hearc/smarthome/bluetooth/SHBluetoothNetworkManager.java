@@ -75,16 +75,13 @@ import android.util.Log;
  */
 public class SHBluetoothNetworkManager extends Application
 {
-
-
-
 	// SDP (Service Discovery Protocol) Name 
 	private static final String 	NAME 	= "SmartHome Bluetooth";
 
 	// Debugging 
-	public static final boolean 	DEBUG 	= true;
-	public static final boolean 	INFO	= true;
-	private static final String 	TAG 	= "SHBluetoothNetworkManager";
+	public static final boolean 	DEBUG 		= true;
+	public static final boolean 	INFO		= true;
+	private static final String 	TAG 		= "SHBluetoothNetworkManager";
 	
 	// Member fields 
 	private final 	BluetoothAdapter	mBtAdapter;
@@ -322,7 +319,6 @@ public class SHBluetoothNetworkManager extends Application
 			// Send the following data to the device so that it knows we
 			// disconnected
 			write(".,230,.");
-			
 
 			// Cancel any running connected threads
 			if(mConnectedThread != null)
