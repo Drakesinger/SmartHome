@@ -4,16 +4,16 @@ import org.achartengine.model.XYSeries;
 
 import android.util.Log;
 
-public class HeatingHistoryObject {
+public class SHHeatingHistoryObject {
 
 	private String date;
 	private XYSeries temps;
 
-	public HeatingHistoryObject(){
+	public SHHeatingHistoryObject(){
 		super();
 	}
 	
-	public HeatingHistoryObject(String date, XYSeries temps){
+	public SHHeatingHistoryObject(String date, XYSeries temps){
 		this.date = date;
 		//this.temp = temp;
 		this.temps = temps;

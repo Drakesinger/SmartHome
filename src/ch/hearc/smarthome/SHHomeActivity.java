@@ -9,7 +9,7 @@ import android.widget.TextView;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.debuging.SHBluetoothDebugger;
 import ch.hearc.smarthome.door.DoorActivity;
-import ch.hearc.smarthome.heating.HeatingMainActivity;
+import ch.hearc.smarthome.heating.SHHeatingMainActivity;
 import ch.hearc.smarthome.notes.NoteMenu;
 
 /** Activity containing the links to our 4 other activities */
@@ -33,7 +33,7 @@ public class SHHomeActivity extends SHBluetoothActivity {
 		if (v.getId() == R.id.main_door_button) {
 			i.setClass(this, DoorActivity.class);
 		} else if (v.getId() == R.id.main_heating_button) {
-			i.setClass(this, HeatingMainActivity.class);
+			i.setClass(this, SHHeatingMainActivity.class);
 		} else if (v.getId() == R.id.main_note_button) {
 			i.setClass(this, NoteMenu.class);
 		} else if (v.getId() == R.id.main_alarm_button) {

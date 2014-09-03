@@ -21,17 +21,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import ch.hearc.smarthome.R;
 
-public class HeatingHistoryArrayAdapter extends
-		ArrayAdapter<HeatingHistoryObject> {
+public class SHHeatingHistoryArrayAdapter extends
+		ArrayAdapter<SHHeatingHistoryObject> {
 
 	Context context;
 	int resource;
-	ArrayList<HeatingHistoryObject> history = null;
+	ArrayList<SHHeatingHistoryObject> history = null;
 	
 	int ITERATOR = 0;
 
-	public HeatingHistoryArrayAdapter(Context context, int resource,
-			ArrayList<HeatingHistoryObject> history) {
+	public SHHeatingHistoryArrayAdapter(Context context, int resource,
+			ArrayList<SHHeatingHistoryObject> history) {
 		super(context, resource, history);
 
 		this.context = context;
@@ -66,7 +66,7 @@ public class HeatingHistoryArrayAdapter extends
 		
 		
 		// Getting the history object
-		final HeatingHistoryObject historyObject = history.get(position);
+		final SHHeatingHistoryObject historyObject = history.get(position);
 		
 		// Creating the chart
 		XYSeries test = historyObject.getTemps();

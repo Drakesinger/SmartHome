@@ -23,7 +23,7 @@ import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
-public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
+public class SHHeatingSchedulingsAddDialogFragment extends DialogFragment {
 
 	// Save Directory
 	static File MAIN_DIR = new File(Environment.getExternalStorageDirectory()
@@ -136,7 +136,7 @@ public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
 
 						} else {
 							addScheduling(n, date, t);
-							((HeatingSchedulingsActivity) getActivity()).updateList();
+							((SHHeatingSchedulingsActivity) getActivity()).updateList();
 							
 							dialog.dismiss();
 						}
@@ -161,7 +161,7 @@ public class HeatingSchedulingsAddDialogFragment extends DialogFragment {
 		// Concat save
 		String save = name + ";" + date + ";" + temp + "\n";
 		
-		((HeatingSchedulingsActivity) getActivity()).write(protocol.generateDataToSend("h add scheduling", save));
+		((SHHeatingSchedulingsActivity) getActivity()).write(protocol.generateDataToSend("h add scheduling", save));
 
 		// Check if Media is mounted ( File exists because
 		// HeatingSchedulingsActivity.onCreate() create the file if it doesn't

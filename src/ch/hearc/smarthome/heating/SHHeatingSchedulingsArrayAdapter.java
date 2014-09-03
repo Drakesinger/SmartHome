@@ -21,17 +21,17 @@ import ch.hearc.smarthome.R;
  * This is used to create the custom ListView, with my own items
  * 
  */
-public class HeatingSchedulingsArrayAdapter extends ArrayAdapter<HeatingScheduling> {
+public class SHHeatingSchedulingsArrayAdapter extends ArrayAdapter<SHHeatingSchedulingObject> {
 
 	// CONSTS
 	public boolean CHECKED = true, UNCHECKED = false;
 
 	Context context;
 	int resource;
-	ArrayList<HeatingScheduling> data = null;
+	ArrayList<SHHeatingSchedulingObject> data = null;
 
-	public HeatingSchedulingsArrayAdapter(Context context, int resource,
-			ArrayList<HeatingScheduling> data) {
+	public SHHeatingSchedulingsArrayAdapter(Context context, int resource,
+			ArrayList<SHHeatingSchedulingObject> data) {
 
 		super(context, resource, data);
 
@@ -65,7 +65,7 @@ public class HeatingSchedulingsArrayAdapter extends ArrayAdapter<HeatingScheduli
 			holder = (SchedulingHolder) row.getTag();
 		}
 
-		final HeatingScheduling scheduling = data.get(position);
+		final SHHeatingSchedulingObject scheduling = data.get(position);
 		holder.name.setText(scheduling.getName());
 		holder.date.setText(scheduling.getDate());
 		holder.temp.setText(scheduling.getTemp() + "°");

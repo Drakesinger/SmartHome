@@ -16,7 +16,7 @@ import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
-public class HeatingThresholdsActivity extends SHBluetoothActivity {
+public class SHHeatingThresholdsActivity extends SHBluetoothActivity {
 
 	// Save Directory
 	static String SAVE_NAME = "thresholds_save.txt";
@@ -74,7 +74,7 @@ public class HeatingThresholdsActivity extends SHBluetoothActivity {
 
 		// If there is a modification ask to save, else quit
 		if (!thresholdsSaved) {
-			DialogFragment dialog = new HeatingThresholdsSaveDialogFragment();
+			DialogFragment dialog = new SHHeatingThresholdsSaveDialogFragment();
 			dialog.show(getFragmentManager(), "DialogThresholdsNotSaved");
 		}else{
 			finish();

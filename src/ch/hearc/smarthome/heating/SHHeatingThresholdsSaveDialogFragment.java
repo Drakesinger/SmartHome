@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import ch.hearc.smarthome.R;
 
-public class HeatingThresholdsSaveDialogFragment extends DialogFragment {
+public class SHHeatingThresholdsSaveDialogFragment extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// Use the Builder class for convenient dialog construction
@@ -17,7 +17,7 @@ public class HeatingThresholdsSaveDialogFragment extends DialogFragment {
 						new DialogInterface.OnClickListener() {
 							// SAVE THRESHOLDS
 							public void onClick(DialogInterface dialog, int id) {
-								((HeatingThresholdsActivity) getActivity())
+								((SHHeatingThresholdsActivity) getActivity())
 										.saveThresholds(null);
 							}
 						})

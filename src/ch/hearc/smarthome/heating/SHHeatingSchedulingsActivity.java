@@ -17,7 +17,7 @@ import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 import ch.hearc.smarthome.heating.SHBluetoothFragmentActivity;
 
-public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
+public class SHHeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 
 	// Save Directory
 	static String SAVE_NAME = "schedulings_save.txt";
@@ -27,8 +27,8 @@ public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 	ListView schedulingListView;
 
 	ArrayList<CheckBox> checkboxes = new ArrayList<CheckBox>();
-	ArrayList<HeatingScheduling> datas = new ArrayList<HeatingScheduling>();
-	HeatingSchedulingsArrayAdapter adapter;
+	ArrayList<SHHeatingSchedulingObject> datas = new ArrayList<SHHeatingSchedulingObject>();
+	SHHeatingSchedulingsArrayAdapter adapter;
 	FragmentManager fm = getSupportFragmentManager();
 	
 	//Bluetooth
@@ -47,7 +47,7 @@ public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 		// ListAdapter -> ListView
 		schedulingListView = (ListView) findViewById(R.id.listViewScheduling);
 
-		adapter = new HeatingSchedulingsArrayAdapter(this,
+		adapter = new SHHeatingSchedulingsArrayAdapter(this,
 				R.layout.heating_scheduling_list_item, datas);
 		schedulingListView.setAdapter(adapter);
 
@@ -62,7 +62,7 @@ public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 	public void addSchedulingDialog(View v) {
 
 		// Create DialogFragment
-		HeatingSchedulingsAddDialogFragment dFragment = new HeatingSchedulingsAddDialogFragment();
+		SHHeatingSchedulingsAddDialogFragment dFragment = new SHHeatingSchedulingsAddDialogFragment();
 		// Show DialogFragment
 		dFragment.show(fm, "Dialog Fragment");
 	}
@@ -89,7 +89,7 @@ public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 				Toast.LENGTH_SHORT).show();
 
 		// Create the String to save
-		for (HeatingScheduling s : datas) {
+		for (SHHeatingSchedulingObject s : datas) {
 			save += s.getName() + ";" + s.getDate() + ";" + s.getTemp() + "\n";
 		}
 		
@@ -156,7 +156,7 @@ public class HeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 			// Update 'datas' array with the new list content
 			for (String l : lines) {
 				String s[] = l.split(";");
-				datas.add(new HeatingScheduling(s[0], s[1], s[2]));
+				datas.add(new SHHeatingSchedulingObject(s[0], s[1], s[2]));
 			}
 
 			adapter.notifyDataSetChanged();

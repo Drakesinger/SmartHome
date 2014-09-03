@@ -1,17 +1,17 @@
 package ch.hearc.smarthome.heating;
 
-public class HeatingScheduling {
+public class SHHeatingSchedulingObject {
 	
 	private String name, date, temp;
 	private boolean state;
 	
-	public HeatingScheduling(){
+	public SHHeatingSchedulingObject(){
 		super();
 	}
 	
 	//
 	
-	public HeatingScheduling(String name, String date, String temp){
+	public SHHeatingSchedulingObject(String name, String date, String temp){
 		this.name = name;
 		this.date = date;
 		this.temp = temp;

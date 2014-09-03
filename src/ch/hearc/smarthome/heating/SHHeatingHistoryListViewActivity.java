@@ -23,7 +23,7 @@ import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
-public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
+public class SHHeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 	// Dates
 	String DATE_FORMAT = "dd.MM.yyyy HH:mm";
@@ -34,14 +34,14 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 			+ File.separator + SAVE_NAME);
 
 	// List View
-	private HeatingHistoryArrayAdapter adapterIn, adapterOut;
+	private SHHeatingHistoryArrayAdapter adapterIn, adapterOut;
 	private ListView lvHistoryIn, lvHistoryOut;
 
 	// History
-	private ArrayList<HeatingHistoryObject> historyIn = new ArrayList<HeatingHistoryObject>();
-	private ArrayList<HeatingHistoryObject> historyOut = new ArrayList<HeatingHistoryObject>();
-	private ArrayList<HeatingHistoryObject> displayIn = new ArrayList<HeatingHistoryObject>();
-	private ArrayList<HeatingHistoryObject> displayOut = new ArrayList<HeatingHistoryObject>();
+	private ArrayList<SHHeatingHistoryObject> historyIn = new ArrayList<SHHeatingHistoryObject>();
+	private ArrayList<SHHeatingHistoryObject> historyOut = new ArrayList<SHHeatingHistoryObject>();
+	private ArrayList<SHHeatingHistoryObject> displayIn = new ArrayList<SHHeatingHistoryObject>();
+	private ArrayList<SHHeatingHistoryObject> displayOut = new ArrayList<SHHeatingHistoryObject>();
 
 	// Bluetooth
 	private static SHCommunicationProtocol protocol;
@@ -57,9 +57,9 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 		lvHistoryIn = (ListView) findViewById(R.id.listview_history_indoor);
 		lvHistoryOut = (ListView) findViewById(R.id.listview_history_outdoor);
-		adapterIn = new HeatingHistoryArrayAdapter(this,
+		adapterIn = new SHHeatingHistoryArrayAdapter(this,
 				R.layout.heating_history_list_item, displayIn);
-		adapterOut = new HeatingHistoryArrayAdapter(this,
+		adapterOut = new SHHeatingHistoryArrayAdapter(this,
 				R.layout.heating_history_list_item, displayOut);
 		lvHistoryIn.setAdapter(adapterIn);
 		lvHistoryOut.setAdapter(adapterOut);
@@ -79,12 +79,12 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 	public void updateLists() {
 
 		String sDate = null;
-		HeatingHistoryObject hhoIn, hhoOut;
+		SHHeatingHistoryObject hhoIn, hhoOut;
 
 		for (int i = 0; i < 7; i++) {
 			sDate = historyIn.get(i).getDate().split(" ")[0];
-			hhoIn = new HeatingHistoryObject(sDate, historyIn.get(i).getTemps());
-			hhoOut = new HeatingHistoryObject(sDate, historyOut.get(i)
+			hhoIn = new SHHeatingHistoryObject(sDate, historyIn.get(i).getTemps());
+			hhoOut = new SHHeatingHistoryObject(sDate, historyOut.get(i)
 					.getTemps());
 			displayIn.add(hhoIn);
 			displayOut.add(hhoOut);
@@ -107,9 +107,9 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 		return sdf.format(dDate);
 	}
 
-	public ArrayList<HeatingHistoryObject> populate(String seriesTitle) {
+	public ArrayList<SHHeatingHistoryObject> populate(String seriesTitle) {
 
-		ArrayList<HeatingHistoryObject> datas = new ArrayList<HeatingHistoryObject>();
+		ArrayList<SHHeatingHistoryObject> datas = new ArrayList<SHHeatingHistoryObject>();
 		Calendar c = new GregorianCalendar();
 
 		// Get 1 week before
@@ -136,7 +136,7 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 				e1.printStackTrace();
 			}
 
-			datas.add(new HeatingHistoryObject(sDate, temps.get(i)));
+			datas.add(new SHHeatingHistoryObject(sDate, temps.get(i)));
 
 			c.add(Calendar.DATE, +1);
 		}
@@ -146,7 +146,7 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 	public void showGraphicalView(View v) {
 		Intent intent = new Intent(this,
-				HeatingHistoryGraphicalViewActivity.class);
+				SHHeatingHistoryGraphicalViewActivity.class);
 
 		ArrayList<String> dates = new ArrayList<String>();
 		ArrayList<String> tempsIndoor = new ArrayList<String>();
