@@ -30,36 +30,43 @@ public class HeatingHistoryGraphicalViewActivity extends Activity {
 		ArrayList<String> tempsOut = getIntent().getExtras()
 				.getStringArrayList("tempsOut");
 
-		ArrayList<HeatingHistoryObject> historyIn = new ArrayList<HeatingHistoryObject>();
-		ArrayList<HeatingHistoryObject> historyOut = new ArrayList<HeatingHistoryObject>();
 
-		for (int i = 0; i < dates.size(); i++) {
-			historyIn
-					.add(new HeatingHistoryObject(dates.get(i), tempsIn.get(i)));
-			historyOut.add(new HeatingHistoryObject(dates.get(i), tempsOut
-					.get(i)));
+		XYSeries seriesIn = new XYSeries("Indoor's temperatures");
+		XYSeries seriesOut = new XYSeries("Outdoor's temperatures");
+
+		for(int i = 0; i < 28; i++){
+			seriesIn.add(i, Double.valueOf(tempsIn.get(i)));
+			seriesOut.add(i, Double.valueOf(tempsOut.get(i)));
 		}
 
-		chartView = createGraphicalView(historyIn, historyOut);
+//		ArrayList<HeatingHistoryObject> historyIn = new ArrayList<HeatingHistoryObject>();
+//		ArrayList<HeatingHistoryObject> historyOut = new ArrayList<HeatingHistoryObject>();
+		// Init. histories
+//		for (int i = 0; i < 7; i++) {
+//			seriesIn.add(new XYSeries("Indoor temps"));
+//			seriesOut.add(new XYSeries("Outdoor temps"));
+//			for (int j = 0; j < 4; j++) {
+//				double tempIn = Double.valueOf(tempsIn.get((i * 4) + j));
+//				double tempOut = Double.valueOf(tempsOut.get((i * 4) + j));
+//				seriesOut.get(i).add(j, tempIn);
+//				seriesOut.get(i).add(j, tempOut);
+//			}
+//			historyIn.add(new HeatingHistoryObject(dates.get(i), seriesIn
+//					.get(i)));
+//			historyOut.add(new HeatingHistoryObject(dates.get(i), seriesOut
+//					.get(i)));
+//		}
+
+		chartView = createGraphicalView(seriesIn, seriesOut);
 
 		setContentView(chartView);
 	}
 
-	public GraphicalView createGraphicalView(
-			ArrayList<HeatingHistoryObject> indoor,
-			ArrayList<HeatingHistoryObject> outdoor) {
-
-		XYSeries tempsIn = new XYSeries("Indoor temps");
-		XYSeries tempsOut = new XYSeries("Outdoor temps");
-
-		for (int i = 0; i < indoor.size(); i++) {
-			tempsIn.add(i, Integer.parseInt(indoor.get(i).getTemp()));
-			tempsOut.add(i, Integer.parseInt(outdoor.get(i).getTemp()));
-		}
+	public GraphicalView createGraphicalView(XYSeries indoor, XYSeries outdoor) {
 
 		ArrayList<XYSeries> series = new ArrayList<XYSeries>();
-		series.add(tempsIn);
-		series.add(tempsOut);
+		series.add(indoor);
+		series.add(outdoor);
 
 		// Now we create the renderer
 		XYSeriesRenderer rendererIn = new XYSeriesRenderer();
@@ -70,8 +77,7 @@ public class HeatingHistoryGraphicalViewActivity extends Activity {
 		// we add point markers
 		rendererIn.setPointStyle(PointStyle.CIRCLE);
 		rendererIn.setPointStrokeWidth(20);
-		
-		
+
 		XYSeriesRenderer rendererOut = new XYSeriesRenderer();
 		rendererOut.setLineWidth(4);
 		rendererOut.setColor(Color.BLUE);
@@ -80,7 +86,6 @@ public class HeatingHistoryGraphicalViewActivity extends Activity {
 		// we add point markers
 		rendererOut.setPointStyle(PointStyle.CIRCLE);
 		rendererOut.setPointStrokeWidth(20);
-		
 
 		XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
 		mRenderer.addSeriesRenderer(0, rendererIn);

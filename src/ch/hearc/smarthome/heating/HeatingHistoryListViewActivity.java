@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import org.achartengine.model.XYSeries;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,8 +53,13 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 		lvHistoryIn.setAdapter(adapterIn);
 		lvHistoryOut.setAdapter(adapterOut);
 
-		historyIn = populate();
-		historyOut = populate();
+		historyIn = populate("Indoor temperatures");
+		historyOut = populate("Outdoor temperatures");
+
+		Log.d("TEMPS", "HIST(0): New hho( Date ,  n° of temps = "
+				+ historyIn.get(0).getTemps().getItemCount());
+
+		Log.d("TEMPS", "historyIn.size(): " + historyIn.size());
 
 		updateLists();
 
@@ -60,33 +67,20 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 	public void updateLists() {
 
-		Date firstDate = null;
-		Calendar c = new GregorianCalendar();
-
-		try {
-			firstDate = stringToDate(historyIn.get(0).getDate(), DATE_FORMAT);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		c.setTime(firstDate);
-
 		String sDate = null;
+		HeatingHistoryObject hhoIn, hhoOut;
 
-		for (int i = 1; i <= 28; i += 4) {
+		for (int i = 0; i < 7; i++) {
 			sDate = historyIn.get(i).getDate().split(" ")[0];
-			HeatingHistoryObject hhoIn = new HeatingHistoryObject(sDate,
-					historyIn.get(i).getTemp());
-			HeatingHistoryObject hhoOut = new HeatingHistoryObject(sDate,
-					historyOut.get(i).getTemp());
+			hhoIn = new HeatingHistoryObject(sDate, historyIn.get(i).getTemps());
+			hhoOut = new HeatingHistoryObject(sDate, historyOut.get(i)
+					.getTemps());
 			displayIn.add(hhoIn);
 			displayOut.add(hhoOut);
 		}
 
 		adapterIn.notifyDataSetChanged();
 		adapterOut.notifyDataSetChanged();
-
 	}
 
 	public static Date stringToDate(String sDate, String sFormat)
@@ -102,7 +96,8 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 		return sdf.format(dDate);
 	}
 
-	public ArrayList<HeatingHistoryObject> populate() {
+	public ArrayList<HeatingHistoryObject> populate(String seriesTitle) {
+
 		ArrayList<HeatingHistoryObject> datas = new ArrayList<HeatingHistoryObject>();
 		Calendar c = new GregorianCalendar();
 
@@ -113,9 +108,15 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 		String sRand = null;
 		String sDate = null;
 
-		for (int i = 0; i < 28; i++) {
-			// Random temp
-			sRand = String.valueOf((int) (Math.random() * 15) + 15);
+		ArrayList<XYSeries> temps = new ArrayList<XYSeries>();
+
+		for (int i = 0; i < 7; i++) {
+			temps.add(new XYSeries(seriesTitle));
+			for (int j = 0; j < 4; j++) {
+				sRand = String.valueOf((int) (Math.random() * 10) + 20);
+				temps.get(i).add(i, Double.parseDouble(sRand));
+			}
+
 			// Date
 			try {
 				sDate = dateToString(c.getTime(), DATE_FORMAT);
@@ -124,10 +125,13 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 				e1.printStackTrace();
 			}
 
-			datas.add(new HeatingHistoryObject(sDate, sRand));
+			datas.add(new HeatingHistoryObject(sDate, temps.get(i)));
 
-			c.add(Calendar.HOUR, +6);
+			c.add(Calendar.DATE, +1);
 		}
+
+		Log.d("TEMPS", "DATA(0): New hho( Date ,  n° of temps = "
+				+ datas.get(0).getTemps().getItemCount());
 
 		return datas;
 	}
@@ -140,12 +144,20 @@ public class HeatingHistoryListViewActivity extends SHBluetoothActivity {
 		ArrayList<String> tempsIndoor = new ArrayList<String>();
 		ArrayList<String> tempsOutdoor = new ArrayList<String>();
 
-		int size = historyIn.size();
+		int size = historyIn.size() * 4;
+		int it = 0;
 		for (int i = 0; i < size; i++) {
-
-			dates.add(historyIn.get(i).getDate());
-			tempsIndoor.add(historyIn.get(i).getTemp());
-			tempsOutdoor.add(historyOut.get(i).getTemp());
+			
+			dates.add(historyIn.get(it).getDate());
+			tempsIndoor.add(String.valueOf(historyIn.get(it).getTemps()
+					.getY(i % 4)));
+			tempsOutdoor.add(String.valueOf(historyOut.get(it).getTemps()
+					.getY(i % 4)));
+			
+			//Every 4, increment iterator
+			if(i%4==3){
+				it++;
+			}
 
 		}
 

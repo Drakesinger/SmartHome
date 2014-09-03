@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:id="@+id/heating_history_relative_layout"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
 
@@ -12,6 +13,17 @@
         android:text="@string/item_temp"
         android:textSize="20sp" />
 
+    <LinearLayout
+        android:id="@+id/heating_history_list_graph"
+        android:layout_width="200dip"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@+id/heating_history_list_item_date"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="80dp"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+    
     <TextView
         android:id="@+id/heating_history_list_item_date"
         android:layout_width="fill_parent"
