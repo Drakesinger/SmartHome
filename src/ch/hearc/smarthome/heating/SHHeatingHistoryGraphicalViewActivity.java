@@ -71,7 +71,7 @@ public class SHHeatingHistoryGraphicalViewActivity extends Activity {
 		// Now we create the renderer
 		XYSeriesRenderer rendererIn = new XYSeriesRenderer();
 		rendererIn.setLineWidth(4);
-		rendererIn.setColor(Color.RED);
+		rendererIn.setColor(Color.rgb(51, 181, 229));
 		// Include low and max value
 		rendererIn.setDisplayBoundingPoints(true);
 		// we add point markers
@@ -80,7 +80,7 @@ public class SHHeatingHistoryGraphicalViewActivity extends Activity {
 
 		XYSeriesRenderer rendererOut = new XYSeriesRenderer();
 		rendererOut.setLineWidth(4);
-		rendererOut.setColor(Color.BLUE);
+		rendererIn.setColor(Color.rgb(0, 153, 204));
 		// Include low and max value
 		rendererOut.setDisplayBoundingPoints(true);
 		// we add point markers
