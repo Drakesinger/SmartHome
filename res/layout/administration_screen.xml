@@ -10,17 +10,21 @@
         android:layout_height="316dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp" >
+        android:layout_marginTop="58dp"
+        android:animateLayoutChanges="true"
+        android:visibility="gone" >
     </ListView>
 
     <Button
         android:id="@+id/ad_b_get_users"
+        style="@style/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/listView1"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginTop="16dp"
+        android:background="?android:attr/selectableItemBackground"
         android:onClick="getUsers"
-        android:text="Get users" />
+        android:text="@string/as_b_getUsers" />
 
 </RelativeLayout>

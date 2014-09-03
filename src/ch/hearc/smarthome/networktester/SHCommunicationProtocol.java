@@ -37,19 +37,24 @@ public class SHCommunicationProtocol
 
 	//@formatter:off
 		
-	private static String[ ]					functionNames		= { 
+	private static String[ ]					functionNames		= { // LOGIN
 	                        					             		    "create user" ,			// 0
 	                        					             		    "login" , 				// 1
-	                        					             		    "a change pass" , 		// 2
-	                        					             		    "a change username" , 	// 3
-	                        					             		    "a get user" , 			// 4
-	                        					             		    "d open" , 				// 5
-	                        					             		    "d change pass" , 		// 6
-	                        					             		    "send post-it" , 		// 7
-	                        					             		    "delete post-it",		// 8
-	                        					             		    "get post-its all",		// 9
-	                        					             		    "get post-its user",	// 10
-	                        					             		    "get post-its public"	// 11
+	                        					             		    // ADMIN
+	                        					             		    "a get user" , 			// 2
+	                        					             		    "a del user",			// 3
+	                        					             		    "a add user",			// 4
+	                        					             		    "a change pass" , 		// 5
+	                        					             		    "a change username" , 	// 6
+	                        					             		    // DOOR
+	                        					             		    "d open" , 				// 7
+	                        					             		    "d change pass" , 		// 8
+	                        					             		    // POST-IT
+	                        					             		    "send post-it" , 		// 9
+	                        					             		    "delete post-it",		// 10
+	                        					             		    "get post-its all",		// 11
+	                        					             		    "get post-its user",	// 12
+	                        					             		    "get post-its public"	// 13
 	                        					             		   };
 
 	//@formatter:on

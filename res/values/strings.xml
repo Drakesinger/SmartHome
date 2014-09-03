@@ -22,6 +22,9 @@
     <string name="BouttonChauffage">Chauffage</string>
     <string name="BouttonNote">Notes</string>
     <string name="BouttonAlarme">Alarme</string>
+    
+    <!-- Administration screen -->
+	<string name="as_b_getUsers">Get users</string>
 
     <!-- Debugging Screen -->
     <string name="ds_b_send">send</string>
