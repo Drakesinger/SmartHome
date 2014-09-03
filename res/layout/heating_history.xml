@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/background_light"
-        android:background="@android:color/background_dark"
+        android:background="@color/blue01"
         android:text="@string/indoor" />
 
     <ListView
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/background_light"
-        android:background="@android:color/background_dark"
+        android:background="@color/blue01"
         android:text="@string/outdoor" />
     <ListView
         android:id="@+id/listview_history_outdoor"
