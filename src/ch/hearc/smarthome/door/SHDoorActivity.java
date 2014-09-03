@@ -14,7 +14,7 @@ import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
-public class DoorActivity extends SHBluetoothActivity
+public class SHDoorActivity extends SHBluetoothActivity
 {
 
 	// Our view references
@@ -54,14 +54,17 @@ public class DoorActivity extends SHBluetoothActivity
 	{
 		// When we click on our open button we send the password
 
-		context = DoorActivity.this; // TODO check if we do not need
+		context = SHDoorActivity.this; // TODO check if we do not need
 										// getApplicationContext
 		doorPassword = convertEditTextContentToStrings(door_main_et_Password);
 		checker = door_main_cb_change_password.isChecked( );
 
-		//String dataToSend = Protocol.generateDataToSend(CredentialManager.getActualUser( ),openRequest, doorPassword);
+		// String dataToSend =
+		// Protocol.generateDataToSend(CredentialManager.getActualUser(
+		// ),openRequest, doorPassword);
 		String dataToSend = Protocol.generateDataToSend(openRequest, doorPassword);
 		write(dataToSend);
+
 	}
 
 	/**
@@ -108,7 +111,7 @@ public class DoorActivity extends SHBluetoothActivity
 				CredentialManager.setDoorPass(doorPassword);
 
 				notifyUser("Opening door.\nYou may now change the password.");
-				intent = new Intent(context, DoorAdminActivity.class);
+				intent = new Intent(context, SHDoorAdminActivity.class);
 				preventCancel = true;
 				startActivity(intent);
 			}
@@ -125,7 +128,7 @@ public class DoorActivity extends SHBluetoothActivity
 			// Show pop-up dialog
 			// TODO
 			//@formatter:off
-			// PopupMessages.launchPopup("Open door.", "Wrong password, please retry.", DoorActivity.this);
+			// PopupMessages.launchPopup("Open door.", "Wrong password, please retry.", SHDoorActivity.this);
 			//@formatter:on
 		}
 	}

@@ -1,97 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:padding="10dp" >
 
     <TextView
-        android:id="@+id/tv_Title"
+        android:id="@+id/door_admin_tv_welcome"
+        style="@style/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Password Administration"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/et_door_admin_old_pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_Old"
-        android:ems="10"
-        android:hint="Enter your old password"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/et_door_admin_new_pass1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_New"
-        android:ems="10"
-        android:hint="Enter your new password"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/et_door_admin_new_pass2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_Conf"
-        android:ems="10"
-        android:hint="Re-enter your new password"
-        android:inputType="textPassword" >
-    </EditText>
-
-    <Button
-        android:id="@+id/b_change"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="Change password" />
-
-    <CheckBox
-        android:id="@+id/cb_show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/b_change"
-        android:layout_marginBottom="33dp"
-        android:text="Show password" />
+        android:gravity="center_horizontal"
+        android:text="@string/ds_admin_tv_welcome"
+        android:textColor="@color/blue08" />
 
     <TextView
-        android:id="@+id/tv_Old"
+        android:id="@+id/door_admin_tv_old_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_door_admin_old_pass"
-        android:layout_below="@+id/tv_Title"
+        android:layout_alignLeft="@+id/door_admin_et_old_pass"
+        android:layout_below="@+id/door_admin_tv_instruction"
         android:layout_marginTop="24dp"
-        android:text="Old password:" />
+        android:text="@string/ds_admin_tv_old" />
+
+    <EditText
+        android:id="@+id/door_admin_et_old_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/door_admin_tv_old_password"
+        android:ems="10"
+        android:hint="Enter old password"
+        android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/tv_New"
+        android:id="@+id/door_admin_tv_new_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_door_admin_new_pass1"
-        android:layout_below="@+id/et_door_admin_old_pass"
+        android:layout_alignLeft="@+id/door_admin_et_new_pass1"
+        android:layout_below="@+id/door_admin_et_old_pass"
         android:layout_marginTop="18dp"
-        android:text="New password:" />
+        android:text="@string/ds_admin_tv_new" />
+
+    <EditText
+        android:id="@+id/door_admin_et_new_pass1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/door_admin_tv_new_password"
+        android:ems="10"
+        android:hint="Enter new password"
+        android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/tv_Conf"
+        android:id="@+id/door_admin_tv_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_door_admin_new_pass2"
-        android:layout_below="@+id/et_door_admin_new_pass1"
+        android:layout_alignLeft="@+id/door_admin_et_new_pass2"
+        android:layout_below="@+id/door_admin_et_new_pass1"
         android:layout_marginTop="21dp"
-        android:text="Confirm new password:" />
+        android:text="@string/ds_admin_tv_confirm" />
+
+    <EditText
+        android:id="@+id/door_admin_et_new_pass2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/door_admin_tv_confirm"
+        android:ems="10"
+        android:hint="Confirm new password"
+        android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/tv_door_admin_Message"
+        android:id="@+id/door_admin_tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_door_admin_new_pass2"
+        android:layout_below="@+id/door_admin_et_new_pass2"
         android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#CC0000" />
+
+    <TextView
+        android:id="@+id/door_admin_tv_instruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/door_admin_tv_welcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="@string/ds_admin_tv_instruction"
+        android:textColor="@color/blue08" />
+
+    <Button
+        android:id="@+id/door_admin_b_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/door_admin_tv_message"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableLeft="@drawable/ic_action_save"
+        android:drawablePadding="6dp"
+        android:text="@string/ds_admin_b_change"
+        android:textSize="16sp" />
+
+    <CheckBox
+        android:id="@+id/door_admin_cb_show"
+        style="@style/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/door_admin_et_new_pass2"
+        android:layout_below="@+id/door_admin_et_new_pass2"
+        android:text="@string/ds_admin_cb_show" />
 
 </RelativeLayout>

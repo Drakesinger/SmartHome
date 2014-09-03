@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Login Screen -->
+    <string name="ls_name">Hey there!</string>
     <string name="ls_welcome">Welcome home.</string>
     <string name="ls_pleaseLogin">Please login.</string>
     <string name="ls_enterPassword">Please enter your password.</string>
@@ -36,15 +37,27 @@
     <string name="adm_cancel">Cancel</string>
     <string name="adm_remove">Remove</string>
 
-    <!-- Debugging Screen -->
+    <!-- Debugging screen -->
     <string name="ds_name">Debugging</string>
     <string name="ds_b_send">send</string>
     <string name="ds_text">Message to send&#8230;</string>
     
     <!-- Door screen -->
+    <string name="ds_main_name">Door Access</string>
     <string name="ds_main_b_open">Open</string>
     <string name="ds_main_cb_change">Change password after login.</string>
-    <string name="ds_main_tv_welcome">Please enter code to open door:</string>
+    <string name="ds_main_tv_welcome">&#8230;A door is blocking your way&#8230;</string>
+    <string name="ds_main_tv_instruction">Please enter code to open door&#8230;</string>
+    
+    <!-- Door Administration screen -->
+    <string name="ds_admin_name">Door Mastery</string>
+    <string name="ds_admin_b_change">Save new password</string>
+    <string name="ds_admin_cb_show">Show password</string>
+    <string name="ds_admin_tv_welcome">Welcome door master</string>
+    <string name="ds_admin_tv_instruction">You may change the password for the door.&#8230;</string>
+    <string name="ds_admin_tv_old">Old password:</string>
+    <string name="ds_admin_tv_new">New password:</string>
+    <string name="ds_admin_tv_confirm">Confirm password:</string>
 
     <!-- Heating Main Activity -->
     <string name="hm_name">Heating Management</string>

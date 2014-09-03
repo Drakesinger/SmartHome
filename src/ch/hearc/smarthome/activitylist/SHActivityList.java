@@ -28,7 +28,7 @@ public class SHActivityList extends SHBluetoothActivity
 		lv_ActivityList = (ListView) findViewById(R.id.al_lv_action_list);
 
 		// Remote control activities
-		mActivityList.add(new SHActivityC("Door Control", "Open doors and change the code required for entry.", "ch.hearc.smarthome.door.", "DoorActivity"));
+		mActivityList.add(new SHActivityC("Door Control", "Open doors and change the code required for entry.", "ch.hearc.smarthome.door.", "SHDoorActivity"));
 		mActivityList.add(new SHActivityC("Heating Management", "Check temperature history and manage all aspects of your home's heating.", "ch.hearc.smarthome.heating.", "SHHeatingMainActivity"));
 		mActivityList.add(new SHActivityC("Post-it Management", "View the post-its saved for you or for the public, create new post-its and delete the ones you don't want.", "ch.hearc.smarthome.notes.", "NoteMenu"));
 		mActivityList.add(new SHActivityC("Administration", "Manage users and their passwords, remove or add new users.", "ch.hearc.smarthome.admin.", "SHAdministration"));

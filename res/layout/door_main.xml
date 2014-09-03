@@ -7,43 +7,58 @@
     android:padding="10dp" >
 
     <TextView
-        android:id="@+id/door_main_tv_welcome"
+        android:id="@+id/door_main_tv_instruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/door_main_et_password"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="151dp"
-        android:text="@string/ds_main_tv_welcome" />
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:text="@string/ds_main_tv_instruction"
+        android:textColor="@color/blue08" />
+
+    <Button
+        android:id="@+id/door_main_b_open"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_below="@+id/door_main_cb_change_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableLeft="@drawable/ic_action_door"
+        android:drawablePadding="6dp"
+        android:onClick="requestDoorOpen"
+        android:text="@string/ds_main_b_open" />
 
     <EditText
         android:id="@+id/door_main_et_password"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/door_main_tv_welcome"
-        android:layout_marginTop="19dp"
+        android:layout_alignRight="@+id/door_main_tv_instruction"
+        android:layout_below="@+id/door_main_tv_instruction"
+        android:layout_marginTop="6dp"
         android:ems="10"
-        android:hint="Your Password"
+        android:gravity="center_horizontal"
+        android:hint="Password"
         android:inputType="numberPassword" />
 
     <CheckBox
         android:id="@+id/door_main_cb_change_password"
+        style="@style/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/door_main_b_open"
-        android:layout_alignLeft="@+id/door_main_et_password"
+        android:layout_alignLeft="@+id/door_main_tv_instruction"
+        android:layout_below="@+id/door_main_et_password"
         android:text="@string/ds_main_cb_change"
         android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/door_main_b_open"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/door_main_tv_welcome"
+        style="@style/title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/door_main_cb_change_password"
-        android:layout_alignParentBottom="true"
-        android:onClick="requestDoorOpen"
-        android:text="@string/ds_main_b_open"
-        android:background="?android:attr/selectableItemBackground"
-         />
+        android:layout_above="@+id/door_main_tv_instruction"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="82dp"
+        android:gravity="center_horizontal"
+        android:text="@string/ds_main_tv_welcome" />
 
 </RelativeLayout>
