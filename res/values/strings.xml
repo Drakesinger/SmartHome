@@ -12,6 +12,7 @@
     <string name="ls_b_login">Log in</string>
 
     <!-- Activity List -->
+    <string name="al_name">Home Activities</string>
     <string name="al_welcome">Welcome home.</string>
     <string name="al_choose">Choose an activity to start&#8230; </string>
 
@@ -22,21 +23,33 @@
     <string name="BouttonChauffage">Chauffage</string>
     <string name="BouttonNote">Notes</string>
     <string name="BouttonAlarme">Alarme</string>
-    
+
     <!-- Administration screen -->
-	<string name="as_b_getUsers">Get users</string>
+    <string name="as_name">Administration</string>
+    <string name="as_b_getUsers">Get users</string>
+    <string name="as_b_addUser">Add a user</string>
+    
+    <!-- Administration modify dialog -->
+    <string name="adm_instructions">User management</string>
+    <string name="adm_modify">Modify</string>
+    <string name="adm_ok">OK</string>
+    <string name="adm_cancel">Cancel</string>
+    <string name="adm_remove">Remove</string>
 
     <!-- Debugging Screen -->
+    <string name="ds_name">Debugging</string>
     <string name="ds_b_send">send</string>
     <string name="ds_text">Message to send&#8230;</string>
 
     <!-- Heating Main Activity -->
+    <string name="hm_name">Heating Management</string>
     <string name="scheduling">Heating Scheduling</string>
     <string name="thresholds">Thresholds Heat and Light</string>
     <string name="history">History</string>
     <string name="Exit">Exit</string>
 
     <!-- Heating Thresholds -->
+    <string name="ht_name">Thresholds</string>
     <string name="heating">HEATING</string>
     <string name="default_temperature">Default Temperature</string>
     <string name="light_below">Turn on below</string>
@@ -47,6 +60,7 @@
     <string name="no_quit">No, let me quit</string>
 
     <!-- Heating Scheduling -->
+    <string name="hs_name">Scheduling</string>
     <string name="add">Add</string>
     <string name="delete_selection">Delete Selection</string>
     <string name="item_temp">T°</string>
@@ -57,6 +71,7 @@
     <string name="end">End</string>
 
     <!-- Heating History -->
+    <string name="hh_name">History</string>
     <string name="show_graphical_view">Show graphical view</string>
     <string name="indoor">Indoor</string>
     <string name="outdoor">Outdoor</string>
@@ -71,8 +86,8 @@
     <string name="detail">Détails :</string>
     <string name="destinataire">Destinataire :</string>
     <string name="NoteAdd">Ajouter</string>
-	<string name="title_activity_note">NoteActivity</string>
-    
+    <string name="title_activity_note">NoteActivity</string>
+
     <!-- Options Menu -->
     <string name="base_connect">Connect a device - Base</string>
     <string name="debug_mode">Debugger</string>

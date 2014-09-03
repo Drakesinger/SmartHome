@@ -1,0 +1,110 @@
+package ch.hearc.smarthome.admin;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import ch.hearc.smarthome.R;
+
+public class SHAddUserFragment extends DialogFragment
+{
+
+	// global variables used in this class, will be passed to the calling alert
+	// dialog
+	private static String	mUserName;
+	private static String	mUserPass;
+
+	// View components
+	private EditText		ad_a_et_username;
+	private EditText		ad_a_et_password;
+
+	public interface NoticeDialogListener
+	{
+		public void onAddUserDialogOkClick(DialogFragment dialog);
+	}
+
+	// Click listener
+	NoticeDialogListener	mListener;
+
+	@Override
+	public void onAttach(Activity activity)
+	{
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+
+		try
+		{
+			// Instantiate the NoticeDialogListener so we can send events to the
+			// host
+			mListener = (NoticeDialogListener) activity;
+		}
+		catch(ClassCastException e)
+		{
+			// The activity doesn't implement the interface, throw exception
+			throw new ClassCastException(activity.toString( ) + " must implement NoticeDialogListener");
+		}
+
+	}
+
+	/**/
+	@Override
+	public Dialog onCreateDialog(Bundle savedInstanceState)
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity( ));
+		// Get the layout inflater
+		LayoutInflater inflater = getActivity( ).getLayoutInflater( );
+		// Inflate and set the layout for the dialog
+		// Pass null as the parent view because its going in the dialog layout
+		final View myDialogView = inflater.inflate(R.layout.administration_add_dialog, null);
+
+		ad_a_et_username = (EditText) myDialogView.findViewById(R.id.ad_a_et_username);
+		ad_a_et_password = (EditText) myDialogView.findViewById(R.id.ad_a_et_password);
+
+		builder.setView(myDialogView);
+
+		// Add action buttons
+		builder.setPositiveButton(R.string.adm_ok, new DialogInterface.OnClickListener( )
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int id)
+				{
+					// convert the ET values to Strings and send them to the
+					// caller
+					mUserName = ad_a_et_username.getText( ).toString( );
+					mUserPass = ad_a_et_password.getText( ).toString( );
+					mListener.onAddUserDialogOkClick(SHAddUserFragment.this);
+				}
+			});
+		builder.setNegativeButton(R.string.adm_cancel, new DialogInterface.OnClickListener( )
+			{
+				public void onClick(DialogInterface dialog, int id)
+				{
+					SHAddUserFragment.this.getDialog( ).cancel( );
+				}
+			});
+
+		return builder.create( );
+
+	}/**/
+
+	/**
+	 * @return the mUserName
+	 */
+	public String getUserName( )
+	{
+		return mUserName;
+	}
+
+	/**
+	 * @return the mUserPass
+	 */
+	public String getUserPass( )
+	{
+		return mUserPass;
+	}
+}

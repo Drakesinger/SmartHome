@@ -12,6 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
         android:animateLayoutChanges="true"
+        android:descendantFocusability="blocksDescendants"
         android:visibility="gone" >
     </ListView>
 
@@ -26,5 +27,16 @@
         android:background="?android:attr/selectableItemBackground"
         android:onClick="getUsers"
         android:text="@string/as_b_getUsers" />
+
+    <Button
+        android:id="@+id/ad_b_add_user"
+        style="@style/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ad_lv_user_list"
+        android:layout_centerHorizontal="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="addUser"
+        android:text="@string/as_b_addUser" />
 
 </RelativeLayout>

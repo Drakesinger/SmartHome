@@ -3,13 +3,9 @@ package ch.hearc.smarthome.admin;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -20,8 +16,12 @@ import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
 
-public class SHAdministration extends SHBluetoothActivity
+public class SHAdministration extends SHBluetoothActivity implements SHManageUserFragment.NoticeDialogListener, SHAddUserFragment.NoticeDialogListener, OnItemLongClickListener
 {
+
+	// Debugging
+	private static final String			TAG				= "SHAdministration";
+	private static final boolean		DebugOnly		= false;
 
 	private Hashtable<String , String>	users;
 
@@ -37,10 +37,17 @@ public class SHAdministration extends SHBluetoothActivity
 
 	// View components
 	private Button						b_getUsers;
+	private Button						b_addUser;
 	private ListView					lv_UserList;
+
 	// List components
 	private ArrayList<SHUser>			mUserList		= new ArrayList<SHUser>( );
 	private SHUserListBaseAdapter		mUserListBaseAdapter;
+
+	// Data that is sent from SHManageUserFragment and onItemLongClickListener
+	private int							mUserChosen;
+	private String						newUsername;
+	private String						newPassword;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -59,9 +66,13 @@ public class SHAdministration extends SHBluetoothActivity
 		b_getUsers.setVisibility(View.VISIBLE);
 		b_getUsers.setClickable(true);
 
+		b_addUser = (Button) findViewById(R.id.ad_b_add_user);
+		b_addUser.setVisibility(View.GONE);
+		b_addUser.setClickable(false);
+
 		mUserListBaseAdapter = new SHUserListBaseAdapter(this, mUserList);
 		lv_UserList.setAdapter(mUserListBaseAdapter);
-		lv_UserList.setOnItemLongClickListener(mUserClickListener);
+		lv_UserList.setOnItemLongClickListener(this);
 	}
 
 	public void getUsers(View _view)
@@ -71,8 +82,15 @@ public class SHAdministration extends SHBluetoothActivity
 		notifyUser("Retrieving user list.");
 		b_getUsers.setVisibility(View.GONE);
 		b_getUsers.setClickable(false);
-		// for debugging purpouses
+		// for debugging purposes
 		getStuff( );
+	}
+
+	public void addUser(View _view)
+	{
+		// Launch a new dialog to insert username and password
+		DialogFragment addUserFragment = new SHAddUserFragment( );
+		addUserFragment.show(getFragmentManager( ), "AddUser");
 	}
 
 	/** Only for debugging */
@@ -84,6 +102,9 @@ public class SHAdministration extends SHBluetoothActivity
 		mUserList.add(new SHUser("Thomas", "from"));
 		mUserList.add(new SHUser("Sal", "1234"));
 		mUserListBaseAdapter.notifyDataSetChanged( );
+
+		b_addUser.setVisibility(View.VISIBLE);
+		b_addUser.setClickable(true);
 
 	}
 
@@ -97,6 +118,7 @@ public class SHAdministration extends SHBluetoothActivity
 			if(data.contains("users:"))
 			{
 				mUserList.clear( );
+				lv_UserList.setVisibility(View.VISIBLE);
 
 				// data contains the whole list of users and their passwords
 				String[ ] lines = data.split("\n");
@@ -108,85 +130,126 @@ public class SHAdministration extends SHBluetoothActivity
 				}
 				notifyUser("Data received.");
 				mUserListBaseAdapter.notifyDataSetChanged( );
+
+				b_addUser.setVisibility(View.VISIBLE);
+				b_addUser.setClickable(true);
+			}
+
+			if(data.contains("username change ok"))
+			{
+				notifyUser("Username was changed sucessfully.");
+			}
+			else if(data.contains("password change ok"))
+			{
+				notifyUser("Password was changed sucessfully.");
+
+				if(!DebugOnly)
+				{
+					// update
+					users.remove(newUsername);
+					mUserList.set(mUserChosen, (SHUser) new SHUser(newUsername, newPassword));
+					mUserListBaseAdapter.notifyDataSetChanged( );
+				}
+			}
+
+			if(data.contains("add user ok"))
+			{
+				notifyUser("User was created sucessfuly.");
+
+				if(!DebugOnly)
+				{
+					// update
+					users.put(newUsername, newPassword);
+					mUserList.add((SHUser) new SHUser(newUsername, newPassword));
+					mUserListBaseAdapter.notifyDataSetChanged( );
+				}
 			}
 
 		}
 		return super.handleMessage(_msg);
 	}
 
-	//@formatter:off
-	/** The on-click listener for all devices in the ListViews */
-    private OnItemLongClickListener mUserClickListener = new OnItemLongClickListener() {
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+	{
+		mUserChosen = position;
 
-		@Override
-		public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+		SHUser actualUserChosen = mUserList.get(mUserChosen);
+		String actualUserName = actualUserChosen.getUserName( );
+		String actualUserPass = actualUserChosen.getPassword( );
+
+		// Instantiate a new dialogFragment containing the manage user screen.
+		DialogFragment manageUserFragment = new SHManageUserFragment( );
+		((SHManageUserFragment) manageUserFragment).showPreviousData(actualUserName, actualUserPass);
+		manageUserFragment.show(getFragmentManager( ), "ManageUser");
+
+		return false;
+	}
+
+	@Override
+	public void onManageUserDialogModifyClick(DialogFragment _dialogFragment)
+	{
+		// TODO Auto-generated method stub
+
+		// Retrive the changed data
+		newUsername = ((SHManageUserFragment) _dialogFragment).getUserName( );
+		newPassword = ((SHManageUserFragment) _dialogFragment).getUserPass( );
+
+		if(DebugOnly)
 		{
-			/// Instantiate the AlertDialog.Builder
-        	final AlertDialog.Builder adb = new AlertDialog.Builder(SHAdministration.this);
-    		
-    		adb.setTitle("Manage user");
-    		adb.setMessage("What do you want to do?");
-    		final int userChosen = position;
-    		
-    		adb.setPositiveButton("Manage", new AlertDialog.OnClickListener() {
-    	           public void onClick(DialogInterface dialog, int id) {
-    	               // should open a new dialog with the username and password
-    	        	   
-    	        	   DialogFragment newFragment = new ManageUser();
-    	        	    newFragment.show(getFragmentManager(), "missiles");
-    	           }
-    	       });
-    		adb.setNeutralButton("Cancel", new AlertDialog.OnClickListener( )
-				{
-					public void onClick(DialogInterface dialog, int which)
-					{
-						// Do nothing
-					}
-				});
-    		adb.setNegativeButton("Delete", new AlertDialog.OnClickListener( )
-				{
-					public void onClick(DialogInterface dialog, int which)
-					{
-						SHUser userToRemove = mUserList.get(userChosen);
-						mUserList.remove(userChosen);
-						
-						String dataToSend = protocol.generateDataToSend(removeUser, userToRemove.getUserName( ));
-						write(dataToSend);;
-					}
-				});
-            adb.show();
-			return false;
+			users.remove(newUsername);
+			mUserList.set(mUserChosen, (SHUser) new SHUser(newUsername, newPassword));
+			mUserListBaseAdapter.notifyDataSetChanged( );
 		}
-    	
-    	
-    };
-    /* WORKS */
-    public static class ManageUser extends DialogFragment {
-    	@Override
-    	public Dialog onCreateDialog(Bundle savedInstanceState) {
-    	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    	    // Get the layout inflater
-    	    LayoutInflater inflater = getActivity().getLayoutInflater();
 
-    	    // Inflate and set the layout for the dialog
-    	    // Pass null as the parent view because its going in the dialog layout
-    	    builder.setView(inflater.inflate(R.layout.administration_modify_dialog, null))
-    	    // Add action buttons
-    	           .setPositiveButton("Modify", new DialogInterface.OnClickListener() {
-    	               @Override
-    	               public void onClick(DialogInterface dialog, int id) {
-    	                   // sign in the user ...
-    	               }
-    	           })
-    	           .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-    	               public void onClick(DialogInterface dialog, int id) {
-    	            	   ManageUser.this.getDialog().cancel();
-    	               }
-    	           });      
-    	    return builder.create();
-    	}
-    }
-    
-	//@formatter:on
+		String dataToSend;
+
+		// now send the new information about the user
+		dataToSend = protocol.generateDataToSend(changeUserName, newUsername);
+		write(dataToSend);
+
+		String params = newUsername + "," + newPassword;
+		dataToSend = protocol.generateDataToSend(changeUserPass, params);
+		write(dataToSend);
+	}
+
+	@Override
+	public void onManageUserDialogRemoveClick(DialogFragment _dialogFragment)
+	{
+		// TODO Auto-generated method stub
+		notifyUser("Ok clicked.");
+		SHUser userToRemove = mUserList.get(mUserChosen);
+
+		if(DebugOnly)
+		{
+			mUserList.remove(mUserChosen);
+			mUserListBaseAdapter.notifyDataSetChanged( );
+		}
+		String dataToSend = protocol.generateDataToSend(removeUser, userToRemove.getUserName( ));
+		write(dataToSend);
+	}
+
+	@Override
+	public void onAddUserDialogOkClick(DialogFragment _dialogFragment)
+	{
+		// TODO Auto-generated method stub
+		// Retrive the changed data
+		newUsername = ((SHAddUserFragment) _dialogFragment).getUserName( );
+		newPassword = ((SHAddUserFragment) _dialogFragment).getUserPass( );
+
+		if(DebugOnly)
+		{
+			users.put(newUsername, newPassword);
+			mUserList.add(new SHUser(newUsername, newPassword));
+			mUserListBaseAdapter.notifyDataSetChanged( );
+		}
+
+		String dataToSend;
+
+		// now send the new information about the new user
+		String params = newUsername + "," + newPassword;
+		dataToSend = protocol.generateDataToSend(addUser, newUsername);
+		write(dataToSend);
+	}
 
 }
