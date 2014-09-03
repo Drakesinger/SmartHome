@@ -1,9 +1,8 @@
-package ch.hearc.smarthome.networktester;
+package ch.hearc.smarthome.bluetooth;
 
 import java.util.Hashtable;
 
 import ch.hearc.smarthome.CredentialManager;
-import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 
 import android.util.Log;
 

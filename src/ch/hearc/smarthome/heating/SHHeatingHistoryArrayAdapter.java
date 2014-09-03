@@ -64,7 +64,6 @@ public class SHHeatingHistoryArrayAdapter extends
 		
 		
 		
-		
 		// Getting the history object
 		final SHHeatingHistoryObject historyObject = history.get(position);
 		
@@ -73,7 +72,7 @@ public class SHHeatingHistoryArrayAdapter extends
 		
 		XYSeriesRenderer rendererOut = new XYSeriesRenderer();
 		rendererOut.setLineWidth(4);
-		rendererOut.setColor(Color.BLUE);
+		rendererOut.setColor(((Activity) context).getResources().getColor(R.color.blue08));
 		// Include low and max value
 		rendererOut.setDisplayBoundingPoints(true);
 		// we add point markers

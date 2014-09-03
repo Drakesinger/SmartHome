@@ -10,6 +10,7 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import ch.hearc.smarthome.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -71,7 +72,7 @@ public class SHHeatingHistoryGraphicalViewActivity extends Activity {
 		// Now we create the renderer
 		XYSeriesRenderer rendererIn = new XYSeriesRenderer();
 		rendererIn.setLineWidth(4);
-		rendererIn.setColor(Color.RED);
+		rendererIn.setColor(getResources().getColor(R.color.blue01));
 		// Include low and max value
 		rendererIn.setDisplayBoundingPoints(true);
 		// we add point markers
@@ -80,7 +81,7 @@ public class SHHeatingHistoryGraphicalViewActivity extends Activity {
 
 		XYSeriesRenderer rendererOut = new XYSeriesRenderer();
 		rendererOut.setLineWidth(4);
-		rendererOut.setColor(Color.BLUE);
+		rendererOut.setColor(getResources().getColor(R.color.blue08));
 		// Include low and max value
 		rendererOut.setDisplayBoundingPoints(true);
 		// we add point markers

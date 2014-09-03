@@ -12,15 +12,15 @@ import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
-import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
+import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
 
-public class DoorActivity extends SHBluetoothActivity
+public class SHDoorActivity extends SHBluetoothActivity
 {
 
 	// Our view references
-	Button									b_door_main_Open;
-	CheckBox								cb_door_main_Change_Password;
-	EditText								et_door_main_Password;
+	Button									door_main_b_open;
+	CheckBox								door_main_cb_change_password;
+	EditText								door_main_et_Password;
 
 	// Our password string
 	String									doorPassword;
@@ -54,14 +54,17 @@ public class DoorActivity extends SHBluetoothActivity
 	{
 		// When we click on our open button we send the password
 
-		context = DoorActivity.this; // TODO check if we do not need
+		context = SHDoorActivity.this; // TODO check if we do not need
 										// getApplicationContext
-		doorPassword = convertEditTextContentToStrings(et_door_main_Password);
-		checker = cb_door_main_Change_Password.isChecked( );
+		doorPassword = convertEditTextContentToStrings(door_main_et_Password);
+		checker = door_main_cb_change_password.isChecked( );
 
-		//String dataToSend = Protocol.generateDataToSend(CredentialManager.getActualUser( ),openRequest, doorPassword);
+		// String dataToSend =
+		// Protocol.generateDataToSend(CredentialManager.getActualUser(
+		// ),openRequest, doorPassword);
 		String dataToSend = Protocol.generateDataToSend(openRequest, doorPassword);
 		write(dataToSend);
+
 	}
 
 	/**
@@ -76,9 +79,9 @@ public class DoorActivity extends SHBluetoothActivity
 	/** Initialize all our used references for this activity */
 	private void initializeReferences( )
 	{
-		b_door_main_Open = (Button) findViewById(R.id.b_door_main_Open);
-		cb_door_main_Change_Password = (CheckBox) findViewById(R.id.cb_door_main_Change_Password);
-		et_door_main_Password = (EditText) findViewById(R.id.et_door_main_Password);
+		door_main_b_open = (Button) findViewById(R.id.door_main_b_open);
+		door_main_cb_change_password = (CheckBox) findViewById(R.id.door_main_cb_change_password);
+		door_main_et_Password = (EditText) findViewById(R.id.door_main_et_password);
 	}
 
 	@Override
@@ -108,7 +111,7 @@ public class DoorActivity extends SHBluetoothActivity
 				CredentialManager.setDoorPass(doorPassword);
 
 				notifyUser("Opening door.\nYou may now change the password.");
-				intent = new Intent(context, DoorAdminActivity.class);
+				intent = new Intent(context, SHDoorAdminActivity.class);
 				preventCancel = true;
 				startActivity(intent);
 			}
@@ -125,7 +128,7 @@ public class DoorActivity extends SHBluetoothActivity
 			// Show pop-up dialog
 			// TODO
 			//@formatter:off
-			// PopupMessages.launchPopup("Open door.", "Wrong password, please retry.", DoorActivity.this);
+			// PopupMessages.launchPopup("Open door.", "Wrong password, please retry.", SHDoorActivity.this);
 			//@formatter:on
 		}
 	}

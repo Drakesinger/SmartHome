@@ -21,7 +21,7 @@ import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
-import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
+import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
 
 public class SHHeatingHistoryListViewActivity extends SHBluetoothActivity {
 

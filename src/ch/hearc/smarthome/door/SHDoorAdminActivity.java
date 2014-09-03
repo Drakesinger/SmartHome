@@ -15,9 +15,9 @@ import ch.hearc.smarthome.CredentialManager;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
-import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
+import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
 
-public class DoorAdminActivity extends SHBluetoothActivity implements OnClickListener
+public class SHDoorAdminActivity extends SHBluetoothActivity implements OnClickListener
 {
 
 	// View components
@@ -88,7 +88,7 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 			 * item
 			 */
 			notifyUser("The old password you have entered is not valid.");
-			//PopupMessages.launchPopup("Change password.", "The old password you have entered is not valid.", DoorAdminActivity.this);
+			//PopupMessages.launchPopup("Change password.", "The old password you have entered is not valid.", SHDoorAdminActivity.this);
 		}
 	}
 
@@ -123,12 +123,12 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 	/** Initialize all our used references for this activity. */
 	private void initializeReferences( )
 	{
-		b_change = (Button) findViewById(R.id.b_change);
-		cb_show = (CheckBox) findViewById(R.id.cb_show);
-		et_door_admin_old_pass = (EditText) findViewById(R.id.et_door_admin_old_pass);
-		et_door_admin_new_pass1 = (EditText) findViewById(R.id.et_door_admin_new_pass1);
-		et_door_admin_new_pass2 = (EditText) findViewById(R.id.et_door_admin_new_pass2);
-		tv_door_admin_Message = (TextView) findViewById(R.id.tv_door_admin_Message);
+		b_change = (Button) findViewById(R.id.door_admin_b_change);
+		cb_show = (CheckBox) findViewById(R.id.door_admin_cb_show);
+		et_door_admin_old_pass = (EditText) findViewById(R.id.door_admin_et_old_pass);
+		et_door_admin_new_pass1 = (EditText) findViewById(R.id.door_admin_et_new_pass1);
+		et_door_admin_new_pass2 = (EditText) findViewById(R.id.door_admin_et_new_pass2);
+		tv_door_admin_Message = (TextView) findViewById(R.id.door_admin_tv_message);
 		ets[0] = et_door_admin_old_pass;
 		ets[1] = et_door_admin_new_pass1;
 		ets[2] = et_door_admin_new_pass2;
@@ -139,7 +139,7 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 	{
 		switch(_view.getId( ))
 		{
-			case R.id.cb_show:
+			case R.id.door_admin_cb_show:
 
 				if(cb_show.isChecked( ))
 				{
@@ -159,7 +159,7 @@ public class DoorAdminActivity extends SHBluetoothActivity implements OnClickLis
 				}
 				break;
 
-			case R.id.b_change:
+			case R.id.door_admin_b_change:
 				fillStringTable( );
 				checkValidity(stringTable);
 				break;

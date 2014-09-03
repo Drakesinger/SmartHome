@@ -14,7 +14,7 @@ import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
-import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
+import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
 import ch.hearc.smarthome.heating.SHBluetoothFragmentActivity;
 
 public class SHHeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
