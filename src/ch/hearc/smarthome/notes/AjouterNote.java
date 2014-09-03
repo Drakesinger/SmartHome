@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
-import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
+import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
 
 
 public class AjouterNote extends SHBluetoothActivity {

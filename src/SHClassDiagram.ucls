@@ -314,7 +314,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="34" language="java" name="ch.hearc.smarthome.networktester.SHCommunicationProtocol" project="SmartHome" 
+  <class id="34" language="java" name="ch.hearc.smarthome.bluetooth.SHCommunicationProtocol" project="SmartHome" 
     file="/SmartHome/src/ch/hearc/smarthome/networktester/SHCommunicationProtocol.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="142" width="237" x="3491" y="1392"/>    

@@ -17,19 +17,11 @@
     <string name="al_welcome">Welcome home.</string>
     <string name="al_choose">Choose an activity to start&#8230; </string>
 
-    <!-- Home Screen (will be deleted) -->
-    <string name="title_activity_display_message">Bienvenue</string>
-    <string name="Welcome">Bienvenue à la maison</string>
-    <string name="BouttonPorte">Porte</string>
-    <string name="BouttonChauffage">Chauffage</string>
-    <string name="BouttonNote">Notes</string>
-    <string name="BouttonAlarme">Alarme</string>
-
     <!-- Administration screen -->
     <string name="as_name">Administration</string>
     <string name="as_b_getUsers">Get users</string>
     <string name="as_b_addUser">Add a user</string>
-    
+
     <!-- Administration modify dialog -->
     <string name="adm_instructions">User management</string>
     <string name="adm_modify">Modify</string>
@@ -41,14 +33,14 @@
     <string name="ds_name">Debugging</string>
     <string name="ds_b_send">send</string>
     <string name="ds_text">Message to send&#8230;</string>
-    
+
     <!-- Door screen -->
     <string name="ds_main_name">Door Access</string>
     <string name="ds_main_b_open">Open</string>
     <string name="ds_main_cb_change">Change password after login.</string>
     <string name="ds_main_tv_welcome">&#8230;A door is blocking your way&#8230;</string>
     <string name="ds_main_tv_instruction">Please enter code to open door&#8230;</string>
-    
+
     <!-- Door Administration screen -->
     <string name="ds_admin_name">Door Mastery</string>
     <string name="ds_admin_b_change">Save new password</string>

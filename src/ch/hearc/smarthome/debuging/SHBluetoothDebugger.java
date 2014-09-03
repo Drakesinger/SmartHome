@@ -33,13 +33,6 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 	// Global variables
 	public static short			kfirstUse				= 1;
 
-	// Constants to indicate message contents
-	public static final int		MSG_OK					= 0;
-	public static final int		MSG_READ				= 1;
-	public static final int		MSG_WRITE				= 2;
-	public static final int		MSG_CANCEL				= 3;
-	public static final int		MSG_CONNECTED			= 4;
-
 	// Key names received from the BluetoothCommandService Handler
 	public static final String	DEVICE_NAME				= "device_name";
 	public static final String	DEVICE_ADDRESS			= "device_address";
@@ -47,9 +40,6 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 
 	// Name of the connected device
 	public String				mConnectedDeviceName	= "PIC";
-
-	// Local Bluetooth adapter
-	// public BluetoothAdapter mBluetoothAdapter;
 
 	// String Buffer for outgoing messages
 	public StringBuffer			mOutStringBuffer;
@@ -103,21 +93,21 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 	{
 
 		// Initialize the array adapter for the conversation thread
-		mConversationArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
-		mConversationView = (ListView) findViewById(R.id.in);
+		mConversationArrayAdapter = new ArrayAdapter<String>(this, R.layout.debugging_screen_message);
+		mConversationView = (ListView) findViewById(R.id.debugging_screen_lv_in);
 		mConversationView.setAdapter(mConversationArrayAdapter);
 
 		// Initialize the compose field with a listener for the return key
-		mOutEditText = (EditText) findViewById(R.id.edit_text_out);
+		mOutEditText = (EditText) findViewById(R.id.debugging_screen_et_out);
 
 		// Initialize the send button with a listener that for click events
-		mSendButton = (Button) findViewById(R.id.button_send);
+		mSendButton = (Button) findViewById(R.id.debugging_screen_b_send);
 		mSendButton.setOnClickListener(new OnClickListener( )
 			{
 				public void onClick(View v)
 				{
 					// Send a message using content of the edit text widget
-					TextView view = (TextView) findViewById(R.id.edit_text_out);
+					TextView view = (TextView) findViewById(R.id.debugging_screen_et_out);
 					String message = view.getText( ).toString( );
 					sendMessage(message);
 				}
@@ -133,12 +123,12 @@ public class SHBluetoothDebugger extends SHBluetoothActivity
 		switch(_msg.what)
 		{
 			case SHBluetoothNetworkManager.MSG_READ:
-				String readBuffer = ((String) _msg.obj).toLowerCase( );
+				String readBuffer = ((String) _msg.obj);
 				if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "readBuffer = " + readBuffer);
 				mConversationArrayAdapter.add(mConnectedDeviceName + ": " + readBuffer);
 				break;
 			case SHBluetoothNetworkManager.MSG_WRITE:
-				String writeBuffer = ((String) _msg.obj).toLowerCase( );
+				String writeBuffer = ((String) _msg.obj);
 				if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "writeBuffer = " + writeBuffer);
 				mConversationArrayAdapter.add("Me: " + writeBuffer);
 				break;

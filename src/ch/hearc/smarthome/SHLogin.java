@@ -9,7 +9,7 @@ import android.widget.EditText;
 import ch.hearc.smarthome.activitylist.SHActivityList;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
-import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
+import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
 
 /**
  * Activity called directly after connecting with a device.

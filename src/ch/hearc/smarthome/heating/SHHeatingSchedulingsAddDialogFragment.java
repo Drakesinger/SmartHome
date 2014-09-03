@@ -21,7 +21,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import ch.hearc.smarthome.FileUtil;
 import ch.hearc.smarthome.R;
-import ch.hearc.smarthome.networktester.SHCommunicationProtocol;
+import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
 
 public class SHHeatingSchedulingsAddDialogFragment extends DialogFragment {
 
