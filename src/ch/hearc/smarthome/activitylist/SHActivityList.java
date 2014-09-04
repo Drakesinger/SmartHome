@@ -32,9 +32,9 @@ public class SHActivityList extends SHBluetoothActivity
 		mActivityList.add(new SHActivityC("Heating Management", "Check temperature history and manage all aspects of your home's heating.", "ch.hearc.smarthome.heating.", "SHHeatingMainActivity"));
 		mActivityList.add(new SHActivityC("Post-it Management", "View the post-its saved for you or for the public, create new post-its and delete the ones you don't want.", "ch.hearc.smarthome.notes.", "SHNoteMenu"));
 		mActivityList.add(new SHActivityC("Administration", "Manage users and their passwords, remove or add new users.", "ch.hearc.smarthome.admin.", "SHAdministration"));
-
+		
 		// SHBluetoothTesting video surveillance
-		mActivityList.add(new SHActivityC("Video Surveillance", "Has not been implemented.", "ch.hearc.smarthome.networktester.", "SHBluetoothTesting"));
+		mActivityList.add(new SHActivityC("Buzzer", "To infinite and beyond", "ch.hearc.smarthome.buzzer.", "BuzzerActivity"));
 
 		lv_ActivityList.setAdapter(new SHActivityListBaseAdapter(this, mActivityList));
 		lv_ActivityList.setOnItemClickListener(new OnItemClickListener( )
