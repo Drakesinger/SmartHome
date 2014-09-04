@@ -166,7 +166,7 @@ public class SHNoteActivity extends SHBluetoothActivity
 								try
 								{
 									nbLinesRead = 0;
-									String lines[] = MessageRead.split("\r");
+									String lines[] = MessageRead.split("\n");
 									listItem.clear( );
 									while(lines != null)
 									{
@@ -196,19 +196,25 @@ public class SHNoteActivity extends SHBluetoothActivity
 	private void getNotes( )
 	{
 		// TODO Auto-generated method stub
-		String lines[] = MessageRead.split("\r");
+		String lines[] = MessageRead.split("\n");
 		listItem.clear( );
 		Toast.makeText(getApplicationContext( ), "Save found", Toast.LENGTH_SHORT).show( );
 		// Update 'listItem' array with the new list content
-		for(String l : lines)
+		while(lines != null)
 		{
-			String s[] = l.split(",");
-			map.put("sujet", s[2]);
-			newDetail = s[3].replace("_", " ");
-			map.put("detail", newDetail);
-			map.put("date", s[4]);
-			listItem.add(map);
-			map = new HashMap<String , String>( );
+			if(MessageRead.contains("subject"))
+			{
+				map.put("sujet", lines[2]);
+				newDetail = lines[3].replace("_", " ");
+				map.put("detail", newDetail);
+				map.put("date", lines[4]);
+				listItem.add(map);
+				map = new HashMap<String , String>( );
+			}
+			else
+			{
+				notifyUser("No notes");
+			}
 		}
 		mSchedule.notifyDataSetChanged( );
 	}
