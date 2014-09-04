@@ -87,7 +87,7 @@ public class SHLogin extends SHBluetoothActivity
 		if(CredentialManager.bIsValid(username, password))
 		{
 
-			if(DEBUG_ONLY) 
+			if(DEBUG_ONLY)
 			{
 				notifyUser("Login OK");
 				// Now we need to save the Credentials
@@ -99,7 +99,7 @@ public class SHLogin extends SHBluetoothActivity
 				startActivity(intent);
 				return;
 			}
-			
+
 			CredentialManager.setCredential(username, password);
 			dataToSend = Protocol.generateDataToSend(username, login, password);
 
@@ -164,6 +164,10 @@ public class SHLogin extends SHBluetoothActivity
 				String parameters = Protocol.generate(CredentialManager.getActualPass( ));
 				String dataToSend = Protocol.generateDataToSend(createUser, parameters);
 				write(dataToSend);
+			}
+			else if(response.contains("user created"))
+			{
+				notifyUser("User was created sucessfully.");
 			}
 		}
 		return super.handleMessage(_msg);
