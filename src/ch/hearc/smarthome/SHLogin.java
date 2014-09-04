@@ -75,7 +75,6 @@ public class SHLogin extends SHBluetoothActivity
 	/** Called by the login button */
 	public void login(View _view)
 	{
-
 		et_userName = (EditText) findViewById(R.id.login_screen_et_username);
 		et_password = (EditText) findViewById(R.id.login_screen_et_password);
 
@@ -115,7 +114,8 @@ public class SHLogin extends SHBluetoothActivity
 		}
 		else
 		{
-			notifyUser("Invalid user/password length. Max: " + SHCredentialManager.kPasswordMaxLength + " chars.");
+			//notifyUser("Invalid user/password length. Max: " + SHCredentialManager.kPasswordMaxLength + " chars.");
+			PopupMessages.popup(SHLogin.this, "Invalid user/password length. Max: " + SHCredentialManager.kPasswordMaxLength + " chars.");
 		}
 	}
 

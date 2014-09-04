@@ -24,6 +24,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import ch.hearc.smarthome.PopupMessages;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.SHLogin;
 
@@ -36,8 +37,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 {
 
 	// Debugging
-	private static final String			NAME				= "SHDeviceSelectActivity";
-	private static final String			TAG					= "DeviceSelect";
+	private static final String			TAG					= "SHDeviceSelectActivity";
 	private static final boolean		DEBUG				= true;
 
 	// Bluetooth members
@@ -77,8 +77,6 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		// Start the bluetooth adapter
 		mBtAdapter = BluetoothAdapter.getDefaultAdapter( );
 
-		if(SHBluetoothNetworkManager.DEBUG) Toast.makeText(getApplicationContext( ), "On Create", Toast.LENGTH_SHORT).show( );
-
 		// Setup Bluetooth devices lists with custom rows
 		devPairedListView = (ListView) findViewById(R.id.device_list_lv_paired_devices);
 		devPairedList = new ArrayList<SHDevice>( );
@@ -105,12 +103,10 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 	 */
 	public void doDiscovery(View _view)
 	{
-		if(DEBUG) Log.d(NAME, "doDiscovery()");
+		if(DEBUG) Log.d(TAG, "doDiscovery()");
 
 		b_device_list_scan.setText("Cancel scanning");
-
-		Toast.makeText(getApplicationContext( ), "doDiscovery", Toast.LENGTH_SHORT).show( );
-
+		
 		// Prevent phones without Bluetooth from using this application
 		if(!checkBlueToothState( ))
 		{
@@ -170,7 +166,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 		// Inform user that the phone does not have Bluetooth
 		if(mBtAdapter == null)
 		{
-			Toast.makeText(getApplicationContext( ), "Bluetooth not available.", Toast.LENGTH_SHORT).show( );
+			PopupMessages.popup(getApplicationContext( ), "Bluetooth not available.");
 			return false;
 		}
 		else if(!mBtAdapter.isEnabled( ))
@@ -281,8 +277,6 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 					// If some text came with the message show in a toast
 					if(SHBluetoothNetworkManager.DEBUG) Log.d(TAG, "Message: " + msg.obj);
 					notifyUser((String) msg.obj);
-					// Toast.makeText(SHDeviceSelectActivity.this, (String)
-					// msg.obj, Toast.LENGTH_SHORT).show( );
 				}
 				break;
 			case SHBluetoothNetworkManager.MSG_CONNECTED:
@@ -319,7 +313,7 @@ public class SHDeviceSelectActivity extends Activity implements Handler.Callback
 					// The user can back out at any moment
 					mConnectionProgressDialog.dismiss();
 					mBtNetworkManager.disconnect();
-					if (DEBUG) Log.i(NAME, "Canceled connection progress");
+					if (DEBUG) Log.i(TAG, "Canceled connection progress");
 					return;
 					}
 				});

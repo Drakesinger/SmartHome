@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import ch.hearc.smarthome.PopupMessages;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;	
@@ -53,7 +54,8 @@ public class SHActivityList extends SHBluetoothActivity
 					}
 					catch(ClassNotFoundException e)
 					{
-						e.printStackTrace( );
+						PopupMessages.errorPopup(SHActivityList.this, e);
+						//e.printStackTrace( );
 					}
 				}
 			});
