@@ -1,4 +1,4 @@
-package ch.hearch.smarthome.buzzer;
+package ch.hearc.smarthome.buzzer;
 
 import android.os.Bundle;
 import android.view.View;

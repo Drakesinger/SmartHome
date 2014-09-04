@@ -11,7 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
-import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
+import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;	
 
 public class SHActivityList extends SHBluetoothActivity
 {
