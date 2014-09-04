@@ -94,6 +94,7 @@ public class SHBluetoothNetworkManager extends Application
 	private int 	mState;
 	private boolean bBusy; // can be used to avoid sending over and over if blocked
 	private boolean bStoppingConnection;
+	private boolean noCarriage = false;
 
 	// UUIDs for this application 
 	// This is the base UUID in order to establish an RFCOMM channel with the PIC module 
@@ -318,8 +319,15 @@ public class SHBluetoothNetworkManager extends Application
 
 			// Send the following data to the device so that it knows we
 			// disconnected
-			write(".,230,.");
-
+			write(".,236,.");
+			if(DEBUG) Log.d(TAG, "noCarriage: " + noCarriage);
+			noCarriage = true;
+			if(DEBUG) Log.d(TAG, "noCarriage set: " + noCarriage);
+			write("$$$"); // no \r
+			write("K,"); //no \r
+			noCarriage = false;
+			if(DEBUG) Log.d(TAG, "noCarriage reset: " + noCarriage);
+			
 			// Cancel any running connected threads
 			if(mConnectedThread != null)
 			{
@@ -680,7 +688,7 @@ public class SHBluetoothNetworkManager extends Application
 					if(DEBUG) Log.d(TAG, "Sending: " + _data);
 					mmOutStream.write(_data.getBytes( ));
 				}
-				mmOutStream.write('\r');
+				if(!noCarriage) mmOutStream.write('\r');
 				return true;
 			}
 			catch(IOException e)
@@ -755,7 +763,7 @@ public class SHBluetoothNetworkManager extends Application
 				if(DEBUG) Log.d(TAG, "Connection lost. Restaring.");
 				break;
 		}
-		// Failed to connect, restart the service in order to try again
+		// Failed to connect, restart the service in listen mode in order to try again
 		SHBluetoothNetworkManager.this.start( );
 
 	}

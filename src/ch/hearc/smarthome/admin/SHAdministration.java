@@ -21,7 +21,6 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 
 	// Debugging
 	private static final String			TAG				= "SHAdministration";
-	
 
 	private Hashtable<String , String>	users;
 
@@ -47,6 +46,7 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 	// Data that is sent from SHManageUserFragment and onItemLongClickListener
 	private int							mUserChosen;
 	private String						newUsername;
+	private String						oldUsername;
 	private String						newPassword;
 
 	@Override
@@ -203,6 +203,7 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 
 		SHUser actualUserChosen = mUserList.get(mUserChosen);
 		String actualUserName = actualUserChosen.getUserName( );
+		oldUsername = actualUserName;
 		String actualUserPass = actualUserChosen.getPassword( );
 
 		// Instantiate a new dialogFragment containing the manage user screen.
@@ -232,10 +233,11 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 		String dataToSend;
 
 		// now send the new information about the user
-		dataToSend = protocol.generateDataToSend(changeUserName, newUsername);
+		String param = protocol.generate(oldUsername) + "," + protocol.generate(newUsername);
+		dataToSend = protocol.generateDataToSend(changeUserName, param);
 		write(dataToSend);
 
-		String params = newUsername + "," + newPassword;
+		String params = protocol.generate(newUsername) + "," + protocol.generate(newPassword);
 		dataToSend = protocol.generateDataToSend(changeUserPass, params);
 		write(dataToSend);
 	}
@@ -243,8 +245,6 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 	@Override
 	public void onManageUserDialogRemoveClick(DialogFragment _dialogFragment)
 	{
-		// TODO Auto-generated method stub
-		notifyUser("Ok clicked.");
 		SHUser userToRemove = mUserList.get(mUserChosen);
 
 		if(DEBUG_ONLY)
@@ -252,7 +252,9 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 			mUserList.remove(mUserChosen);
 			mUserListBaseAdapter.notifyDataSetChanged( );
 		}
-		String dataToSend = protocol.generateDataToSend(removeUser, userToRemove.getUserName( ));
+
+		String param = protocol.generate(userToRemove.getUserName( ));
+		String dataToSend = protocol.generateDataToSend(removeUser, param);
 		write(dataToSend);
 	}
 
@@ -274,8 +276,8 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 		String dataToSend;
 
 		// now send the new information about the new user
-		String params = newUsername + "," + newPassword;
-		dataToSend = protocol.generateDataToSend(addUser, newUsername);
+		String params = protocol.generate(newUsername) + "," + protocol.generate(newPassword);
+		dataToSend = protocol.generateDataToSend(addUser, params);
 		write(dataToSend);
 	}
 

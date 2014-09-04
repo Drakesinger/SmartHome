@@ -161,7 +161,7 @@ public class SHLogin extends SHBluetoothActivity
 			else if(response.contains("user not found"))
 			{
 				notifyUser("User not found.\nCreating user.");
-				String parameters = Protocol.generate(CredentialManager.getActualUser( )) + "," + Protocol.generate(CredentialManager.getActualPass( ));
+				String parameters = Protocol.generate(CredentialManager.getActualPass( ));
 				String dataToSend = Protocol.generateDataToSend(createUser, parameters);
 				write(dataToSend);
 			}

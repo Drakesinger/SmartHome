@@ -132,6 +132,15 @@ public class SHManageUserFragment extends DialogFragment
 		return mUserPass;
 	}
 
+
+	/**
+	 * @return mOldUserName
+	 */
+	private static String getOldUserName( )
+	{
+		return mOldUserName;
+	}
+	
 	/**
 	 * @param mUserName
 	 *            the mUserName to set
