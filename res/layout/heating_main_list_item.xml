@@ -17,6 +17,7 @@
         android:id="@+id/heating_main_list_title"
         style="@style/title"
         android:layout_width="200dp"
+        android:fontFamily="sans-serif"
          android:layout_toRightOf="@+id/heating_main_list_icon"
         android:layout_height="wrap_content"
         android:textColor="@color/blue08"

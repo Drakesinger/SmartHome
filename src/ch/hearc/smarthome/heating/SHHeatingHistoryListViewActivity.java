@@ -86,6 +86,10 @@ public class SHHeatingHistoryListViewActivity extends SHBluetoothActivity {
 			hhoIn = new SHHeatingHistoryObject(sDate, historyIn.get(i).getTemps());
 			hhoOut = new SHHeatingHistoryObject(sDate, historyOut.get(i)
 					.getTemps());
+			
+			hhoIn.setColor(getResources().getColor(R.color.blue01));
+			hhoOut.setColor(getResources().getColor(R.color.orange01));
+			
 			displayIn.add(hhoIn);
 			displayOut.add(hhoOut);
 		}

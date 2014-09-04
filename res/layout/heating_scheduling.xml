@@ -5,15 +5,12 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/schedulingTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/heating_scheduling_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="sans-serif"
-        android:text="@string/scheduling"
-        android:textSize="25sp"
-        android:textStyle="italic" />
+        android:background="@color/blue01"
+        android:text="@string/schedulings"
+        android:textColor="@android:color/background_light" />
 
     <ListView
         android:id="@+id/listViewScheduling"
@@ -33,6 +30,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="sans-serif-thin"
             android:onClick="addSchedulingDialog"
             android:text="@string/add" />
 
@@ -40,8 +38,9 @@
             android:id="@+id/btnDeleteSelected"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dip"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-thin"
             android:onClick="deleteSelection"
             android:text="@string/delete_selection" />
     </LinearLayout>

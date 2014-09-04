@@ -72,7 +72,11 @@ public class SHHeatingHistoryArrayAdapter extends
 		
 		XYSeriesRenderer rendererOut = new XYSeriesRenderer();
 		rendererOut.setLineWidth(4);
-		rendererOut.setColor(((Activity) context).getResources().getColor(R.color.blue08));
+		if(historyObject.getColor()==0){
+			rendererOut.setColor(((Activity) context).getResources().getColor(R.color.blue08));
+		}else{
+			rendererOut.setColor(historyObject.getColor());
+		}
 		// Include low and max value
 		rendererOut.setDisplayBoundingPoints(true);
 		// we add point markers

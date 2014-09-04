@@ -34,18 +34,18 @@
         android:layout_height="250dp"
         android:layout_below="@+id/activity_list_tv_choose"
         android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:animationCache="true" >
-
+        android:layout_marginTop="50dp"
+        android:animationCache="true"
+        android:padding="10dp" >
     </ListView>
-    
+
     <Button
         android:id="@+id/buttonBack"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/heating_main_listview"
-        android:layout_marginTop="40dp"
+        android:layout_alignParentBottom="true"
         android:contentDescription="@string/Exit"
         android:fontFamily="sans-serif-thin"
         android:onClick="intentBack"

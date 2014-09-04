@@ -81,7 +81,7 @@ public class SHHeatingHistoryGraphicalViewActivity extends Activity {
 
 		XYSeriesRenderer rendererOut = new XYSeriesRenderer();
 		rendererOut.setLineWidth(4);
-		rendererOut.setColor(getResources().getColor(R.color.blue08));
+		rendererOut.setColor(getResources().getColor(R.color.orange01));
 		// Include low and max value
 		rendererOut.setDisplayBoundingPoints(true);
 		// we add point markers

@@ -1,58 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/heating_history_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="sans-serif"
-        android:text="@string/history"
-        android:textSize="25sp"
-        android:textStyle="italic" />
-
-    <TextView
         android:id="@+id/heating_history_title_indoor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/background_light"
         android:background="@color/blue01"
-        android:text="@string/indoor" />
+        android:text="@string/indoor"
+        android:textColor="@android:color/background_light" />
 
     <ListView
         android:id="@+id/listview_history_indoor"
         android:layout_width="match_parent"
-        android:layout_height="200dip" >
+        android:layout_height="210dip"
+        android:layout_below="@+id/heating_history_title_indoor" >
     </ListView>
+
     <TextView
         android:id="@+id/heating_history_title_outdoor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/background_light"
-        android:background="@color/blue01"
-        android:text="@string/outdoor" />
+        android:layout_below="@+id/listview_history_indoor"
+        android:background="@color/orange01"
+        android:text="@string/outdoor"
+        android:textColor="@android:color/background_light" />
+
     <ListView
         android:id="@+id/listview_history_outdoor"
         android:layout_width="match_parent"
-        android:layout_height="200dip" >
+        android:layout_height="210dip"
+        android:layout_below="@+id/heating_history_title_outdoor" >
     </ListView>
 
-    <LinearLayout
-        style="?android:attr/buttonBarStyle"
+    <Button
+        android:id="@+id/btnShowGraphicalView"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="sans-serif-thin"
+        android:onClick="showGraphicalView"
+        android:text="@string/show_graphical_view" />
 
-        <Button
-            android:id="@+id/btnShowGraphicalView"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="showGraphicalView"
-            android:text="@string/show_graphical_view" />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

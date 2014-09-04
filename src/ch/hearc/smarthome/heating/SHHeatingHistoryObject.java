@@ -8,6 +8,7 @@ public class SHHeatingHistoryObject {
 
 	private String date;
 	private XYSeries temps;
+	private int color;
 
 	public SHHeatingHistoryObject(){
 		super();
@@ -17,6 +18,7 @@ public class SHHeatingHistoryObject {
 		this.date = date;
 		//this.temp = temp;
 		this.temps = temps;
+		this.color = 0;
 	}
 	
 	public String getDate(){
@@ -25,6 +27,14 @@ public class SHHeatingHistoryObject {
 	
 	public XYSeries getTemps(){
 		return this.temps;
+	}
+	
+	public void setColor(int color){
+		this.color = color;
+	}
+	
+	public int getColor(){
+		return this.color;
 	}
 	
 	public String toString(){

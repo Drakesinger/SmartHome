@@ -60,6 +60,8 @@
 
     <!-- Heating Thresholds -->
     <string name="ht_name">Thresholds</string>
+    <string name="luminostiy">Luminosity</string>
+    <string name="temperature">Temperature</string>
     <string name="heating">HEATING</string>
     <string name="default_temperature">Default Temperature</string>
     <string name="light_below">Turn on below</string>
@@ -70,6 +72,7 @@
     <string name="no_quit">No, let me quit</string>
 
     <!-- Heating Scheduling -->
+    <string name="schedulings">Schedulings</string>
     <string name="hs_name">Scheduling</string>
     <string name="add">Add</string>
     <string name="delete_selection">Delete Selection</string>
