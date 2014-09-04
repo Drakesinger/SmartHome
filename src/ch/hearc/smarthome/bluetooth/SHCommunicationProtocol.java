@@ -59,7 +59,7 @@ public class SHCommunicationProtocol
 	                        					             		    "h del scheduling",		// 15
 	                        					             		    "h sav thresholds",		// 16
 	                        					             		    // BUZZER
-	                        					             		    "to infinity and beyond"// 17
+	                        					             		    "to infinite and beyond"// 17
 	                        					             		   };
 
 	//@formatter:on
