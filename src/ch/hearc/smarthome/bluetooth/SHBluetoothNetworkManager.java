@@ -75,6 +75,7 @@ import android.util.Log;
  */
 public class SHBluetoothNetworkManager extends Application
 {
+
 	// SDP (Service Discovery Protocol) Name 
 	private static final String 	NAME 	= "SmartHome Bluetooth";
 
@@ -317,20 +318,21 @@ public class SHBluetoothNetworkManager extends Application
 
 			if(DEBUG) Log.d(TAG, "Disconnecting.");
 
-			// Send the following data to the device so that it knows we
-			// disconnected
-			write(".,236,.");
-			if(DEBUG) Log.d(TAG, "noCarriage: " + noCarriage);
-			noCarriage = true;
-			if(DEBUG) Log.d(TAG, "noCarriage set: " + noCarriage);
-			write("$$$"); // no \r
-			write("K,"); //no \r
-			noCarriage = false;
-			if(DEBUG) Log.d(TAG, "noCarriage reset: " + noCarriage);
-			
 			// Cancel any running connected threads
 			if(mConnectedThread != null)
 			{
+
+				// Send the following data to the device so that it knows we
+				// disconnected
+				write(".,236,.");
+				if(DEBUG) Log.d(TAG, "noCarriage: " + noCarriage);
+				noCarriage = true;
+				if(DEBUG) Log.d(TAG, "noCarriage set: " + noCarriage);
+				write("$$$"); // no \r
+				write("K,"); // no \r
+				noCarriage = false;
+				if(DEBUG) Log.d(TAG, "noCarriage reset: " + noCarriage);
+
 				mConnectedThread.cancel( );
 				mConnectedThread = null;
 			}
@@ -763,7 +765,8 @@ public class SHBluetoothNetworkManager extends Application
 				if(DEBUG) Log.d(TAG, "Connection lost. Restaring.");
 				break;
 		}
-		// Failed to connect, restart the service in listen mode in order to try again
+		// Failed to connect, restart the service in listen mode in order to try
+		// again
 		SHBluetoothNetworkManager.this.start( );
 
 	}
