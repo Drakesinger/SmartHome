@@ -125,7 +125,7 @@ public class SHNoteActivity extends SHBluetoothActivity
 					// on créer une boite de dialogue
 					AlertDialog.Builder adb = new AlertDialog.Builder(SHNoteActivity.this);
 					// on attribut un titre à notre boite de dialogue
-					adb.setTitle("Note selection");
+					adb.setTitle("Post-it selected:");
 					// on insère un message à notre boite de dialogue, et ici on
 					// affiche le titre de l'item cliqué
 					adb.setMessage("Post-it details : " + newLine + map.get("detail") + newLine + newLine);
@@ -178,7 +178,7 @@ public class SHNoteActivity extends SHBluetoothActivity
 										}
 										nbLinesRead++;
 									}
-									write(protocol.generateDataToSend(CredentialManager.getActualUser( ), deletepost, delSujet));
+									write(protocol.generateDataToSend(deletepost, delSujet));
 									mSchedule.notifyDataSetChanged( );
 								}
 								catch(Exception e)
