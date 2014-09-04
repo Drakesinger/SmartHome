@@ -57,7 +57,9 @@ public class SHCommunicationProtocol
 	                        					             		    // HEATING
 	                        					             		    "h add scheduling",		// 14
 	                        					             		    "h del scheduling",		// 15
-	                        					             		    "h sav thresholds"		// 16
+	                        					             		    "h sav thresholds",		// 16
+	                        					             		    // BUZZER
+	                        					             		    "to infinity and beyond"// 17
 	                        					             		   };
 
 	//@formatter:on
