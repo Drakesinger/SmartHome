@@ -323,7 +323,7 @@ public class CredentialManager
 				for(String l : lines)
 				{
 					String s[] = l.split(";");
-					cptJackSparrow.put(s[0], s[1]);
+					if(s[0] != null && s[1]!=null)cptJackSparrow.put(s[0], s[1]);
 				}
 			}
 			else

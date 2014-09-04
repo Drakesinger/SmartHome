@@ -99,12 +99,14 @@
     <string name="NoteAdd">Add</string>
     <string name="title_activity_note">Post-it</string>
     <string name="title_activity_note_menu">Post-it menu</string>
-    <string name="NoteMenu">What do you want to do ? Add or delete a post-it ?</string>
+    
     
     <!-- View and delete note screen -->
     <string name="dn_name">Note viewer</string>
-    <string name="SupprimerNote">See and/or delete a post-it</string>
-    <string name="AjouterNote">Add post-it</string>
+    <string name="anm_check">Check them out</string>
+    <string name="anm_add">Write a post-it</string>
+    <string name="anm_instr">What do you want to do?</string>
+    <string name="anm_welcome">Hey there!\nWelcome to your post-it management.</string>
 
 
     <!-- Options Menu -->
