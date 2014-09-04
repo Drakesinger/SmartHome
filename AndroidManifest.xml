@@ -34,6 +34,14 @@
             </intent-filter>
         </activity>
 
+        <!-- Buzzer -->
+        <activity
+            android:name="ch.hearc.smarthome.buzzer.BuzzerActivity"
+            android:label="@string/toinfiniteandbeyond"
+            android:screenOrientation="portrait" >
+            
+        </activity>
+        
         <!-- Login -->
         <activity
             android:name="ch.hearc.smarthome.SHLogin"
