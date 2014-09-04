@@ -31,7 +31,8 @@
         android:layout_below="@+id/door_admin_tv_old_password"
         android:ems="10"
         android:hint="Enter old password"
-        android:inputType="textPassword" />
+        android:inputType="numberPassword"
+        android:maxLength="8" />
 
     <TextView
         android:id="@+id/door_admin_tv_new_password"
@@ -49,7 +50,8 @@
         android:layout_below="@+id/door_admin_tv_new_password"
         android:ems="10"
         android:hint="Enter new password"
-        android:inputType="textPassword" />
+        android:inputType="numberPassword"
+        android:maxLength="8" />
 
     <TextView
         android:id="@+id/door_admin_tv_confirm"
@@ -67,7 +69,8 @@
         android:layout_below="@+id/door_admin_tv_confirm"
         android:ems="10"
         android:hint="Confirm new password"
-        android:inputType="textPassword" />
+        android:inputType="numberPassword"
+        android:maxLength="8" />
 
     <TextView
         android:id="@+id/door_admin_tv_message"

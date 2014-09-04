@@ -22,7 +22,8 @@
         android:layout_marginTop="16dp"
         android:gravity="center_horizontal"
         android:hint="username"
-        android:inputType="text" />
+        android:inputType="text"
+        android:maxLength="8" />
 
     <EditText
         android:id="@+id/ad_a_et_password"
@@ -35,6 +36,7 @@
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
         android:hint="password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:maxLength="8" />
 
 </LinearLayout>

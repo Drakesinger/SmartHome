@@ -102,6 +102,11 @@ public class SHAdministration extends SHBluetoothActivity implements SHManageUse
 	/** Only for debugging */
 	private void getStuff( )
 	{
+		
+		notifyUser("Retrieving user list.");
+		b_getUsers.setVisibility(View.GONE);
+		b_getUsers.setClickable(false);
+		
 		lv_UserList.setVisibility(View.VISIBLE);
 		mUserList.clear( );
 
