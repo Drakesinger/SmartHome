@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import ch.hearc.smarthome.CredentialManager;
+import ch.hearc.smarthome.SHCredentialManager;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
@@ -60,7 +60,7 @@ public class SHDoorAdminActivity extends SHBluetoothActivity implements OnClickL
 	{
 		tv_door_admin_Message.setText("");
 
-		if(_stringTable[0].equals(CredentialManager.getDoorPass( )))
+		if(_stringTable[0].equals(SHCredentialManager.getDoorPass( )))
 		{
 			// Old password inserted is correct, proceed
 			if(_stringTable[1].compareTo(_stringTable[2]) == 0)
@@ -169,7 +169,7 @@ public class SHDoorAdminActivity extends SHBluetoothActivity implements OnClickL
 			dataReceived = ((String) _msg.obj).toLowerCase( );
 			if(dataReceived.contains("change pass ok"))
 			{
-				CredentialManager.setDoorPass(newPassword);
+				SHCredentialManager.setDoorPass(newPassword);
 				notifyUser("New door password has been set.");
 				finish();
 			}

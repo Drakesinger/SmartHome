@@ -17,7 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
-import ch.hearc.smarthome.FileUtil;
+import ch.hearc.smarthome.SHFileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
@@ -30,7 +30,7 @@ public class SHHeatingHistoryListViewActivity extends SHBluetoothActivity {
 
 	// Save Directory
 	static String SAVE_NAME = "history_save.txt";
-	static File SAVE_FILEPATH = new File(FileUtil.HEATING_DIR.getAbsolutePath()
+	static File SAVE_FILEPATH = new File(SHFileUtil.HEATING_DIR.getAbsolutePath()
 			+ File.separator + SAVE_NAME);
 
 	// List View

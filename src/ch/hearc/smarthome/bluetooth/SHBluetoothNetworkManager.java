@@ -659,9 +659,7 @@ public class SHBluetoothNetworkManager extends Application
 				catch(IOException e)
 				{
 					Log.e(TAG, "Disconnected from device.", e);
-					exceptionManager(MSG_CONNECTION_LOST); // TODO check which
-															// is better
-					// sendMessage(MSG_CANCEL, "Disconnected from device");
+					exceptionManager(MSG_CONNECTION_LOST);
 					break;
 				}
 

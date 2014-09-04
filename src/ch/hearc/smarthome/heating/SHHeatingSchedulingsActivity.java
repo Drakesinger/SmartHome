@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
-import ch.hearc.smarthome.FileUtil;
+import ch.hearc.smarthome.SHFileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
 import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
@@ -21,7 +21,7 @@ public class SHHeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 
 	// Save Directory
 	static String SAVE_NAME = "schedulings_save.txt";
-	static File SAVE_FILEPATH = new File(FileUtil.HEATING_DIR.getAbsolutePath()
+	static File SAVE_FILEPATH = new File(SHFileUtil.HEATING_DIR.getAbsolutePath()
 			+ File.separator + SAVE_NAME);
 
 	ListView schedulingListView;
@@ -97,9 +97,9 @@ public class SHHeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 		write(protocol.generateDataToSend("h del scheduling", save));
 
 		// Modify the file
-		if (FileUtil.isMediaMounted()) {
+		if (SHFileUtil.isMediaMounted()) {
 			try {
-				FileUtil.writeTextFile(SAVE_FILEPATH, save, false);
+				SHFileUtil.writeTextFile(SAVE_FILEPATH, save, false);
 			} catch (IOException e) {
 				Toast.makeText(getApplicationContext(),
 						"File writing error: " + e.getMessage(),
@@ -116,23 +116,23 @@ public class SHHeatingSchedulingsActivity extends SHBluetoothFragmentActivity {
 
 		String content = null, info = "";
 
-		if (FileUtil.isMediaMounted()) {
-			if (FileUtil.HEATING_DIR.exists()) {
+		if (SHFileUtil.isMediaMounted()) {
+			if (SHFileUtil.HEATING_DIR.exists()) {
 				if (SAVE_FILEPATH.exists()) {
 					try {
-						content = FileUtil.readTextFile(SAVE_FILEPATH);
+						content = SHFileUtil.readTextFile(SAVE_FILEPATH);
 					} catch (IOException e) {
 						info = "File reading error: " + e.getMessage();
 					}
 				} else {
 					// Create File and restart function
-					FileUtil.createFile(SAVE_FILEPATH);
+					SHFileUtil.createFile(SAVE_FILEPATH);
 					updateList();
 					return;
 				}
 			} else {
 				// Create Tree and restart function
-				FileUtil.createTree(FileUtil.HEATING_DIR);
+				SHFileUtil.createTree(SHFileUtil.HEATING_DIR);
 				updateList();
 				return;
 			}

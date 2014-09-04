@@ -2,7 +2,7 @@ package ch.hearc.smarthome.bluetooth;
 
 import java.util.Hashtable;
 
-import ch.hearc.smarthome.CredentialManager;
+import ch.hearc.smarthome.SHCredentialManager;
 
 import android.util.Log;
 
@@ -185,7 +185,7 @@ public class SHCommunicationProtocol
 				break;
 			case 1:
 				// Login
-				actualUser = CredentialManager.getActualUser( );
+				actualUser = SHCredentialManager.getActualUser( );
 				generatedUser = generate(actualUser);
 
 				String pass = _params;
@@ -196,7 +196,7 @@ public class SHCommunicationProtocol
 
 				break;
 			default:
-				actualUser = CredentialManager.getActualUser( );
+				actualUser = SHCredentialManager.getActualUser( );
 				generatedUser = generate(actualUser);
 				dataToSend = new String(generatedUser + "," + getFunctionID(_function) + "," + _params);
 

@@ -19,7 +19,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import ch.hearc.smarthome.FileUtil;
+import ch.hearc.smarthome.SHFileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
 
@@ -166,9 +166,9 @@ public class SHHeatingSchedulingsAddDialogFragment extends DialogFragment {
 		// Check if Media is mounted ( File exists because
 		// HeatingSchedulingsActivity.onCreate() create the file if it doesn't
 		// exist)
-		if (FileUtil.isMediaMounted()) {
+		if (SHFileUtil.isMediaMounted()) {
 			try {
-				FileUtil.writeTextFile(SAVE_FILEPATH, save, true);
+				SHFileUtil.writeTextFile(SAVE_FILEPATH, save, true);
 			} catch (IOException e) {
 				Toast.makeText(getActivity(),
 						"File writing error: " + e.getMessage(),

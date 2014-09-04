@@ -14,7 +14,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import ch.hearc.smarthome.CredentialManager;
+import ch.hearc.smarthome.SHCredentialManager;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
@@ -98,7 +98,7 @@ public class SHNoteActivity extends SHBluetoothActivity
 		listItem.add(map);}
 
 		// ask only for user's notes
-		String dataToSend = protocol.generateDataToSend(getNotesUser, protocol.generate(CredentialManager.getActualUser( )));
+		String dataToSend = protocol.generateDataToSend(getNotesUser, protocol.generate(SHCredentialManager.getActualUser( )));
 		write(dataToSend);
 
 		/*

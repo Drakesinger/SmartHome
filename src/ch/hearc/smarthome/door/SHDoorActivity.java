@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import ch.hearc.smarthome.CredentialManager;
+import ch.hearc.smarthome.SHCredentialManager;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHBluetoothNetworkManager;
@@ -107,7 +107,7 @@ public class SHDoorActivity extends SHBluetoothActivity
 			{
 				// Password entered was correct, save it so that the user cannot
 				// change it if he doesn't recall it
-				CredentialManager.setDoorPass(doorPassword);
+				SHCredentialManager.setDoorPass(doorPassword);
 
 				notifyUser("Opening door.\nYou may now change the password.");
 				intent = new Intent(context, SHDoorAdminActivity.class);

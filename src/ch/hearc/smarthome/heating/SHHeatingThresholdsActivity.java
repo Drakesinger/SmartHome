@@ -11,7 +11,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
-import ch.hearc.smarthome.FileUtil;
+import ch.hearc.smarthome.SHFileUtil;
 import ch.hearc.smarthome.R;
 import ch.hearc.smarthome.bluetooth.SHBluetoothActivity;
 import ch.hearc.smarthome.bluetooth.SHCommunicationProtocol;
@@ -20,7 +20,7 @@ public class SHHeatingThresholdsActivity extends SHBluetoothActivity {
 
 	// Save Directory
 	static String SAVE_NAME = "thresholds_save.txt";
-	static File SAVE_FILEPATH = new File(FileUtil.HEATING_DIR.getAbsolutePath()
+	static File SAVE_FILEPATH = new File(SHFileUtil.HEATING_DIR.getAbsolutePath()
 			+ File.separator + SAVE_NAME);
 
 	// Views
@@ -53,9 +53,9 @@ public class SHHeatingThresholdsActivity extends SHBluetoothActivity {
 		// Bluetooth save
 		write(protocol.generateDataToSend("h sav thresholds", save));
 
-		if (FileUtil.isMediaMounted()) {
+		if (SHFileUtil.isMediaMounted()) {
 			try {
-				FileUtil.writeTextFile(SAVE_FILEPATH, save, false);
+				SHFileUtil.writeTextFile(SAVE_FILEPATH, save, false);
 				Toast.makeText(getApplicationContext(), "Thresholds saved !",
 						Toast.LENGTH_SHORT).show();
 			} catch (IOException e) {
@@ -173,23 +173,23 @@ public class SHHeatingThresholdsActivity extends SHBluetoothActivity {
 	public void updateSeekBars() {
 		String content = null, info = "";
 
-		if (FileUtil.isMediaMounted()) {
-			if (FileUtil.HEATING_DIR.exists()) {
+		if (SHFileUtil.isMediaMounted()) {
+			if (SHFileUtil.HEATING_DIR.exists()) {
 				if (SAVE_FILEPATH.exists()) {
 					try {
-						content = FileUtil.readTextFile(SAVE_FILEPATH);
+						content = SHFileUtil.readTextFile(SAVE_FILEPATH);
 					} catch (IOException e) {
 						info = "File reading error: " + e.getMessage();
 					}
 				} else {
 					// Create File and restart function
-					FileUtil.createFile(SAVE_FILEPATH);
+					SHFileUtil.createFile(SAVE_FILEPATH);
 					updateSeekBars();
 					return;
 				}
 			} else {
 				// Create Tree and restart function
-				FileUtil.createTree(FileUtil.HEATING_DIR);
+				SHFileUtil.createTree(SHFileUtil.HEATING_DIR);
 				updateSeekBars();
 				return;
 			}

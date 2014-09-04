@@ -46,7 +46,7 @@ public class SHLogin extends SHBluetoothActivity
 		// Construct the Communication Protocol containing all functions used
 		Protocol = new SHCommunicationProtocol( );
 		// Update our credentials if there are any written on disk
-		CredentialManager.update( );
+		SHCredentialManager.update( );
 		// First we need to ask the PIC if someone did log in before.
 
 		write("\r"); 	// PIC requires an empty 1st message in order to function
@@ -84,14 +84,14 @@ public class SHLogin extends SHBluetoothActivity
 
 		String dataToSend;
 
-		if(CredentialManager.bIsValid(username, password))
+		if(SHCredentialManager.bIsValid(username, password))
 		{
 
 			if(DEBUG_ONLY)
 			{
 				notifyUser("Login OK");
 				// Now we need to save the Credentials
-				CredentialManager.saveCredential(CredentialManager.getActualUser( ));
+				SHCredentialManager.saveCredential(SHCredentialManager.getActualUser( ));
 
 				// And start up the Home Activity screen
 				Intent intent = new Intent(this, SHActivityList.class);
@@ -100,7 +100,7 @@ public class SHLogin extends SHBluetoothActivity
 				return;
 			}
 
-			CredentialManager.setCredential(username, password);
+			SHCredentialManager.setCredential(username, password);
 			dataToSend = Protocol.generateDataToSend(username, login, password);
 
 			if(dataToSend.contains("Davy Jones' Locker!"))
@@ -115,7 +115,7 @@ public class SHLogin extends SHBluetoothActivity
 		}
 		else
 		{
-			notifyUser("Invalid user/password length. Max: " + CredentialManager.kPasswordMaxLength + " chars.");
+			notifyUser("Invalid user/password length. Max: " + SHCredentialManager.kPasswordMaxLength + " chars.");
 		}
 	}
 
@@ -151,7 +151,7 @@ public class SHLogin extends SHBluetoothActivity
 			{
 				notifyUser("Login OK");
 				// Now we need to save the Credentials
-				CredentialManager.saveCredential(CredentialManager.getActualUser( ));
+				SHCredentialManager.saveCredential(SHCredentialManager.getActualUser( ));
 
 				// And start up the Home Activity screen
 				Intent intent = new Intent(this, SHActivityList.class);
@@ -161,7 +161,7 @@ public class SHLogin extends SHBluetoothActivity
 			else if(response.contains("user not found"))
 			{
 				notifyUser("User not found.\nCreating user.");
-				String parameters = Protocol.generate(CredentialManager.getActualPass( ));
+				String parameters = Protocol.generate(SHCredentialManager.getActualPass( ));
 				String dataToSend = Protocol.generateDataToSend(createUser, parameters);
 				write(dataToSend);
 			}
